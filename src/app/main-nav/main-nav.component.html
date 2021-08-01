@@ -23,6 +23,11 @@
       </mat-list-item>
       <a mat-list-item href="#">Link 1</a>
     </mat-nav-list>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>text</button>
+      <button mat-menu-item>text</button>
+      <button mat-menu-item>text</button>
+    </mat-menu>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
@@ -31,11 +36,30 @@
       </button>
       <span>Bug Tracker</span>
       <span class="spacer"> </span>
+      <mat-form-field class="assign-task-list" [floatLabel]="'never'">
+        <mat-label class="clr-blue">Dropdown</mat-label>
+        <mat-select placeholder="" value="all">
+          <mat-option value="all">All Projects</mat-option>
+          <mat-option value="open">Open</mat-option>
+          <mat-option value="copy">Copy</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- <mat-list-item [mat-menu-trigger-for]="menu">
+        <mat-icon>unfold_more</mat-icon>
+        <a>Example</a>
+      </mat-list-item>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>text</button>
+        <button mat-menu-item>text</button>
+        <button mat-menu-item>text</button>
+      </mat-menu> -->
       <a href="#">Link 1</a>
       <a href="#">Link 2</a>
       <a href="#">Link 3</a>
     </mat-toolbar>
     <!-- Add Content Here -->
+    <router-outlet></router-outlet>
     <ng-content #name></ng-content>
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -10,10 +10,36 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+
+const appRoutes: Routes = [
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
+];
 
 @NgModule({
-  declarations: [AppComponent, MainNavComponent],
-  imports: [BrowserModule, BrowserAnimationsModule, MatButtonModule, LayoutModule, MatToolbarModule, MatSidenavModule, MatIconModule, MatListModule],
+  declarations: [AppComponent, MainNavComponent, HomeComponent],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    LayoutModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    MatMenuModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    BsDropdownModule.forRoot(),
+    RouterModule.forRoot(appRoutes),
+  ],
+  exports: [MatButtonModule, MatToolbarModule, MatSidenavModule, MatIconModule, MatListModule, MatMenuModule, MatSelectModule, MatFormFieldModule],
   providers: [],
   bootstrap: [AppComponent],
 })
