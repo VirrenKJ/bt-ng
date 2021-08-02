@@ -31,10 +31,10 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
-      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="isHandset$ | async">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>Bug Tracker</span>
+      <span class="ml2">Bug Tracker</span>
       <span class="spacer"> </span>
       <mat-form-field class="assign-task-list" [floatLabel]="'never'">
         <mat-label class="clr-blue">Dropdown</mat-label>
