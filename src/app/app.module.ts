@@ -17,6 +17,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -37,6 +39,8 @@ const appRoutes: Routes = [
     MatMenuModule,
     MatFormFieldModule,
     MatSelectModule,
+    MatTableModule,
+    MatPaginatorModule,
     BsDropdownModule.forRoot(),
     RouterModule.forRoot(appRoutes),
     NgbModule,
