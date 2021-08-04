@@ -40,7 +40,20 @@
     </div>
   </div>
 </nav>
+
 <div class="mat-elevation-z8">
+  <mat-card>
+    <div class="row">
+      <mat-card-title class="lg-col-6"> Assigned to me </mat-card-title>
+      <mat-card-actions class="lg-col-6" align="end">
+        <button mat-raised-button>Click</button>
+      </mat-card-actions>
+    </div>
+    <mat-card-content> Content </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-raised-button>Click</button>
+    </mat-card-actions>
+  </mat-card>
   <table mat-table [dataSource]="dataSource">
     <!-- Position Column -->
     <ng-container matColumnDef="position">

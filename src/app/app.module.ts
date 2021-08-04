@@ -19,6 +19,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatCardModule } from '@angular/material/card';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -41,6 +42,7 @@ const appRoutes: Routes = [
     MatSelectModule,
     MatTableModule,
     MatPaginatorModule,
+    MatCardModule,
     BsDropdownModule.forRoot(),
     RouterModule.forRoot(appRoutes),
     NgbModule,
