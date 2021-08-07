@@ -26,3 +26,7 @@ mat-toolbar a {
   color: white;
   text-decoration: none;
 }
+
+.is-active {
+  background-color: rgb(44, 44, 44);
+}

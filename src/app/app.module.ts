@@ -20,14 +20,22 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCardModule } from '@angular/material/card';
+import { ViewIssueComponent } from './issue/view-issue/view-issue.component';
+import { AddIssueComponent } from './issue/add-issue/add-issue.component';
+import { SummaryComponent } from './summary/summary.component';
+import { ManageComponent } from './manage/manage.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
+  { path: 'view-issue', component: ViewIssueComponent },
+  { path: 'add-issue', component: AddIssueComponent },
+  { path: 'manage', component: ManageComponent },
+  { path: 'summary', component: SummaryComponent },
 ];
 
 @NgModule({
-  declarations: [AppComponent, MainNavComponent, HomeComponent],
+  declarations: [AppComponent, MainNavComponent, HomeComponent, ViewIssueComponent, AddIssueComponent, SummaryComponent, ManageComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
