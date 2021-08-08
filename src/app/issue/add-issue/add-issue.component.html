@@ -1,1 +1,102 @@
-<h1>add issues</h1>
+<div class="container">
+  <div class="py-5">
+    <h1>
+      <span><mat-icon mat-list-icon>bug_report</mat-icon></span> Issue Details
+    </h1>
+    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <div class="row">
+          <div class="col-sm-6">
+            <label class="form-label" for="firstName">First Name</label>
+            <input type="text" class="form-control" id="firstName" aria-describedby="emailHelp" placeholder="Viren" />
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          </div>
+          <div class="col-sm-6">
+            <label class="form-label" for="lastName">Last Name</label>
+            <input type="text" class="form-control" id="lastName" aria-describedby="emailHelp" placeholder="Jarwal" />
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          </div>
+        </div>
+        <div class="col-12 mt-2">
+          <label class="form-label" for="username">Username</label>
+          <div class="input-group">
+            <span class="input-group-text">@</span>
+            <input type="text" class="form-control" id="username" aria-describedby="emailHelp" placeholder="v_jarwal" />
+          </div>
+          <div class="invalid-feedback">Valid Username is required.</div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-5">
+            <label class="form-label" for="country">Country</label>
+            <select class="form-control" id="country">
+              <option value="">Choose...</option>
+              <option value="australia">India</option>
+              <option value="usa">Pakistan</option>
+            </select>
+            <div class="invalid-feedback">Valid Username is required.</div>
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label" for="state">State</label>
+            <select class="form-control" id="state">
+              <option value="">Choose...</option>
+              <option value="delhi">Delhi</option>
+              <option value="jaipur">Jaipur</option>
+              <option value="karachi">Karachi</option>
+            </select>
+            <div class="invalid-feedback">Valid Username is required.</div>
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label" for="pincode">Pin code</label>
+            <input class="form-control" id="pincode" type="number" placeholder="302015" />
+            <div class="invalid-feedback">Valid Username is required.</div>
+          </div>
+
+          <hr class="my-4" />
+
+          <div class="col-12">
+            <div class="form-check">
+              <input id="sameAddress" type="checkbox" class="form-check-input" />
+              <label class="form-check-label" for="sameAddress">Shipping address is same as billing.</label>
+            </div>
+            <div class="form-check">
+              <input id="saveInfo" type="checkbox" class="form-check-input" />
+              <label class="form-check-label" for="saveInfo">Save this info.</label>
+            </div>
+          </div>
+
+          <hr class="my-4" />
+
+          <h3 class="mb-3">Payments</h3>
+
+          <div class="form-check">
+            <input id="creditCard" name="paymentMethod" type="radio" class="form-check-input" checked required />
+            <label class="form-check-label" for="creditCard">Credit Card</label>
+          </div>
+          <div class="form-check">
+            <input id="directDebit" name="paymentMethod" type="radio" class="form-check-input" required />
+            <label class="form-check-label" for="directDebit">Direct debit</label>
+          </div>
+          <div class="form-check">
+            <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required />
+            <label class="form-check-label" for="paypal">PayPal</label>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-md-6">
+              Name on card
+              <input type="text" class="form-control" />
+            </div>
+            <div class="col-md-6">
+              Credit card number
+              <input type="text" class="form-control" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>

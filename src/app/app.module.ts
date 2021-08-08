@@ -26,6 +26,7 @@ import { ViewIssueComponent } from './issue/view-issue/view-issue.component';
 import { AddIssueComponent } from './issue/add-issue/add-issue.component';
 import { SummaryComponent } from './summary/summary.component';
 import { ManageComponent } from './manage/manage.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -42,6 +43,8 @@ const appRoutes: Routes = [
     BrowserModule,
     BrowserAnimationsModule,
     LayoutModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatButtonModule,
     MatToolbarModule,
     MatSidenavModule,
