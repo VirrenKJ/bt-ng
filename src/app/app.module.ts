@@ -22,6 +22,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTabsModule } from '@angular/material/tabs';
 import { ViewIssueComponent } from './issue/view-issue/view-issue.component';
 import { AddIssueComponent } from './issue/add-issue/add-issue.component';
 import { SummaryComponent } from './summary/summary.component';
@@ -58,6 +59,7 @@ const appRoutes: Routes = [
     MatCardModule,
     MatCheckboxModule,
     MatDatepickerModule,
+    MatTabsModule,
     BsDropdownModule.forRoot(),
     RouterModule.forRoot(appRoutes),
     NgbModule,

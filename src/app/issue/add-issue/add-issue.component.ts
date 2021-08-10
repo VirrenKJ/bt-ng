@@ -20,21 +20,6 @@ export class AddIssueComponent implements OnInit {
     country: new FormControl(),
   });
 
-  countryList = [
-    {
-      id: 1,
-      name: 'India',
-    },
-    {
-      id: 2,
-      name: 'Sri Lanka',
-    },
-    {
-      id: 3,
-      name: 'Bangladesh',
-    },
-  ];
-
   onSubmit() {
     console.log('Submitted!');
   }
