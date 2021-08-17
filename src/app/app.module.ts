@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
@@ -32,6 +31,7 @@ import { AddUserModalComponent } from './manage/add-user-modal/add-user-modal.co
 import { AddProjectModalComponent } from './manage/add-project-modal/add-project-modal.component';
 import { AddCategoryModalComponent } from './manage/add-category-modal/add-category-modal.component';
 import { AddProfileModalComponent } from './manage/add-profile-modal/add-profile-modal.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -79,6 +79,7 @@ const appRoutes: Routes = [
     MatTabsModule,
     BsDropdownModule.forRoot(),
     RouterModule.forRoot(appRoutes),
+    ModalModule.forRoot(),
     NgbModule,
   ],
   exports: [MatButtonModule, MatToolbarModule, MatSidenavModule, MatIconModule, MatListModule, MatMenuModule, MatSelectModule, MatFormFieldModule],

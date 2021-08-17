@@ -23,6 +23,8 @@ export class ManageComponent implements OnInit, AfterViewInit {
   profileDataSource = new MatTableDataSource<Users>(globalProfiles);
   categoryDataSource = new MatTableDataSource<Users>(globalProfiles);
 
+  setOpenUserModal: any;
+
   constructor() {}
 
   ngOnInit(): void {}
@@ -32,6 +34,12 @@ export class ManageComponent implements OnInit, AfterViewInit {
     this.projectDataSource.paginator = this.projectPaginator;
     this.profileDataSource.paginator = this.profilePaginator;
     this.categoryDataSource.paginator = this.categoryPaginator;
+  }
+
+  openUserModal(userId) {
+    this.setOpenUserModal = {
+      userId: userId,
+    };
   }
 }
 
