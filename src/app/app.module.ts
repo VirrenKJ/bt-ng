@@ -28,6 +28,10 @@ import { AddIssueComponent } from './issue/add-issue/add-issue.component';
 import { SummaryComponent } from './summary/summary.component';
 import { ManageComponent } from './manage/manage.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AddUserModalComponent } from './manage/add-user-modal/add-user-modal.component';
+import { AddProjectModalComponent } from './manage/add-project-modal/add-project-modal.component';
+import { AddCategoryModalComponent } from './manage/add-category-modal/add-category-modal.component';
+import { AddProfileModalComponent } from './manage/add-profile-modal/add-profile-modal.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -39,7 +43,20 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, MainNavComponent, HomeComponent, ViewIssueComponent, AddIssueComponent, SummaryComponent, ManageComponent],
+  declarations: [
+    AppComponent,
+    MainNavComponent,
+    HomeComponent,
+    ViewIssueComponent,
+    AddIssueComponent,
+    SummaryComponent,
+    ManageComponent,
+    AddUserModalComponent,
+    AddProjectModalComponent,
+    AddCategoryModalComponent,
+    AddProfileModalComponent,
+  ],
+
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
