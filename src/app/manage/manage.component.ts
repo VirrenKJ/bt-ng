@@ -24,6 +24,9 @@ export class ManageComponent implements OnInit, AfterViewInit {
   categoryDataSource = new MatTableDataSource<Users>(globalProfiles);
 
   setOpenUserModal: any;
+  setOpenProjectModal: any;
+  setOpenCategoryModal: any;
+  setOpenProfileModal: any;
 
   constructor() {}
 
@@ -39,6 +42,24 @@ export class ManageComponent implements OnInit, AfterViewInit {
   openUserModal(userId) {
     this.setOpenUserModal = {
       userId: userId,
+    };
+  }
+
+  openProjectModal(projectId) {
+    this.setOpenProjectModal = {
+      projectId: projectId,
+    };
+  }
+
+  openCategoryModal(categoryId) {
+    this.setOpenCategoryModal = {
+      categoryId: categoryId,
+    };
+  }
+
+  openProfileModal(profileId) {
+    this.setOpenProfileModal = {
+      profileId: profileId,
     };
   }
 }

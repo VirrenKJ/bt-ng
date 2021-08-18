@@ -1,15 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-add-project-modal',
   templateUrl: './add-project-modal.component.html',
-  styleUrls: ['./add-project-modal.component.css']
+  styleUrls: ['./add-project-modal.component.css'],
+  providers: [NgbModalConfig, NgbModal],
 })
 export class AddProjectModalComponent implements OnInit {
+  @ViewChild('addProject') addProject: TemplateRef<any>;
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(config: NgbModalConfig, private modalService: NgbModal) {
+    config.backdrop = 'static';
+    config.keyboard = false;
   }
 
+  ngOnInit(): void {}
+
+  @Input()
+  set openProjectModal(data: any) {
+    if (data && !data.projectId) {
+      this.openModal(this.addProject);
+    }
+    if (data && data.projectId) {
+      this.openModal(this.addProject, data.projectId);
+    }
+  }
+
+  openModal(template: TemplateRef<any>, projectId = null) {
+    setTimeout(() => {
+      this.modalService.open(template, { size: 'lg' });
+    });
+  }
 }

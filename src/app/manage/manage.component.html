@@ -1,4 +1,7 @@
 <app-add-user-modal [openUserModal]="setOpenUserModal"></app-add-user-modal>
+<app-add-project-modal [openProjectModal]="setOpenProjectModal"></app-add-project-modal>
+<app-add-category-modal [openCategoryModal]="setOpenCategoryModal"></app-add-category-modal>
+<app-add-profile-modal [openProfileModal]="setOpenProfileModal"></app-add-profile-modal>
 
 <div>
   <mat-tab-group class="mat-tab-group" mat-align-tabs="center">
@@ -75,7 +78,7 @@
               </div>
               <div class="col-4 d-flex">
                 <div class="col-4">
-                  <button type="button" class="btn btn-outline-light float-end me-3">Add Project</button>
+                  <button type="button" class="btn btn-outline-light float-end me-3" (click)="openProjectModal(null)">Add Project</button>
                 </div>
                 <div class="col">
                   <div class="input-group">
@@ -137,7 +140,7 @@
               </div>
               <div class="col-4 d-flex">
                 <div class="col-4">
-                  <button type="button" class="btn btn-outline-light float-end me-3">Add Category</button>
+                  <button type="button" class="btn btn-outline-light float-end me-3" (click)="openCategoryModal(null)">Add Category</button>
                 </div>
                 <div class="col">
                   <div class="input-group">
@@ -199,7 +202,7 @@
               </div>
               <div class="col-4 d-flex">
                 <div class="col-4">
-                  <button type="button" class="btn btn-outline-light float-end me-3">Add Profile</button>
+                  <button type="button" class="btn btn-outline-light float-end me-3" (click)="openProfileModal(null)">Add Profile</button>
                 </div>
                 <div class="col">
                   <div class="input-group">
