@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -31,5 +32,18 @@ export class AddProjectModalComponent implements OnInit {
     setTimeout(() => {
       this.modalService.open(template, { size: 'lg' });
     });
+  }
+
+  contactForm = new FormGroup({
+    firstName: new FormControl(),
+    lastName: new FormControl(),
+    email: new FormControl(),
+    gender: new FormControl(),
+    isMarried: new FormControl(),
+    country: new FormControl(),
+  });
+
+  onSubmit() {
+    console.log('Submitted!');
   }
 }

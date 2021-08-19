@@ -5,10 +5,58 @@
       <button type="button" class="btn-close btn-close-white" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
-      <p>Hello, World!</p>
+      <div class="container">
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-4">
+                <label class="form-label" for="name">Name</label>
+                <input type="text" class="form-control bg-dark text-white" id="name" placeholder="Name" />
+                <div class="invalid-feedback">Valid name is required.</div>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="status">Status</label>
+                <select class="form-control bg-dark text-white" id="status">
+                  <option value="">Choose...</option>
+                  <option value="australia">Project 1</option>
+                  <option value="usa">Project 2</option>
+                </select>
+                <div class="invalid-feedback">Valid Username is required.</div>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="visibility">Visibility</label>
+                <select class="form-control bg-dark text-white" id="visibility">
+                  <option value="">Choose...</option>
+                  <option value="australia">Project 1</option>
+                  <option value="usa">Project 2</option>
+                </select>
+                <div class="invalid-feedback">Valid Username is required.</div>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col">
+                <label class="form-label" for="description">Description</label>
+                <textarea class="form-control bg-dark text-white" id="description" rows="3"></textarea>
+              </div>
+            </div>
+
+            <hr class="mt-4 mb-3" />
+
+            <div class="row">
+              <div class="col">
+                <div class="form-check form-switch ms-2">
+                  <input class="form-check-input bg-dark" style="font-size: large" type="checkbox" id="category" checked />
+                  <label class="form-check-label mt-1" for="category">Inherit Global Categories</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-outline-light" (click)="modal.close('Save click')">Save</button>
+      <button type="button" class="btn btn-primary">Submit</button>
+      <button type="button" class="btn btn-primary" (click)="modal.close('Save click')">Cancel</button>
     </div>
   </div>
 </ng-template>

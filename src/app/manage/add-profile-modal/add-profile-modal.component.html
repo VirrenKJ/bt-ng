@@ -4,11 +4,40 @@
       <h1 class="modal-title">Add Profile</h1>
       <button type="button" class="btn-close btn-close-white" (click)="modal.dismiss('Cross click')"></button>
     </div>
-    <div class="modal-body">
-      <p>Hello, World!</p>
+    <div class="modal-body mb-2">
+      <div class="container">
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-4">
+                <label class="form-label" for="platform">Platform</label>
+                <input type="text" class="form-control bg-dark text-white" id="platform" placeholder="Platform" />
+                <div class="invalid-feedback">Valid name is required.</div>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="os">OS</label>
+                <input type="text" class="form-control bg-dark text-white" id="os" placeholder="OS" />
+                <div class="invalid-feedback">Valid name is required.</div>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="version">OS Version</label>
+                <input type="text" class="form-control bg-dark text-white" id="version" placeholder="OS Version" />
+                <div class="invalid-feedback">Valid name is required.</div>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col">
+                <label class="form-label" for="description">Description</label>
+                <textarea class="form-control bg-dark text-white" id="description" rows="3"></textarea>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-outline-light" (click)="modal.close('Save click')">Save</button>
+      <button type="button" class="btn btn-primary">Submit</button>
+      <button type="button" class="btn btn-primary" (click)="modal.close('Save click')">Cancel</button>
     </div>
   </div>
 </ng-template>
