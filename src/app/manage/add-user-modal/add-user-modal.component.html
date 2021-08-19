@@ -5,10 +5,64 @@
       <button type="button" class="btn-close btn-close-white" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
-      <p>Hello, World!</p>
+      <div class="container">
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-6">
+                <label class="form-label" for="country">Username</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-dark text-white">@</span>
+                  <input type="text" class="form-control bg-dark text-white" id="username" placeholder="Username" />
+                </div>
+                <div class="invalid-feedback">Valid Username is required.</div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="name">Name</label>
+                <input type="text" class="form-control bg-dark text-white" id="name" placeholder="Name" />
+                <div class="invalid-feedback">Valid name is required.</div>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-md-6">
+                <label class="form-label" for="mail">E-mail</label>
+                <input type="mail" class="form-control bg-dark text-white" id="mail" placeholder="xyz@gmail.com" />
+                <div class="invalid-feedback">Valid Username is required.</div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="access">Access Level</label>
+                <select class="form-control bg-dark text-white" id="access">
+                  <option value="">Choose...</option>
+                  <option value="australia">Project 1</option>
+                  <option value="usa">Project 2</option>
+                </select>
+                <div class="invalid-feedback">Valid Username is required.</div>
+              </div>
+            </div>
+
+            <hr class="my-4" />
+
+            <div class="row">
+              <div class="col ps-4">
+                <div class="form-check form-switch">
+                  <input class="form-check-input bg-dark" style="font-size: large" type="checkbox" id="enabled" checked />
+                  <label class="form-check-label mt-1" for="enabled">Enabled</label>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-check form-switch">
+                  <input class="form-check-input bg-dark" style="font-size: large" type="checkbox" id="protected" />
+                  <label class="form-check-label mt-1" for="protected">Protected</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-outline-light" (click)="modal.close('Save click')">Save</button>
+      <button type="button" class="btn btn-primary">Submit</button>
+      <button type="button" class="btn btn-primary" (click)="modal.close('Save click')">Cancel</button>
     </div>
   </div>
 </ng-template>
