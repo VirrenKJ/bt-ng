@@ -27,6 +27,12 @@ mat-toolbar a {
   text-decoration: none;
 }
 
+mat-sidenav-container mat-sidenav-content mat-toolbar.app-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
 .is-active {
   background-color: rgb(44, 44, 44);
 }
