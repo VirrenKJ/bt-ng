@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark my-3 mx-3" style="border-left: solid">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Navbar</a>
     <button
@@ -41,12 +41,12 @@
   </div>
 </nav>
 
-<div class="row">
-  <div class="col-sm-7 py-3">
+<div class="row mx-4">
+  <div class="col-lg-7">
     <div class="mat-elevation-z8">
       <mat-card>
         <div class="row">
-          <mat-card-title class="lg-col-6"> Assigned to me </mat-card-title>
+          <mat-card-title class="lg-col-6" style="margin-bottom: 0px"> Assigned to me </mat-card-title>
         </div>
       </mat-card>
       <table mat-table [dataSource]="dataSource">
@@ -81,11 +81,11 @@
       <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements"> </mat-paginator>
     </div>
   </div>
-  <div class="col-sm-5 py-3">
+  <div class="col-lg-5">
     <div class="mat-elevation-z8">
       <mat-card>
         <div class="row">
-          <mat-card-title class="lg-col-6"> Timeline </mat-card-title>
+          <mat-card-title class="lg-col-6" style="margin-bottom: 0px"> Timeline </mat-card-title>
         </div>
       </mat-card>
       <table mat-table [dataSource]="dataSource">
