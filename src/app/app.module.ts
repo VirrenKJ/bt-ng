@@ -9,7 +9,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -32,15 +31,10 @@ import { AddProjectModalComponent } from './manage/add-project-modal/add-project
 import { AddCategoryModalComponent } from './manage/add-category-modal/add-category-modal.component';
 import { AddProfileModalComponent } from './manage/add-profile-modal/add-profile-modal.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
-
-const appRoutes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
-  { path: 'view-issue', component: ViewIssueComponent },
-  { path: 'add-issue', component: AddIssueComponent },
-  { path: 'manage', component: ManageComponent },
-  { path: 'summary', component: SummaryComponent },
-];
+import { HttpClientModule } from '@angular/common/http';
+import { AppRoutingModule } from './app-routing.module';
+import { SignupComponent } from './authentication/signup/signup.component';
+import { LoginComponent } from './authentication/login/login.component';
 
 @NgModule({
   declarations: [
@@ -55,9 +49,12 @@ const appRoutes: Routes = [
     AddProjectModalComponent,
     AddCategoryModalComponent,
     AddProfileModalComponent,
+    SignupComponent,
+    LoginComponent,
   ],
 
   imports: [
+    AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
     LayoutModule,
@@ -78,9 +75,9 @@ const appRoutes: Routes = [
     MatDatepickerModule,
     MatTabsModule,
     BsDropdownModule.forRoot(),
-    RouterModule.forRoot(appRoutes),
     ModalModule.forRoot(),
     NgbModule,
+    HttpClientModule,
   ],
   exports: [MatButtonModule, MatToolbarModule, MatSidenavModule, MatIconModule, MatListModule, MatMenuModule, MatSelectModule, MatFormFieldModule],
   providers: [],
