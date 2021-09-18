@@ -1,11 +1,11 @@
 <div class="bootstrap-wrapper">
   <div class="container">
-    <div class="row mt-4">
-      <div class="col-md-5 offset-3">
+    <div class="row justify-content-center mt-4">
+      <div class="col-lg-5">
         <div class="container">
           <h1 class="text-center">LOGO</h1>
           <form action="" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" matTooltip="Must be Unique!" matTooltipPosition="after">
               <mat-label>Username</mat-label>
               <input type="text" formControlName="username" autocomplete="username" matInput placeholder="Enter here!" />
               <mat-hint *ngIf="!signupForm.get('username').valid && signupForm.get('username').touched">Please enter a valid username!!</mat-hint>

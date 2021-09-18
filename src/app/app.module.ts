@@ -36,6 +36,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { SignupComponent } from './authentication/signup/signup.component';
 import { LoginComponent } from './authentication/login/login.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -75,6 +77,8 @@ import { LoginComponent } from './authentication/login/login.component';
     MatCheckboxModule,
     MatDatepickerModule,
     MatTabsModule,
+    MatSnackBarModule,
+    MatTooltipModule,
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
     NgbModule,

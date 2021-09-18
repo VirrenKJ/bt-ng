@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { SearchCriteriaObj } from 'src/app/base/models/search_criteria_obj';
+import Swal from 'sweetalert2';
 import { Role } from '../common/models/role';
-import { User } from '../common/models/user';
 import { RoleService } from '../services/role.service';
 import { UserService } from '../services/user.service';
 
@@ -13,10 +14,10 @@ import { UserService } from '../services/user.service';
 })
 export class SignupComponent implements OnInit {
   @ViewChild(FormGroupDirective) signupFormDirective: FormGroupDirective;
-  signupForm: FormGroup;
   roles = new Array<Role>();
+  signupForm: FormGroup;
 
-  constructor(private userService: UserService, private roleService: RoleService) {}
+  constructor(private userService: UserService, private roleService: RoleService, private _snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.init();
@@ -86,22 +87,28 @@ export class SignupComponent implements OnInit {
       this.userService.addUser(this.signupForm.value).subscribe(
         response => {
           console.log(response);
-          alert('Success');
+          Swal.fire('Success', 'User Registered', 'success');
         },
         error => {
           console.log(error);
-          alert('Something went wrong');
+          this._snackBar.open('Something went wrong', 'OK', {
+            duration: 3000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+          });
+        },
+        () => {
+          this.signupFormDirective.resetForm();
         }
       );
-      this.signupForm.reset();
-      setTimeout(() => {
-        this.signupFormDirective.resetForm();
-      });
     } else {
-      alert('Invalid Form');
-      setTimeout(() => {
-        this.signupFormDirective.resetForm();
-      });
+      Swal.fire('Success', 'User Registered', 'success');
+      // this._snackBar.open('Invalid Form', 'OK', {
+      //   duration: 3000,
+      //   horizontalPosition: 'center',
+      //   verticalPosition: 'top',
+      // });
+      this.signupFormDirective.resetForm();
     }
   }
 }
