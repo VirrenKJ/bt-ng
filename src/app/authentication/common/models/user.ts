@@ -9,5 +9,5 @@ export class User {
   public email: string;
   public enabled: boolean = true;
   public deleteFlag: boolean;
-  public roles: Role[];
+  public roles = new Array<Role>();
 }
