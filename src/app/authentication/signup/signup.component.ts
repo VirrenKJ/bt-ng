@@ -102,12 +102,12 @@ export class SignupComponent implements OnInit {
         }
       );
     } else {
-      Swal.fire('Success', 'User Registered', 'success');
-      // this._snackBar.open('Invalid Form', 'OK', {
-      //   duration: 3000,
-      //   horizontalPosition: 'center',
-      //   verticalPosition: 'top',
-      // });
+      // Swal.fire('Success', 'User Registered', 'success');
+      this._snackBar.open('Invalid Form', 'OK', {
+        duration: 3000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+      });
       this.signupFormDirective.resetForm();
     }
   }
