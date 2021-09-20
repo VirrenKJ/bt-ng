@@ -1,10 +1,10 @@
-<mat-toolbar class="app-toolbar shadow" color="primary">
+<mat-toolbar class="app-toolbar sub-header" color="primary">
   <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
     <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
   </button>
-  <span class="ml2">Bug Tracker</span>
+  <span class="ml2">Sub Heading</span>
   <span class="spacer"> </span>
-  <mat-form-field class="assign-task-list mt-1" [floatLabel]="'never'">
+  <mat-form-field class="assign-task-list mt-1 me-3" [floatLabel]="'never'">
     <mat-label class="clr-blue">Dropdown</mat-label>
     <mat-select placeholder="" value="all">
       <mat-option value="all">All Projects</mat-option>
@@ -12,18 +12,10 @@
       <mat-option value="copy">Copy</mat-option>
     </mat-select>
   </mat-form-field>
-  <!-- <mat-list-item [mat-menu-trigger-for]="menu">
-        <a>Example</a>
-        <mat-icon>arrow_drop_down</mat-icon>
-      </mat-list-item>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item>text</button>
-        <button mat-menu-item>text</button>
-        <button mat-menu-item>text</button>
-      </mat-menu> -->
-  <a href="#">Link 1</a>
-  <a href="#">Link 2</a>
-  <a href="#">Link 3</a>
+  <form class="d-flex">
+    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+    <button class="btn btn-outline-light" type="submit">Search</button>
+  </form>
 </mat-toolbar>
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav
@@ -33,7 +25,6 @@
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false"
   >
-    <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
       <mat-list-item routerLink="/home" [routerLinkActive]="['is-active']">
         <mat-icon mat-list-icon>dashboard</mat-icon>
@@ -58,14 +49,6 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar class="app-toolbar sub-header" color="primary">
-      <span class="ml2">Sub Heading</span>
-      <span class="spacer"> </span>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-        <button class="btn btn-outline-light" type="submit">Search</button>
-      </form>
-    </mat-toolbar>
     <!-- Add Content Here -->
     <router-outlet></router-outlet>
   </mat-sidenav-content>

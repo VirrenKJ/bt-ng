@@ -6,32 +6,15 @@
 
 .sidenav {
   width: 200px;
-}
-
-.sidenav .mat-toolbar {
   background: inherit;
 }
 
-.mat-toolbar.mat-primary {
-  position: sticky;
-  top: 0;
-  z-index: 1;
+mat-toolbar.sub-header {
+  /* background: #ea4863; */
+  position: sticky !important;
+  z-index: 0 !important;
+  height: 100px;
 }
-
-.spacer {
-  flex: 1 1 auto;
-}
-
-mat-toolbar a {
-  display: inline-block;
-  margin: 0 10px;
-  color: white;
-  text-decoration: none;
-}
-
-/* mat-toolbar.sub-header {
-  background: #ea4863;
-} */
 
 mat-sidenav-container mat-sidenav-content mat-toolbar.app-toolbar {
   position: sticky;
@@ -41,12 +24,6 @@ mat-sidenav-container mat-sidenav-content mat-toolbar.app-toolbar {
 
 mat-sidenav-container {
   z-index: auto;
-}
-
-mat-toolbar.shadow {
-  position: relative;
-  z-index: 2;
-  box-shadow: 0px 0px 15px -3px #000000 !important;
 }
 
 /* .is-active {

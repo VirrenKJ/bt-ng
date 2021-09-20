@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SearchCriteriaObj } from 'src/app/base/models/search_criteria_obj';
@@ -14,6 +14,7 @@ import { UserService } from '../services/user.service';
 })
 export class SignupComponent implements OnInit {
   @ViewChild(FormGroupDirective) signupFormDirective: FormGroupDirective;
+  @Output() loginEvent = new EventEmitter<any>();
   roles = new Array<Role>();
   signupForm: FormGroup;
 
@@ -22,6 +23,10 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {
     this.init();
     this.getRoles();
+  }
+
+  emitLoginEvent() {
+    this.loginEvent.emit();
   }
 
   init() {

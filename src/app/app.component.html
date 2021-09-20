@@ -1,1 +1,4 @@
-<app-main-nav></app-main-nav>
+<app-toolbar></app-toolbar>
+<app-main-nav *ngIf="loggedIn"></app-main-nav>
+<app-login *ngIf="!loggedIn && logIn" (signupEvent)="switchLogin()" (tempLoginEvent)="login()"></app-login>
+<app-signup *ngIf="!loggedIn && !logIn" (loginEvent)="switchLogin()"></app-signup>
