@@ -26,10 +26,10 @@
             <mat-form-field appearance="outline">
               <mat-label>Password</mat-label>
               <input type="password" formControlName="password" autocomplete="new-password" matInput placeholder="Enter here!" />
-              <mat-hint *ngIf="signupForm.get('password').errors?.required && signupForm.get('password').touched"
-                >Please enter a valid password!!</mat-hint
+              <mat-hint *ngIf="signupForm.get('password').errors?.required && signupForm.get('password').touched">Password is required</mat-hint>
+              <mat-hint *ngIf="signupForm.get('password').errors?.invalidPassword && signupForm.get('password').touched"
+                >Password should have min 8 characters, at least 1 uppercase letter, 1 lowercase letter & 1 number</mat-hint
               >
-              <mat-hint *ngIf="signupForm.get('password').errors?.minlength">Min length is 8!!</mat-hint>
             </mat-form-field>
 
             <mat-form-field appearance="outline">
@@ -38,7 +38,7 @@
               <mat-hint *ngIf="signupForm.get('confirmPassword').errors?.required && signupForm.get('confirmPassword').touched"
                 >Please enter a valid password!!</mat-hint
               >
-              <mat-hint *ngIf="signupForm.get('confirmPassword').errors?.mustMatch">Password do not match!!</mat-hint>
+              <mat-hint *ngIf="signupForm.get('confirmPassword').errors?.passwordMismatch">Passwords does not match</mat-hint>
             </mat-form-field>
 
             <mat-form-field appearance="outline">

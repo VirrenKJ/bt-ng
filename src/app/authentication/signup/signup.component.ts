@@ -5,6 +5,7 @@ import { SearchCriteriaObj } from 'src/app/base/models/search_criteria_obj';
 import Swal from 'sweetalert2';
 import { Role } from '../common/models/role';
 import { RoleService } from '../services/role.service';
+import { SignupValidationService } from '../services/signup-validation.service';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -18,7 +19,12 @@ export class SignupComponent implements OnInit {
   roles = new Array<Role>();
   signupForm: FormGroup;
 
-  constructor(private userService: UserService, private roleService: RoleService, private _snackBar: MatSnackBar) {}
+  constructor(
+    private userService: UserService,
+    private roleService: RoleService,
+    private _snackBar: MatSnackBar,
+    private signupValidationService: SignupValidationService
+  ) {}
 
   ngOnInit(): void {
     this.init();
@@ -32,38 +38,22 @@ export class SignupComponent implements OnInit {
   init() {
     this.signupForm = new FormGroup(
       {
-        username: new FormControl(null, [Validators.required]),
-        password: new FormControl(null, [Validators.required, Validators.minLength(8)]),
+        username: new FormControl(null, [Validators.required, this.signupValidationService.noWhitespace]),
+        password: new FormControl(null, [Validators.required, this.signupValidationService.patternValidator]),
         confirmPassword: new FormControl(null, Validators.required),
-        firstName: new FormControl(null, Validators.required),
-        lastName: new FormControl(null, Validators.required),
+        firstName: new FormControl(null, [Validators.required, this.signupValidationService.noWhitespace]),
+        lastName: new FormControl(null, [Validators.required, this.signupValidationService.noWhitespace]),
         email: new FormControl(null, [Validators.required, Validators.email]),
         enabled: new FormControl(true),
         roles: new FormControl(null, Validators.required),
       },
       {
-        validators: [this.mustMatch('password', 'confirmPassword')],
+        validators: this.signupValidationService.MatchPassword('password', 'confirmPassword'),
       }
     );
     this.signupForm.get('username').valueChanges.subscribe(value => {
       console.log(value);
     });
-  }
-
-  mustMatch(controlName: string, matchingControlName: string) {
-    return (formGroup: FormGroup) => {
-      const control = formGroup.controls[controlName];
-      const matchingControl = formGroup.controls[matchingControlName];
-
-      if (matchingControl.errors && !matchingControl.errors.mustMatch) {
-        return null;
-      }
-      if (control.value !== matchingControl.value) {
-        matchingControl.setErrors({ mustMatch: true });
-      } else {
-        matchingControl.setErrors(null);
-      }
-    };
   }
 
   getRoles() {

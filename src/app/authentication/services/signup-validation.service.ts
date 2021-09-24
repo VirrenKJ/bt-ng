@@ -7,19 +7,17 @@ import { ValidatorFn, AbstractControl, FormGroup } from '@angular/forms';
 export class SignupValidationService {
   constructor() {}
 
-  patternValidator(): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: any } => {
-      if (!control.value) {
-        return null;
-      }
-      //The password should be a minimum of eight characters long
-      //It has at least one lower case letter
-      //It has at least one upper case letter
-      //It has at least one number
-      const regex = new RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
-      const valid = regex.test(control.value);
-      return valid ? null : { invalidPassword: true };
-    };
+  patternValidator(control: AbstractControl) {
+    if (!control.value) {
+      return null;
+    }
+    //The password should be a minimum of eight characters long
+    //It has at least one lower case letter
+    //It has at least one upper case letter
+    //It has at least one number
+    const regex = new RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
+    const valid = regex.test(control.value);
+    return valid ? null : { invalidPassword: true };
   }
 
   MatchPassword(password: string, confirmPassword: string) {
@@ -43,7 +41,13 @@ export class SignupValidationService {
     };
   }
 
-  userNameValidator(userControl: AbstractControl) {
+  noWhitespace(control: AbstractControl) {
+    const isWhitespace = (control.value || '').trim().length === 0;
+    const isValid = !isWhitespace;
+    return isValid ? null : { whitespace: true };
+  }
+
+  usernameValidator(userControl: AbstractControl) {
     return new Promise(resolve => {
       setTimeout(() => {
         if (this.validateUserName(userControl.value)) {
