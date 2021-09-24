@@ -32,7 +32,7 @@ export class SignupComponent implements OnInit {
   init() {
     this.signupForm = new FormGroup(
       {
-        username: new FormControl(null, Validators.required),
+        username: new FormControl(null, [Validators.required]),
         password: new FormControl(null, [Validators.required, Validators.minLength(8)]),
         confirmPassword: new FormControl(null, Validators.required),
         firstName: new FormControl(null, Validators.required),
@@ -42,7 +42,7 @@ export class SignupComponent implements OnInit {
         roles: new FormControl(null, Validators.required),
       },
       {
-        validators: this.mustMatch('password', 'confirmPassword'),
+        validators: [this.mustMatch('password', 'confirmPassword')],
       }
     );
     this.signupForm.get('username').valueChanges.subscribe(value => {
