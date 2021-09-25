@@ -8,9 +8,9 @@ import { User } from '../common/models/user';
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private http: HttpClient) {}
+  constructor(private httpClient: HttpClient) {}
 
   public addUser(user: User): Observable<any> {
-    return this.http.post(`${baseUrl}/user/add`, user);
+    return this.httpClient.post(`${baseUrl}/user/add`, user);
   }
 }

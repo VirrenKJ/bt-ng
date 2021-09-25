@@ -7,19 +7,19 @@
           <form action="" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <mat-form-field appearance="outline">
               <mat-label>Username</mat-label>
-              <input type="text" name="username" autocomplete="username" matInput placeholder="Enter here!" required />
+              <input type="text" formControlName="username" autocomplete="username" matInput placeholder="Enter here!" required />
               <mat-hint *ngIf="!loginForm.get('username').valid && loginForm.get('username').touched">Please enter a valid username!!</mat-hint>
             </mat-form-field>
 
             <mat-form-field appearance="outline">
               <mat-label>Password</mat-label>
-              <input type="password" name="password" autocomplete="new-password" matInput placeholder="Enter here!" required />
+              <input type="password" formControlName="password" autocomplete="new-password" matInput placeholder="Enter here!" required />
               <mat-hint *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched">Please enter a valid password!!</mat-hint>
             </mat-form-field>
 
             <div class="container text-center">
-              <button class="me-2" mat-raised-button color="primary" (click)="emitTempLoginEvent()">Login</button>
-              <button mat-raised-button color="primary" (click)="emitSignupEvent()">Create New Account</button>
+              <button type="submit" class="me-2" mat-raised-button color="primary">Login</button>
+              <button type="button" mat-raised-button color="primary" (click)="emitSignupEvent()">Create New Account</button>
             </div>
           </form>
         </mat-card>

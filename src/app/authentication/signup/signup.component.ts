@@ -4,8 +4,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SearchCriteriaObj } from 'src/app/base/models/search_criteria_obj';
 import Swal from 'sweetalert2';
 import { Role } from '../common/models/role';
+import { CustomValidationService } from '../services/custom-validation.service';
 import { RoleService } from '../services/role.service';
-import { SignupValidationService } from '../services/signup-validation.service';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -23,7 +23,7 @@ export class SignupComponent implements OnInit {
     private userService: UserService,
     private roleService: RoleService,
     private _snackBar: MatSnackBar,
-    private signupValidationService: SignupValidationService
+    private customValidationService: CustomValidationService
   ) {}
 
   ngOnInit(): void {
@@ -38,17 +38,17 @@ export class SignupComponent implements OnInit {
   init() {
     this.signupForm = new FormGroup(
       {
-        username: new FormControl(null, [Validators.required, this.signupValidationService.noWhitespace]),
-        password: new FormControl(null, [Validators.required, this.signupValidationService.patternValidator]),
+        username: new FormControl(null, [Validators.required, this.customValidationService.noWhitespace]),
+        password: new FormControl(null, [Validators.required, this.customValidationService.patternValidator]),
         confirmPassword: new FormControl(null, Validators.required),
-        firstName: new FormControl(null, [Validators.required, this.signupValidationService.noWhitespace]),
-        lastName: new FormControl(null, [Validators.required, this.signupValidationService.noWhitespace]),
+        firstName: new FormControl(null, [Validators.required, this.customValidationService.noWhitespace]),
+        lastName: new FormControl(null, [Validators.required, this.customValidationService.noWhitespace]),
         email: new FormControl(null, [Validators.required, Validators.email]),
         enabled: new FormControl(true),
         roles: new FormControl(null, Validators.required),
       },
       {
-        validators: this.signupValidationService.MatchPassword('password', 'confirmPassword'),
+        validators: this.customValidationService.MatchPassword('password', 'confirmPassword'),
       }
     );
     this.signupForm.get('username').valueChanges.subscribe(value => {

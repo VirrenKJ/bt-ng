@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ValidatorFn, AbstractControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SignupValidationService {
+export class CustomValidationService {
   constructor() {}
 
   patternValidator(control: AbstractControl) {
@@ -12,9 +12,7 @@ export class SignupValidationService {
       return null;
     }
     //The password should be a minimum of eight characters long
-    //It has at least one lower case letter
-    //It has at least one upper case letter
-    //It has at least one number
+    //It has at least one lower case letter, one upper case letter, one number
     const regex = new RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
     const valid = regex.test(control.value);
     return valid ? null : { invalidPassword: true };

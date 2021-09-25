@@ -7,9 +7,9 @@ import baseUrl from '../common/models/base-url';
   providedIn: 'root',
 })
 export class RoleService {
-  constructor(private http: HttpClient) {}
+  constructor(private httpClient: HttpClient) {}
 
   public getList(data: any): Observable<any> {
-    return this.http.post(`${baseUrl}/role/list`, data);
+    return this.httpClient.post(`${baseUrl}/role/list`, data);
   }
 }
