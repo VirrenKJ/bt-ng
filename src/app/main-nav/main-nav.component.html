@@ -26,23 +26,23 @@
     [opened]="(isHandset$ | async) === false"
   >
     <mat-nav-list>
-      <mat-list-item routerLink="/home" [routerLinkActive]="['is-active']">
-        <mat-icon mat-list-icon>dashboard</mat-icon>
-        <span>Dashboard</span>
+      <mat-list-item routerLink="/main/home" [routerLinkActive]="['is-active']">
+        <mat-icon mat-list-icon>home</mat-icon>
+        <span>Home</span>
       </mat-list-item>
-      <mat-list-item routerLink="/view-issue" [routerLinkActive]="['is-active']">
+      <mat-list-item routerLink="/main/view-issue" [routerLinkActive]="['is-active']">
         <mat-icon mat-list-icon>format_list_bulleted</mat-icon>
         <span>View Issues</span>
       </mat-list-item>
-      <mat-list-item routerLink="/add-issue" [routerLinkActive]="['is-active']">
+      <mat-list-item routerLink="/main/add-issue" [routerLinkActive]="['is-active']">
         <mat-icon mat-list-icon>bug_report</mat-icon>
         <span>Report Issue</span>
       </mat-list-item>
-      <mat-list-item routerLink="/summary" [routerLinkActive]="['is-active']">
+      <mat-list-item routerLink="/main/summary" [routerLinkActive]="['is-active']">
         <mat-icon mat-list-icon>list_alt</mat-icon>
         <span>Summary</span>
       </mat-list-item>
-      <mat-list-item routerLink="/manage" [routerLinkActive]="['is-active']">
+      <mat-list-item routerLink="/main/manage" [routerLinkActive]="['is-active']">
         <mat-icon mat-list-icon>admin_panel_settings</mat-icon>
         <span>Manage</span>
       </mat-list-item>

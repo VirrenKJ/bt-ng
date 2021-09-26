@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { CustomValidationService } from '../services/custom-validation.service';
 import { LoginService } from '../services/login.service';
 
@@ -10,12 +11,14 @@ import { LoginService } from '../services/login.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  @Output() showSignupEvent = new EventEmitter<any>();
-  @Output() loggedInEvent = new EventEmitter<any>();
-
   loginForm: FormGroup;
 
-  constructor(private customValidationService: CustomValidationService, private _snackBar: MatSnackBar, private loginService: LoginService) {}
+  constructor(
+    private customValidationService: CustomValidationService,
+    private _snackBar: MatSnackBar,
+    private loginService: LoginService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -25,24 +28,26 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.loginForm.valid) {
-      this.loginService.authenticate(this.loginForm.value).subscribe(
-        (response: any) => {
-          console.log(response);
-          this.loginService.setToken(response.token);
-        },
-        errorRes => {
-          console.error(errorRes);
-          this.snackBarPopup(errorRes.error.message);
-        },
-        () => {
-          this.getCurrentUser();
-          this.emitTempLoginEvent();
-        }
-      );
-    } else {
-      this.snackBarPopup('Invalid Credentials');
-    }
+    this.router.navigate(['main']);
+
+    // if (this.loginForm.valid) {
+    //   this.loginService.authenticate(this.loginForm.value).subscribe(
+    //     (response: any) => {
+    //       console.log(response);
+    //       this.loginService.setToken(response.token);
+    //     },
+    //     errorRes => {
+    //       console.error(errorRes);
+    //       this.snackBarPopup(errorRes.error.message);
+    //     },
+    //     () => {
+    //       this.getCurrentUser();
+    //       this.router.navigate(['main']);
+    //     }
+    //   );
+    // } else {
+    //   this.snackBarPopup('Invalid Credentials');
+    // }
   }
 
   getCurrentUser() {
@@ -64,13 +69,5 @@ export class LoginComponent implements OnInit {
       horizontalPosition: 'center',
       verticalPosition: 'top',
     });
-  }
-
-  emitSignupEvent() {
-    this.showSignupEvent.emit();
-  }
-
-  emitTempLoginEvent() {
-    this.loggedInEvent.emit();
   }
 }

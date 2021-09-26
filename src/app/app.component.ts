@@ -7,22 +7,22 @@ import { LoginService } from './authentication/services/login.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  loggedIn = false;
-  showLogIn = true;
+  // loggedIn = false;
+  // showLogIn = true;
 
   constructor(private loginService: LoginService) {}
 
   ngOnInit(): void {}
 
-  switchLoginSignup() {
-    this.showLogIn = !this.showLogIn;
-  }
+  // switchLoginSignup() {
+  //   this.showLogIn = !this.showLogIn;
+  // }
 
-  login() {
-    this.loggedIn = this.loginService.isLoggedIn();
-  }
+  // login() {
+  //   this.loggedIn = this.loginService.isLoggedIn();
+  // }
 
-  logout() {
-    this.loggedIn = this.loginService.isLoggedIn();
-  }
+  // logout() {
+  //   this.loggedIn = this.loginService.isLoggedIn();
+  // }
 }

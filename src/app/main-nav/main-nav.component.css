@@ -13,7 +13,7 @@ mat-toolbar.sub-header {
   /* background: #ea4863; */
   position: sticky !important;
   z-index: 0 !important;
-  height: 100px;
+  height: 90px;
 }
 
 mat-sidenav-container mat-sidenav-content mat-toolbar.app-toolbar {

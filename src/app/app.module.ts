@@ -38,8 +38,10 @@ import { SignupComponent } from './authentication/signup/signup.component';
 import { LoginComponent } from './authentication/login/login.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ToolbarComponent } from './toolbar/toolbar.component';
+import { ToolbarComponent } from './home-layout/toolbar/toolbar.component';
 import { authInterceptorProvider } from './base/services/auth.interceptor';
+import { LoginLayoutComponent } from './authentication/login-layout/login-layout.component';
+import { HomeLayoutComponent } from './home-layout/home-layout.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +59,8 @@ import { authInterceptorProvider } from './base/services/auth.interceptor';
     SignupComponent,
     LoginComponent,
     ToolbarComponent,
+    LoginLayoutComponent,
+    HomeLayoutComponent,
   ],
 
   imports: [

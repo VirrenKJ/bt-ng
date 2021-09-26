@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { SearchCriteriaObj } from 'src/app/base/models/search_criteria_obj';
 import Swal from 'sweetalert2';
 import { Role } from '../common/models/role';
@@ -14,8 +15,6 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./signup.component.css'],
 })
 export class SignupComponent implements OnInit {
-  @ViewChild(FormGroupDirective) signupFormDirective: FormGroupDirective;
-  @Output() showLoginEvent = new EventEmitter<any>();
   roles = new Array<Role>();
   signupForm: FormGroup;
 
@@ -23,7 +22,8 @@ export class SignupComponent implements OnInit {
     private userService: UserService,
     private roleService: RoleService,
     private _snackBar: MatSnackBar,
-    private customValidationService: CustomValidationService
+    private customValidationService: CustomValidationService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -78,10 +78,13 @@ export class SignupComponent implements OnInit {
       this.userService.addUser(this.signupForm.value).subscribe(
         response => {
           console.log(response);
-          Swal.fire('Success', 'User Registered', 'success').then(value => {
-            if (value.isConfirmed) {
-              this.emitLoginEvent();
-            }
+          Swal.fire({
+            icon: 'success',
+            title: 'User Registered',
+            showConfirmButton: false,
+            timer: 2000,
+          }).then(() => {
+            this.router.navigate(['user/login']);
           });
         },
         errorRes => {
@@ -89,7 +92,7 @@ export class SignupComponent implements OnInit {
           this.snackBarPopup(errorRes.error.message);
         },
         () => {
-          this.signupFormDirective.resetForm();
+          // this.signupFormDirective.resetForm();
         }
       );
     } else {
@@ -104,9 +107,5 @@ export class SignupComponent implements OnInit {
       horizontalPosition: 'center',
       verticalPosition: 'top',
     });
-  }
-
-  emitLoginEvent() {
-    this.showLoginEvent.emit();
   }
 }

@@ -57,7 +57,7 @@
 
             <div class="container text-center">
               <button type="submit" class="me-2" mat-raised-button color="primary">Sign Up</button>
-              <button mat-raised-button color="primary" (click)="emitLoginEvent()">Already have an account</button>
+              <button mat-raised-button color="primary" [routerLink]="'/user/login'">Already have an account</button>
             </div>
           </form>
         </mat-card>
