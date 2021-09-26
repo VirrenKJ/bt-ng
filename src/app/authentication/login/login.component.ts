@@ -10,8 +10,8 @@ import { LoginService } from '../services/login.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  @Output() signupEvent = new EventEmitter<any>();
-  @Output() tempLoginEvent = new EventEmitter<any>();
+  @Output() showSignupEvent = new EventEmitter<any>();
+  @Output() loggedInEvent = new EventEmitter<any>();
 
   loginForm: FormGroup;
 
@@ -37,13 +37,12 @@ export class LoginComponent implements OnInit {
         },
         () => {
           this.getCurrentUser();
+          this.emitTempLoginEvent();
         }
       );
     } else {
       this.snackBarPopup('Invalid Credentials');
     }
-
-    // this.emitTempLoginEvent();
   }
 
   getCurrentUser() {
@@ -68,10 +67,10 @@ export class LoginComponent implements OnInit {
   }
 
   emitSignupEvent() {
-    this.signupEvent.emit();
+    this.showSignupEvent.emit();
   }
 
   emitTempLoginEvent() {
-    this.tempLoginEvent.emit();
+    this.loggedInEvent.emit();
   }
 }

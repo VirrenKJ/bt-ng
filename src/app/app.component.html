@@ -1,4 +1,4 @@
-<app-toolbar></app-toolbar>
+<app-toolbar (loggedOutEvent)="logout()" [setLoggedIn]="loggedIn"></app-toolbar>
 <app-main-nav *ngIf="loggedIn"></app-main-nav>
-<app-login *ngIf="!loggedIn && logIn" (signupEvent)="switchLogin()" (tempLoginEvent)="login()"></app-login>
-<app-signup *ngIf="!loggedIn && !logIn" (loginEvent)="switchLogin()"></app-signup>
+<app-login *ngIf="!loggedIn && showLogIn" (showSignupEvent)="switchLoginSignup()" (loggedInEvent)="login()"></app-login>
+<app-signup *ngIf="!loggedIn && !showLogIn" (showLoginEvent)="switchLoginSignup()"></app-signup>

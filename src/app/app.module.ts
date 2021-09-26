@@ -32,14 +32,14 @@ import { AddProjectModalComponent } from './manage/add-project-modal/add-project
 import { AddCategoryModalComponent } from './manage/add-category-modal/add-category-modal.component';
 import { AddProfileModalComponent } from './manage/add-profile-modal/add-profile-modal.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { SignupComponent } from './authentication/signup/signup.component';
 import { LoginComponent } from './authentication/login/login.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ToolbarComponent } from './toolbar/toolbar.component';
-import { AuthInterceptor, authInterceptorProvider } from './base/services/AuthInterceptor';
+import { authInterceptorProvider } from './base/services/auth.interceptor';
 
 @NgModule({
   declarations: [

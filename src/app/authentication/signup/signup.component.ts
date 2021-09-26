@@ -15,7 +15,7 @@ import { UserService } from '../services/user.service';
 })
 export class SignupComponent implements OnInit {
   @ViewChild(FormGroupDirective) signupFormDirective: FormGroupDirective;
-  @Output() loginEvent = new EventEmitter<any>();
+  @Output() showLoginEvent = new EventEmitter<any>();
   roles = new Array<Role>();
   signupForm: FormGroup;
 
@@ -29,10 +29,6 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {
     this.init();
     this.getRoles();
-  }
-
-  emitLoginEvent() {
-    this.loginEvent.emit();
   }
 
   init() {
@@ -82,15 +78,15 @@ export class SignupComponent implements OnInit {
       this.userService.addUser(this.signupForm.value).subscribe(
         response => {
           console.log(response);
-          Swal.fire('Success', 'User Registered', 'success');
-        },
-        error => {
-          console.log(error);
-          this._snackBar.open('Something went wrong', 'OK', {
-            duration: 3000,
-            horizontalPosition: 'center',
-            verticalPosition: 'top',
+          Swal.fire('Success', 'User Registered', 'success').then(value => {
+            if (value.isConfirmed) {
+              this.emitLoginEvent();
+            }
           });
+        },
+        errorRes => {
+          console.log(errorRes);
+          this.snackBarPopup(errorRes.error.message);
         },
         () => {
           this.signupFormDirective.resetForm();
@@ -98,12 +94,19 @@ export class SignupComponent implements OnInit {
       );
     } else {
       // Swal.fire('Success', 'User Registered', 'success');
-      this._snackBar.open('Invalid Form', 'OK', {
-        duration: 3000,
-        horizontalPosition: 'center',
-        verticalPosition: 'top',
-      });
-      this.signupFormDirective.resetForm();
+      this.snackBarPopup('Invalid Form');
     }
+  }
+
+  snackBarPopup(message: string) {
+    this._snackBar.open(message, 'OK', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+    });
+  }
+
+  emitLoginEvent() {
+    this.showLoginEvent.emit();
   }
 }
