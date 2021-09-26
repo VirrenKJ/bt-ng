@@ -15,6 +15,8 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./signup.component.css'],
 })
 export class SignupComponent implements OnInit {
+  @ViewChild(FormGroupDirective) signupFormDirective: FormGroupDirective;
+
   roles = new Array<Role>();
   signupForm: FormGroup;
 
@@ -34,7 +36,11 @@ export class SignupComponent implements OnInit {
   init() {
     this.signupForm = new FormGroup(
       {
-        username: new FormControl(null, [Validators.required, this.customValidationService.noWhitespace]),
+        username: new FormControl(null, [
+          Validators.required,
+          this.customValidationService.noWhitespace,
+          // this.customValidationService.usernameValidator,
+        ]),
         password: new FormControl(null, [Validators.required, this.customValidationService.patternValidator]),
         confirmPassword: new FormControl(null, Validators.required),
         firstName: new FormControl(null, [Validators.required, this.customValidationService.noWhitespace]),
@@ -48,7 +54,7 @@ export class SignupComponent implements OnInit {
       }
     );
     this.signupForm.get('username').valueChanges.subscribe(value => {
-      console.log(value);
+      console.log(value, this.signupForm.get('username').errors);
     });
   }
 
@@ -75,17 +81,10 @@ export class SignupComponent implements OnInit {
       this.signupForm.get('roles').patchValue(roles);
 
       //post user
-      this.userService.addUser(this.signupForm.value).subscribe(
+      this.userService.add(this.signupForm.value).subscribe(
         response => {
           console.log(response);
-          Swal.fire({
-            icon: 'success',
-            title: 'User Registered',
-            showConfirmButton: false,
-            timer: 2000,
-          }).then(() => {
-            this.router.navigate(['user/login']);
-          });
+          this.confirmationPopup();
         },
         errorRes => {
           console.log(errorRes);
@@ -96,7 +95,6 @@ export class SignupComponent implements OnInit {
         }
       );
     } else {
-      // Swal.fire('Success', 'User Registered', 'success');
       this.snackBarPopup('Invalid Form');
     }
   }
@@ -106,6 +104,17 @@ export class SignupComponent implements OnInit {
       duration: 3000,
       horizontalPosition: 'center',
       verticalPosition: 'top',
+    });
+  }
+
+  confirmationPopup() {
+    Swal.fire({
+      icon: 'success',
+      title: 'User Registered',
+      showConfirmButton: false,
+      timer: 2000,
+    }).then(() => {
+      this.router.navigate(['user/login']);
     });
   }
 }

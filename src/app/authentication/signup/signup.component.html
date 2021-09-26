@@ -21,6 +21,9 @@
               <mat-label>Username</mat-label>
               <input type="text" formControlName="username" autocomplete="username" matInput placeholder="Enter here!" required />
               <mat-hint *ngIf="!signupForm.get('username').valid && signupForm.get('username').touched">Please enter a valid username!!</mat-hint>
+              <!-- <mat-hint *ngIf="signupForm.get('username').touched && signupForm.get('username').errors?.userNameNotAvailable"
+                >Username is not available!!</mat-hint
+              > -->
             </mat-form-field>
 
             <mat-form-field appearance="outline">

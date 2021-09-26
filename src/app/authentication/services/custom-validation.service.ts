@@ -1,11 +1,29 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
+import { SearchCriteriaObj } from 'src/app/base/models/search_criteria_obj';
+import { User } from '../common/models/user';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CustomValidationService {
-  constructor() {}
+  usernameList = new Array<string>();
+
+  constructor(private userService: UserService) {
+    this.userService.getList(new SearchCriteriaObj()).subscribe(
+      response => {
+        response.data.user.forEach(user => {
+          this.usernameList.push(user.username);
+        });
+        console.log(this.usernameList);
+      },
+      errorRes => {
+        console.error(errorRes.error);
+      },
+      () => {}
+    );
+  }
 
   patternValidator(control: AbstractControl) {
     if (!control.value) {
@@ -46,19 +64,17 @@ export class CustomValidationService {
   }
 
   usernameValidator(userControl: AbstractControl) {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        if (this.validateUserName(userControl.value)) {
-          resolve({ userNameNotAvailable: true });
-        } else {
-          resolve(null);
-        }
-      }, 1000);
-    });
+    if (!userControl.value) {
+      return null;
+    }
+    if (this.validateUserName(userControl.value)) {
+      return { userNameNotAvailable: true };
+    } else {
+      return null;
+    }
   }
 
-  validateUserName(userName: string) {
-    const UserList = ['ankit', 'admin', 'user', 'superuser'];
-    return UserList.indexOf(userName) > -1;
+  validateUserName(userName: string): any {
+    return this.usernameList.indexOf(userName) > -1;
   }
 }
