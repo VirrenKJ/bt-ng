@@ -6,18 +6,18 @@ import { LoginService } from 'src/app/authentication/services/login.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AdminGuard implements CanActivate {
+export class LoggedInGuard implements CanActivate {
   constructor(private loginService: LoginService, private router: Router) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.loginService.isLoggedIn() && this.loginService.getUserRole() == 'Admin') {
-      return true;
-    } else {
-      this.router.navigate(['/main/home']);
+    if (this.loginService.isLoggedIn()) {
+      this.router.navigate(['/main']);
       return false;
+    } else {
+      return true;
     }
   }
 }

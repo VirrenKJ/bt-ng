@@ -4,6 +4,8 @@ import { LoginLayoutComponent } from './authentication/login-layout/login-layout
 import { LoginComponent } from './authentication/login/login.component';
 import { SignupComponent } from './authentication/signup/signup.component';
 import { AdminGuard } from './base/services/admin.guard';
+import { AuthGuard } from './base/services/auth.guard';
+import { LoggedInGuard } from './base/services/logged-in.guard';
 import { HomeLayoutComponent } from './home-layout/home-layout.component';
 import { HomeComponent } from './home/home.component';
 import { AddIssueComponent } from './issue/add-issue/add-issue.component';
@@ -32,6 +34,7 @@ const routes: Routes = [
         pathMatch: 'full',
       },
     ],
+    canActivate: [LoggedInGuard],
   },
   {
     path: 'main',
@@ -48,6 +51,7 @@ const routes: Routes = [
       { path: 'summary', component: SummaryComponent },
       { path: 'manage', component: ManageComponent, pathMatch: 'full', canActivate: [AdminGuard] },
     ],
+    canActivate: [AuthGuard],
   },
 ];
 

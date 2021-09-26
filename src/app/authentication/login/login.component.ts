@@ -28,26 +28,26 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.router.navigate(['main']);
+    // this.router.navigate(['main']);
 
-    // if (this.loginForm.valid) {
-    //   this.loginService.authenticate(this.loginForm.value).subscribe(
-    //     (response: any) => {
-    //       console.log(response);
-    //       this.loginService.setToken(response.token);
-    //     },
-    //     errorRes => {
-    //       console.error(errorRes);
-    //       this.snackBarPopup(errorRes.error.message);
-    //     },
-    //     () => {
-    //       this.getCurrentUser();
-    //       this.router.navigate(['main']);
-    //     }
-    //   );
-    // } else {
-    //   this.snackBarPopup('Invalid Credentials');
-    // }
+    if (this.loginForm.valid) {
+      this.loginService.authenticate(this.loginForm.value).subscribe(
+        (response: any) => {
+          console.log(response);
+          this.loginService.setToken(response.token);
+        },
+        errorRes => {
+          console.error(errorRes);
+          this.snackBarPopup(errorRes.error.message);
+        },
+        () => {
+          this.getCurrentUser();
+          this.router.navigate(['main']);
+        }
+      );
+    } else {
+      this.snackBarPopup('Invalid Credentials');
+    }
   }
 
   getCurrentUser() {
