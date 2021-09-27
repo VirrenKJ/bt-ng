@@ -42,6 +42,38 @@ import { ToolbarComponent } from './home-layout/toolbar/toolbar.component';
 import { authInterceptorProvider } from './base/services/auth.interceptor';
 import { LoginLayoutComponent } from './authentication/login-layout/login-layout.component';
 import { HomeLayoutComponent } from './home-layout/home-layout.component';
+import { NgxUiLoaderConfig, NgxUiLoaderHttpModule, NgxUiLoaderModule } from 'ngx-ui-loader';
+
+const ngxUiLoaderConfig: NgxUiLoaderConfig = {
+  bgsColor: '#ff6b6b',
+  bgsOpacity: 1,
+  bgsPosition: 'bottom-right',
+  bgsSize: 80,
+  bgsType: 'three-strings',
+  blur: 4,
+  delay: 0,
+  fastFadeOut: true,
+  fgsColor: '#ffffff',
+  fgsPosition: 'center-center',
+  fgsSize: 80,
+  fgsType: 'three-strings',
+  gap: 24,
+  logoPosition: 'center-center',
+  logoSize: 110,
+  logoUrl: 'assets/angular.png',
+  masterLoaderId: 'master',
+  overlayBorderRadius: '0',
+  overlayColor: 'rgba(40,40,40,0.61)',
+  pbColor: '#ffffff',
+  pbDirection: 'ltr',
+  pbThickness: 3,
+  hasProgressBar: true,
+  text: '',
+  textColor: '#3e3e3e',
+  textPosition: 'center-center',
+  maxTime: -1,
+  minTime: 300,
+};
 
 @NgModule({
   declarations: [
@@ -91,6 +123,8 @@ import { HomeLayoutComponent } from './home-layout/home-layout.component';
     NgbModule,
     HttpClientModule,
     MatInputModule,
+    NgxUiLoaderModule,
+    NgxUiLoaderHttpModule.forRoot(ngxUiLoaderConfig),
   ],
   exports: [MatButtonModule, MatToolbarModule, MatSidenavModule, MatIconModule, MatListModule, MatMenuModule, MatSelectModule, MatFormFieldModule],
   providers: [authInterceptorProvider],
