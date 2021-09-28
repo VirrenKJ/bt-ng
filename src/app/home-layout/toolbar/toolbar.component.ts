@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 import Swal from 'sweetalert2';
 import { LoginService } from '../../authentication/services/login.service';
 
@@ -9,7 +10,7 @@ import { LoginService } from '../../authentication/services/login.service';
   styleUrls: ['./toolbar.component.css'],
 })
 export class ToolbarComponent implements OnInit {
-  constructor(private loginService: LoginService, private router: Router) {}
+  constructor(private loginService: LoginService, private router: Router, private ngxService: NgxUiLoaderService) {}
 
   ngOnInit(): void {}
 
@@ -24,8 +25,10 @@ export class ToolbarComponent implements OnInit {
       confirmButtonText: 'Log out',
     }).then(result => {
       if (result.isConfirmed) {
+        this.ngxService.startLoader('master');
         this.loginService.logout();
         this.router.navigate(['user/login']);
+        this.ngxService.stopLoader('master');
       }
     });
   }

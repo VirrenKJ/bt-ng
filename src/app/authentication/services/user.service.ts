@@ -26,7 +26,11 @@ export class UserService {
     return this.httpClient.get(`${baseUrl}/user/${id}`);
   }
 
+  public getByUsername(username: string): Observable<any> {
+    return this.httpClient.get(`${baseUrl}/user/username`, { params: new HttpParams().set('username', username) });
+  }
+
   public delete(id): Observable<any> {
-    return this.httpClient.delete(`${baseUrl}/user/add`, { params: new HttpParams().set('id', id) });
+    return this.httpClient.delete(`${baseUrl}/user/delete`, { params: new HttpParams().set('id', id) });
   }
 }

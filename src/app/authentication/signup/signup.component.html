@@ -20,15 +20,31 @@
             <mat-form-field appearance="outline" matTooltip="Must be Unique!" matTooltipPosition="after">
               <mat-label>Username</mat-label>
               <input type="text" formControlName="username" autocomplete="username" matInput placeholder="Enter here!" required />
-              <mat-hint *ngIf="!signupForm.get('username').valid && signupForm.get('username').touched">Please enter a valid username!!</mat-hint>
-              <!-- <mat-hint *ngIf="signupForm.get('username').touched && signupForm.get('username').errors?.userNameNotAvailable"
+              <mat-hint
+                *ngIf="
+                  signupForm.get('username').touched &&
+                  (signupForm.get('username').errors?.required ||
+                    signupForm.get('username').errors?.whitespace ||
+                    signupForm.get('username').errors?.minlength)
+                "
+                >Please enter a valid username, min length is 5 letters!!</mat-hint
+              >
+              <mat-hint *ngIf="signupForm.get('username').touched && signupForm.get('username').errors?.usernameNotAvailable"
                 >Username is not available!!</mat-hint
-              > -->
+              >
             </mat-form-field>
 
             <mat-form-field appearance="outline">
               <mat-label>Password</mat-label>
-              <input type="password" formControlName="password" autocomplete="new-password" matInput placeholder="Enter here!" required />
+              <input
+                [type]="showPassword ? 'text' : 'password'"
+                formControlName="password"
+                autocomplete="new-password"
+                matInput
+                placeholder="Enter here!"
+                required
+              />
+              <mat-icon matSuffix style="cursor: pointer" (click)="password()">remove_red_eye</mat-icon>
               <mat-hint *ngIf="signupForm.get('password').errors?.required && signupForm.get('password').touched">Password is required</mat-hint>
               <mat-hint *ngIf="signupForm.get('password').errors?.invalidPassword && signupForm.get('password').touched"
                 >Password should have min 8 characters, at least 1 uppercase letter, 1 lowercase letter & 1 number</mat-hint
@@ -37,7 +53,15 @@
 
             <mat-form-field appearance="outline">
               <mat-label>Confirm Password</mat-label>
-              <input type="password" formControlName="confirmPassword" autocomplete="new-password" matInput placeholder="Enter here!" required />
+              <input
+                [type]="showConfirmPassword ? 'text' : 'password'"
+                formControlName="confirmPassword"
+                autocomplete="new-password"
+                matInput
+                placeholder="Enter here!"
+                required
+              />
+              <mat-icon matSuffix style="cursor: pointer" (click)="confirmPassword()">remove_red_eye</mat-icon>
               <mat-hint *ngIf="signupForm.get('confirmPassword').errors?.required && signupForm.get('confirmPassword').touched"
                 >Please enter a valid password!!</mat-hint
               >

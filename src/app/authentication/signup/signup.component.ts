@@ -18,6 +18,9 @@ export class SignupComponent implements OnInit {
   @ViewChild(FormGroupDirective) signupFormDirective: FormGroupDirective;
 
   roles = new Array<Role>();
+  showPassword: boolean = false;
+  showConfirmPassword: boolean = false;
+
   signupForm: FormGroup;
 
   constructor(
@@ -36,11 +39,11 @@ export class SignupComponent implements OnInit {
   init() {
     this.signupForm = new FormGroup(
       {
-        username: new FormControl(null, [
-          Validators.required,
-          this.customValidationService.noWhitespace,
-          // this.customValidationService.usernameValidator,
-        ]),
+        username: new FormControl(
+          null,
+          [Validators.required, Validators.minLength(5), this.customValidationService.noWhitespace],
+          this.customValidationService.usernameValidator.bind(this.customValidationService)
+        ),
         password: new FormControl(null, [Validators.required, this.customValidationService.patternValidator]),
         confirmPassword: new FormControl(null, Validators.required),
         firstName: new FormControl(null, [Validators.required, this.customValidationService.noWhitespace]),
@@ -80,7 +83,13 @@ export class SignupComponent implements OnInit {
       roles.push(role);
       this.signupForm.get('roles').patchValue(roles);
 
-      //post user
+      //remove whitespace
+      this.signupForm.get('username').setValue(this.signupForm.get('username').value.trim());
+      this.signupForm.get('firstName').setValue(this.signupForm.get('firstName').value.trim());
+      this.signupForm.get('lastName').setValue(this.signupForm.get('lastName').value.trim());
+      this.signupForm.get('email').setValue(this.signupForm.get('email').value.trim());
+
+      // post user
       this.userService.add(this.signupForm.value).subscribe(
         response => {
           console.log(response);
@@ -116,5 +125,13 @@ export class SignupComponent implements OnInit {
     }).then(() => {
       this.router.navigate(['user/login']);
     });
+  }
+
+  password() {
+    this.showPassword = !this.showPassword;
+  }
+
+  confirmPassword() {
+    this.showConfirmPassword = !this.showConfirmPassword;
   }
 }

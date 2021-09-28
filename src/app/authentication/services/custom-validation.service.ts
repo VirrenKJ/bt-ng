@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { SearchCriteriaObj } from 'src/app/base/models/search_criteria_obj';
 import { User } from '../common/models/user';
 import { UserService } from './user.service';
 
@@ -10,20 +9,7 @@ import { UserService } from './user.service';
 export class CustomValidationService {
   usernameList = new Array<string>();
 
-  constructor(private userService: UserService) {
-    this.userService.getList(new SearchCriteriaObj()).subscribe(
-      response => {
-        response.data.user.forEach(user => {
-          this.usernameList.push(user.username);
-        });
-        console.log(this.usernameList);
-      },
-      errorRes => {
-        console.error(errorRes.error);
-      },
-      () => {}
-    );
-  }
+  constructor(private userService: UserService) {}
 
   patternValidator(control: AbstractControl) {
     if (!control.value) {
@@ -64,17 +50,23 @@ export class CustomValidationService {
   }
 
   usernameValidator(userControl: AbstractControl) {
-    if (!userControl.value) {
-      return null;
-    }
-    if (this.validateUserName(userControl.value)) {
-      return { userNameNotAvailable: true };
-    } else {
-      return null;
-    }
-  }
-
-  validateUserName(userName: string): any {
-    return this.usernameList.indexOf(userName) > -1;
+    return new Promise(resolve => {
+      setTimeout(() => {
+        this.userService.getByUsername(userControl.value.trim()).subscribe(
+          response => {
+            console.log(response);
+            let user: User = response.data.user;
+            if (user) {
+              resolve({ usernameNotAvailable: true });
+            } else {
+              resolve(null);
+            }
+          },
+          errorRes => {
+            console.error(errorRes.error);
+          }
+        );
+      }, 1000);
+    });
   }
 }
