@@ -33,9 +33,9 @@ export class LoginComponent implements OnInit {
     // this.router.navigate(['main']);
 
     if (this.loginForm.valid) {
-      this.ngxService.startLoader('master');
       this.loginService.authenticate(this.loginForm.value).subscribe(
         (response: any) => {
+          this.ngxService.startLoader('master');
           console.log(response);
           this.loginService.setToken(response.token);
         },
