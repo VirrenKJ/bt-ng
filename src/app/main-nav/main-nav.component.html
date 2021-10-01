@@ -42,7 +42,7 @@
         <mat-icon mat-list-icon>list_alt</mat-icon>
         <span>Summary</span>
       </mat-list-item>
-      <mat-list-item routerLink="/main/manage" [routerLinkActive]="['is-active']">
+      <mat-list-item routerLink="/main/manage" [routerLinkActive]="['is-active']" *ngIf="userRole === 'Admin' || userRole === 'Manager'">
         <mat-icon mat-list-icon>admin_panel_settings</mat-icon>
         <span>Manage</span>
       </mat-list-item>

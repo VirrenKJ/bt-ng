@@ -10,9 +10,15 @@ import { LoginService } from '../../authentication/services/login.service';
   styleUrls: ['./toolbar.component.css'],
 })
 export class ToolbarComponent implements OnInit {
+  nameOfUser: string = '';
+
   constructor(private loginService: LoginService, private router: Router, private ngxService: NgxUiLoaderService) {}
 
   ngOnInit(): void {}
+
+  afterLogin() {
+    this.nameOfUser = this.loginService.getUser()?.firstName;
+  }
 
   logout() {
     Swal.fire({

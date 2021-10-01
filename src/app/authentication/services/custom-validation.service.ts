@@ -66,7 +66,7 @@ export class CustomValidationService {
             console.error(errorRes.error);
           }
         );
-      }, 1000);
+      });
     });
   }
 }

@@ -57,6 +57,6 @@ export class LoginService {
 
   public getUserRole() {
     let user: User = this.getUser();
-    return user.roles[0].roleName;
+    return user?.roles[0]?.roleName;
   }
 }
