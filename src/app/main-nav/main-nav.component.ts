@@ -20,6 +20,8 @@ export class MainNavComponent implements OnInit {
   constructor(private breakpointObserver: BreakpointObserver, private loginService: LoginService) {}
 
   ngOnInit() {
-    this.userRole = this.loginService.getUserRole();
+    setTimeout(() => {
+      this.userRole = this.loginService.getUserRole();
+    });
   }
 }

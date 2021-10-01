@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { LoginService } from '../authentication/services/login.service';
 
 @Component({
   selector: 'app-manage',
@@ -28,9 +29,15 @@ export class ManageComponent implements OnInit, AfterViewInit {
   setOpenCategoryModal: any;
   setOpenProfileModal: any;
 
-  constructor() {}
+  adminRole: boolean = false;
 
-  ngOnInit(): void {}
+  constructor(private loginService: LoginService) {}
+
+  ngOnInit(): void {
+    if (this.loginService.getUserRole() == 'Admin') {
+      this.adminRole = true;
+    }
+  }
 
   ngAfterViewInit() {
     this.userDataSource.paginator = this.userPaginator;

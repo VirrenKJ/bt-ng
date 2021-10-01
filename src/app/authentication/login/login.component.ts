@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import * as EventEmitter from 'events';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { CustomValidationService } from '../services/custom-validation.service';
 import { LoginService } from '../services/login.service';
@@ -14,7 +13,6 @@ import { LoginService } from '../services/login.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  setNameOfUserEvent = new EventEmitter();
 
   constructor(
     private customValidationService: CustomValidationService,
@@ -47,7 +45,6 @@ export class LoginComponent implements OnInit {
         () => {
           this.getCurrentUser();
           this.router.navigate(['main']);
-          this.setNameOfUserEvent.emit(null);
         }
       );
     } else {

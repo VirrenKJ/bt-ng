@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import Swal from 'sweetalert2';
@@ -14,7 +14,11 @@ export class ToolbarComponent implements OnInit {
 
   constructor(private loginService: LoginService, private router: Router, private ngxService: NgxUiLoaderService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    setTimeout(() => {
+      this.afterLogin();
+    });
+  }
 
   afterLogin() {
     this.nameOfUser = this.loginService.getUser()?.firstName;
