@@ -6,6 +6,7 @@ import { SignupComponent } from './authentication/signup/signup.component';
 import { AdminGuard } from './base/services/admin.guard';
 import { AuthGuard } from './base/services/auth.guard';
 import { LoggedInGuard } from './base/services/logged-in.guard';
+import { ViewerGuard } from './base/services/viewer.guard';
 import { HomeLayoutComponent } from './home-layout/home-layout.component';
 import { HomeComponent } from './home/home.component';
 import { AddIssueComponent } from './issue/add-issue/add-issue.component';
@@ -45,9 +46,9 @@ const routes: Routes = [
         redirectTo: 'home',
         pathMatch: 'full',
       },
-      { path: 'home', component: HomeComponent },
+      { path: 'home', component: HomeComponent, canActivate: [ViewerGuard] },
       { path: 'view-issue', component: ViewIssueComponent },
-      { path: 'add-issue', component: AddIssueComponent },
+      { path: 'add-issue', component: AddIssueComponent, canActivate: [ViewerGuard] },
       { path: 'summary', component: SummaryComponent },
       { path: 'manage', component: ManageComponent, pathMatch: 'full', canActivate: [AdminGuard] },
     ],

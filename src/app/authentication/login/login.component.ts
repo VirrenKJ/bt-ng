@@ -36,33 +36,19 @@ export class LoginComponent implements OnInit {
       this.loginService.authenticate(this.loginForm.value).subscribe(
         (response: any) => {
           console.log(response);
-          this.loginService.setToken(response.token);
+          this.loginService.setTokenAndUser(response);
         },
         errorRes => {
           console.error(errorRes);
           this.snackBarPopup(errorRes.error.message);
         },
         () => {
-          this.getCurrentUser();
           this.router.navigate(['main']);
         }
       );
     } else {
       this.snackBarPopup('Invalid Credentials');
     }
-  }
-
-  getCurrentUser() {
-    this.loginService.getCurrentUser().subscribe(
-      (response: any) => {
-        this.loginService.setUser(response);
-        console.log(response);
-      },
-      errorRes => {
-        console.error(errorRes.error);
-        this.snackBarPopup(errorRes.error.message);
-      }
-    );
   }
 
   snackBarPopup(message: string) {

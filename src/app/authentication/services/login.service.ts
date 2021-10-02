@@ -17,14 +17,17 @@ export class LoginService {
     return this.httpClient.get(`${baseUrl}/current-user`);
   }
 
-  public setToken(token) {
-    localStorage.setItem('token', token);
+  public setTokenAndUser(response) {
+    localStorage.setItem('token', response.token);
+    this.setUser(response.user);
     return true;
   }
 
   public isLoggedIn() {
-    let token = localStorage.getItem('token');
-    if (token === undefined || token === null || token === '') {
+    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
+    if (token === undefined || token === null || token === '' || user === undefined || user === null || user === '') {
+      this.logout();
       return false;
     } else {
       return true;
