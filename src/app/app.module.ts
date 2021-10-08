@@ -43,6 +43,7 @@ import { authInterceptorProvider } from './base/services/auth.interceptor';
 import { LoginLayoutComponent } from './authentication/login-layout/login-layout.component';
 import { HomeLayoutComponent } from './home-layout/home-layout.component';
 import { NgxUiLoaderConfig, NgxUiLoaderHttpModule, NgxUiLoaderModule, SPINNER, POSITION, NgxUiLoaderRouterModule } from 'ngx-ui-loader';
+import { CompanyListingComponent } from './company-listing/company-listing.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: '#c33c5b',
@@ -93,6 +94,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     ToolbarComponent,
     LoginLayoutComponent,
     HomeLayoutComponent,
+    CompanyListingComponent,
   ],
 
   imports: [
