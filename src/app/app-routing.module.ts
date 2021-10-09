@@ -41,6 +41,7 @@ const routes: Routes = [
 	{
 		path: 'companies',
 		component: CompanyListingComponent,
+		canActivate: [AuthGuard],
 		// children: [
 		// 	{
 		// 		path: '',
