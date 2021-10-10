@@ -45,6 +45,7 @@ import { HomeLayoutComponent } from './home-layout/home-layout.component';
 import { NgxUiLoaderConfig, NgxUiLoaderHttpModule, NgxUiLoaderModule, SPINNER, POSITION, NgxUiLoaderRouterModule } from 'ngx-ui-loader';
 import { CompanyListingComponent } from './company-listing/company-listing.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NewCompanyComponent } from './company-listing/new-company/new-company.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 	bgsColor: '#c33c5b',
@@ -96,6 +97,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 		LoginLayoutComponent,
 		HomeLayoutComponent,
 		CompanyListingComponent,
+		NewCompanyComponent,
 	],
 
 	imports: [

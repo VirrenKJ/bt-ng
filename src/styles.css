@@ -2,13 +2,36 @@
 
 html,
 body {
-  height: 100%;
-}
-body {
-  margin: 0;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
-  background-color: #142127 !important;
+	height: 100%;
+	margin: 0;
+	font-family: Roboto, 'Helvetica Neue', sans-serif;
+	background-color: #1a1d20 !important;
 }
 .spacer {
-  flex: 1 1 auto;
+	flex: 1 1 auto;
+}
+mat-sidenav-container {
+	background-color: #1a1d20 !important;
+}
+.modal-content {
+	background-color: #1f2327 !important;
+	border: 0px !important;
+	color: white !important;
+	border-radius: 0rem !important;
+}
+mat-card {
+	background: #1f2327 !important;
+}
+table {
+	width: 100%;
+	background: #212529 !important;
+}
+mat-paginator {
+	background: #1f2327 !important;
+}
+
+/* To show mat select above Modal. */
+.cdk-overlay-container,
+.cdk-overlay-pane {
+	z-index: 9999 !important;
 }
