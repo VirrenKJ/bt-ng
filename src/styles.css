@@ -35,3 +35,9 @@ mat-paginator {
 .cdk-overlay-pane {
 	z-index: 9999 !important;
 }
+.business-icon {
+	cursor: pointer;
+	font-size: 95px;
+	margin-top: 9px;
+	margin-left: 6px;
+}

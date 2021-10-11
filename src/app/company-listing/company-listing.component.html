@@ -13,7 +13,7 @@
 			<li><a class="dropdown-item" href="#">Profile</a></li>
 			<li><a class="dropdown-item" href="#">Subscription</a></li>
 			<li><hr class="dropdown-divider" /></li>
-			<li><a class="dropdown-item" href="#">Logout</a></li>
+			<li><a class="dropdown-item" [routerLink]="'/user'" (click)="logout()">Logout</a></li>
 		</ul>
 	</div>
 </mat-toolbar>
@@ -53,12 +53,32 @@
 						</div>
 					</mat-card>
 					<div class="card text-white bg-dark mt-2">
-						<div class="card-header">Header</div>
-						<div class="card-body">This is some text within a card body.</div>
+						<div class="row g-0">
+							<div class="col-md-1">
+								<mat-icon class="material-icons business-icon">business</mat-icon>
+							</div>
+							<div class="col-md-11">
+								<div class="card-header">Business Name</div>
+								<div class="card-body">
+									<h4 class="card-title m-0">virendra.jarwal@gmail.com | 9876543210</h4>
+									<p class="card-text"><small class="text-muted">Industry type: Art, writing and Photography</small></p>
+								</div>
+							</div>
+						</div>
 					</div>
 					<div class="card text-white bg-dark mt-2">
-						<div class="card-header">Header</div>
-						<div class="card-body">This is some text within a card body.</div>
+						<div class="row g-0">
+							<div class="col-md-1">
+								<mat-icon class="material-icons business-icon">business</mat-icon>
+							</div>
+							<div class="col-md-11">
+								<div class="card-header">Business Name</div>
+								<div class="card-body">
+									<h4 class="card-title m-0">virendra.jarwal@gmail.com | 9876543210</h4>
+									<p class="card-text"><small class="text-muted">Industry type: Art, writing and Photography</small></p>
+								</div>
+							</div>
+						</div>
 					</div>
 					<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements" #businessPaginator>
 					</mat-paginator>
@@ -86,15 +106,15 @@
 						</div>
 					</mat-card>
 					<div class="card text-white bg-dark mt-2">
-						<div class="card-header">Header</div>
+						<div class="card-header">Company Name</div>
 						<div class="card-body">This is some text within a card body.</div>
 					</div>
 					<div class="card text-white bg-dark mt-2">
-						<div class="card-header">Header</div>
+						<div class="card-header">Company Name</div>
 						<div class="card-body">This is some text within a card body.</div>
 					</div>
 					<div class="card text-white bg-dark mt-2">
-						<div class="card-header">Header</div>
+						<div class="card-header">Company Name</div>
 						<div class="card-body">This is some text within a card body.</div>
 					</div>
 					<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements" #companyPaginator>

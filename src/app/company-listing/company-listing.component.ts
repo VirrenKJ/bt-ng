@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { LoginService } from '../authentication/services/login.service';
 
 @Component({
 	selector: 'app-company-listing',
@@ -17,7 +18,7 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 	setOpenCompanyModal: any;
 	faUser = faUser;
 
-	constructor() {}
+	constructor(private loginService: LoginService) {}
 
 	ngOnInit(): void {}
 
@@ -35,6 +36,10 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 		this.setOpenCompanyModal = {
 			companyId: companyId,
 		};
+	}
+
+	logout() {
+		this.loginService.logout();
 	}
 }
 
