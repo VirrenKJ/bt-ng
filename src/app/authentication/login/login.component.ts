@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { CustomValidationService } from '../services/custom-validation.service';
 import { LoginService } from '../services/login.service';
 
@@ -29,32 +28,32 @@ export class LoginComponent implements OnInit {
 	}
 
 	onSubmit() {
-		this.loginService.setTokenAndUser({
-			token: 'temporaryLogin',
-			user: {
-				roles: {
-					roleName: 'Admin',
+		// this.loginService.setTokenAndUser({
+		// 	token: 'temporaryLogin',
+		// 	user: {
+		// 		roles: {
+		// 			roleName: 'Admin',
+		// 		},
+		// 	},
+		// });
+		// this.router.navigate(['companies']);
+		if (this.loginForm.valid) {
+			this.loginService.authenticate(this.loginForm.value).subscribe(
+				(response: any) => {
+					console.log(response);
+					this.loginService.setTokenAndUser(response);
 				},
-			},
-		});
-		this.router.navigate(['companies']);
-		// if (this.loginForm.valid) {
-		// 	this.loginService.authenticate(this.loginForm.value).subscribe(
-		// 		(response: any) => {
-		// 			console.log(response);
-		// 			this.loginService.setTokenAndUser(response);
-		// 		},
-		// 		errorRes => {
-		// 			console.error(errorRes);
-		// 			this.snackBarPopup(errorRes.error.message);
-		// 		},
-		// 		() => {
-		// 			// this.router.navigate(['main']);
-		// 		}
-		// 	);
-		// } else {
-		// 	this.snackBarPopup('Invalid Credentials');
-		// }
+				errorRes => {
+					console.error(errorRes);
+					this.snackBarPopup(errorRes.error.message);
+				},
+				() => {
+					this.router.navigate(['companies']);
+				}
+			);
+		} else {
+			this.snackBarPopup('Invalid Credentials');
+		}
 	}
 
 	snackBarPopup(message: string) {

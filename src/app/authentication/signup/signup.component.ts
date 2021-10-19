@@ -1,12 +1,10 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { SearchCriteriaObj } from 'src/app/base/models/search_criteria_obj';
 import Swal from 'sweetalert2';
 import { Role } from '../common/models/role';
 import { CustomValidationService } from '../services/custom-validation.service';
-import { RoleService } from '../services/role.service';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -25,7 +23,6 @@ export class SignupComponent implements OnInit {
 
 	constructor(
 		private userService: UserService,
-		private roleService: RoleService,
 		private _snackBar: MatSnackBar,
 		private customValidationService: CustomValidationService,
 		private router: Router
@@ -33,7 +30,6 @@ export class SignupComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.init();
-		this.getRoles();
 	}
 
 	init() {
@@ -50,7 +46,7 @@ export class SignupComponent implements OnInit {
 				lastName: new FormControl(null, [Validators.required, this.customValidationService.noWhitespace]),
 				email: new FormControl(null, [Validators.required, Validators.email]),
 				enabled: new FormControl(true),
-				roles: new FormControl(null, Validators.required),
+				roles: new FormControl(),
 			},
 			{
 				validators: this.customValidationService.MatchPassword('password', 'confirmPassword'),
@@ -61,39 +57,12 @@ export class SignupComponent implements OnInit {
 		});
 	}
 
-	getRoles() {
-		this.roles = [
-			{
-				roleId: 1,
-				roleName: 'Admin',
-				description: '',
-				deleteFlag: false,
-			},
-			{
-				roleId: 2,
-				roleName: 'Developer',
-				description: '',
-				deleteFlag: false,
-			},
-		];
-		// this.roleService.getList(new SearchCriteriaObj()).subscribe(
-		// 	response => {
-		// 		console.log(response);
-		// 		this.roles = response.data.role;
-		// 		console.log(this.roles);
-		// 	},
-		// 	error => {
-		// 		console.log(error);
-		// 	}
-		// );
-	}
-
 	onSubmit() {
 		if (this.signupForm.valid) {
 			//add role
 			let roles = new Array<Role>();
 			let role = new Role();
-			role.roleId = this.signupForm.get('roles').value;
+			role.roleId = 1;
 			roles.push(role);
 			this.signupForm.get('roles').patchValue(roles);
 
