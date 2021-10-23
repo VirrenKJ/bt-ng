@@ -46,6 +46,7 @@ import { NgxUiLoaderConfig, NgxUiLoaderHttpModule, NgxUiLoaderModule, SPINNER, P
 import { CompanyListingComponent } from './company-listing/company-listing.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NewCompanyComponent } from './company-listing/new-company/new-company.component';
+import { TenantInterceptor, tenantInterceptorProvider } from './base/services/tenant.interceptor';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 	bgsColor: '#c33c5b',
@@ -136,7 +137,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 		}),
 	],
 	exports: [MatButtonModule, MatToolbarModule, MatSidenavModule, MatIconModule, MatListModule, MatMenuModule, MatSelectModule, MatFormFieldModule],
-	providers: [authInterceptorProvider],
+	providers: [authInterceptorProvider, tenantInterceptorProvider],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}
