@@ -1,6 +1,12 @@
 import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormGroupDirective } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { pipe } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { CustomValidationService } from 'src/app/authentication/services/custom-validation.service';
+import Swal from 'sweetalert2';
+import { CompanyService } from '../services/company.service';
 
 @Component({
 	selector: 'app-new-company',
@@ -8,42 +14,109 @@ import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 	styleUrls: ['./new-company.component.css'],
 })
 export class NewCompanyComponent implements OnInit {
+	@ViewChild(FormGroupDirective) companyFormDirective: FormGroupDirective;
 	@ViewChild('addCompany') addCompany: TemplateRef<any>;
 
-	constructor(config: NgbModalConfig, private modalService: NgbModal) {
-		config.backdrop = 'static';
-		config.keyboard = false;
+	companyForm = new FormGroup({
+		userId: new FormControl(),
+		name: new FormControl(null, [Validators.required, this.customValidationService.noWhitespace]),
+		email: new FormControl(null, [Validators.required, Validators.email]),
+		contactNumber: new FormControl(null, Validators.required),
+		industryType: new FormControl(null, Validators.required),
+		pinCode: new FormControl(null, Validators.required),
+		state: new FormControl(null, Validators.required),
+		city: new FormControl(null, [Validators.required, this.customValidationService.noWhitespace]),
+	});
+
+	constructor(
+		private companyService: CompanyService,
+		private config: NgbModalConfig,
+		private modalService: NgbModal,
+		private customValidationService: CustomValidationService,
+		private _snackBar: MatSnackBar
+	) {
+		this.config.backdrop = 'static';
+		this.config.keyboard = false;
 	}
 
-	ngOnInit(): void {}
+	ngOnInit(): void {
+		this.removeWhitespace();
+	}
 
 	@Input()
 	set openCompanyModal(data: any) {
 		if (data && !data.companyId) {
-			this.openModal(this.addCompany);
+			this.openModal();
 		}
 		if (data && data.companyId) {
-			this.openModal(this.addCompany, data.companyId);
+			this.openModal(data.companyId);
 		}
 	}
 
-	openModal(template: TemplateRef<any>, companyId = null) {
+	openModal(companyId = null) {
 		setTimeout(() => {
-			this.modalService.open(template, { size: 'lg' });
+			// this.companyFormDirective.resetForm();
+			this.modalService.open(this.addCompany, { size: 'lg' });
 		});
 	}
 
-	companyForm = new FormGroup({
-		firstName: new FormControl(),
-		lastName: new FormControl(),
-		email: new FormControl(),
-		gender: new FormControl(),
-		isMarried: new FormControl(),
-		country: new FormControl(),
-	});
-
 	onSubmit() {
-		console.log('Submitted!');
+		if (this.companyForm.valid) {
+			this.companyService.add(this.companyForm.value).subscribe(
+				response => {
+					console.log(response);
+					this.confirmationPopup();
+				},
+				errorRes => {
+					console.error(errorRes);
+					this.snackBarPopup(errorRes.error.message);
+				}
+			);
+		} else {
+			this.snackBarPopup('Invalid Form');
+		}
+	}
+
+	removeWhitespace() {
+		this.companyForm
+			.get('name')
+			.valueChanges.pipe(
+				map(value => {
+					if (value != value.trimStart()) {
+						return this.companyForm.get('name').setValue(value.trimStart());
+					}
+				})
+			)
+			.subscribe();
+		this.companyForm.get('city').valueChanges.subscribe(value => {
+			if (value != value.trimStart()) {
+				this.companyForm.get('city').setValue(value.trimStart());
+			}
+		});
+		// this.companyForm.get('email').valueChanges.subscribe(value => {
+		// 	if (value != value.trimStart()) {
+		// 		this.companyForm.get('email').setValue(value.trimStart());
+		// 	}
+		// });
+	}
+
+	confirmationPopup() {
+		Swal.fire({
+			icon: 'success',
+			title: 'Company Registered',
+			showConfirmButton: false,
+			timer: 2000,
+		}).then(() => {
+			// this.router.navigate(['user/login']);
+		});
+	}
+
+	snackBarPopup(message: string) {
+		this._snackBar.open(message, 'OK', {
+			duration: 3000,
+			horizontalPosition: 'center',
+			verticalPosition: 'top',
+		});
 	}
 
 	industryType = [

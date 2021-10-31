@@ -9,9 +9,9 @@ export class TenantInterceptor implements HttpInterceptor {
 
 	intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 		let authReq = request;
-		const dbName = this.companyService.getTenant();
-		if (dbName != null) {
-			authReq = authReq.clone({ setHeaders: { 'x-tenant': dbName } });
+		const dbUUID = this.companyService.getTenant();
+		if (dbUUID != null) {
+			authReq = authReq.clone({ setHeaders: { 'x-tenant': dbUUID } });
 		}
 		return next.handle(request);
 	}

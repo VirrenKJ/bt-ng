@@ -1,5 +1,7 @@
 export class Company {
 	public id: number;
+	public companyDbDetailId: number;
+	public userId: number;
 	public name: string;
 	public dbName: string;
 	public dbUuid: string;

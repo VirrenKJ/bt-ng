@@ -7,19 +7,19 @@
 					<form action="" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
 						<mat-form-field appearance="outline">
 							<mat-label>First name</mat-label>
-							<input type="text" formControlName="firstName" autocomplete="name" matInput placeholder="Enter here!" required />
+							<input type="text" formControlName="firstName" autocomplete="name" matInput placeholder="Enter here!" />
 							<mat-hint *ngIf="!signupForm.get('firstName').valid && signupForm.get('firstName').touched">Please enter a valid firstName!!</mat-hint>
 						</mat-form-field>
 
 						<mat-form-field appearance="outline">
 							<mat-label>Last name</mat-label>
-							<input type="text" formControlName="lastName" autocomplete="name" matInput placeholder="Enter here!" required />
+							<input type="text" formControlName="lastName" autocomplete="name" matInput placeholder="Enter here!" />
 							<mat-hint *ngIf="!signupForm.get('lastName').valid && signupForm.get('lastName').touched">Please enter a valid lastName!!</mat-hint>
 						</mat-form-field>
 
 						<mat-form-field appearance="outline" matTooltip="Must be Unique!" matTooltipPosition="after">
 							<mat-label>Username</mat-label>
-							<input type="text" formControlName="username" autocomplete="username" matInput placeholder="Enter here!" required />
+							<input type="text" formControlName="username" autocomplete="username" matInput placeholder="Enter here!" />
 							<mat-hint
 								*ngIf="
 									signupForm.get('username').touched &&
@@ -42,7 +42,6 @@
 								autocomplete="new-password"
 								matInput
 								placeholder="Enter here!"
-								required
 							/>
 							<mat-icon matSuffix style="cursor: pointer" (click)="password()">remove_red_eye</mat-icon>
 							<mat-hint *ngIf="signupForm.get('password').errors?.required && signupForm.get('password').touched">Password is required</mat-hint>
@@ -59,7 +58,6 @@
 								autocomplete="new-password"
 								matInput
 								placeholder="Enter here!"
-								required
 							/>
 							<mat-icon matSuffix style="cursor: pointer" (click)="confirmPassword()">remove_red_eye</mat-icon>
 							<mat-hint *ngIf="signupForm.get('confirmPassword').errors?.required && signupForm.get('confirmPassword').touched"
@@ -70,7 +68,7 @@
 
 						<mat-form-field appearance="outline">
 							<mat-label>Email</mat-label>
-							<input type="email" formControlName="email" autocomplete="email" matInput placeholder="Enter here!" required />
+							<input type="email" formControlName="email" autocomplete="email" matInput placeholder="Enter here!" />
 							<mat-hint *ngIf="!signupForm.get('email').valid && signupForm.get('email').touched">Please enter a valid email!!</mat-hint>
 						</mat-form-field>
 
