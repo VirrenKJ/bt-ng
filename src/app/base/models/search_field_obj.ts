@@ -1,1 +1,4 @@
-export class SearchFieldObj {}
+export class SearchFieldObj {
+	public searchFor: string;
+	public id: number;
+}

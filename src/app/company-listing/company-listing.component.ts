@@ -1,8 +1,13 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { LoginService } from '../authentication/services/login.service';
+import { SearchCriteriaObj } from '../base/models/search_criteria_obj';
+import { SearchFieldObj } from '../base/models/search_field_obj';
+import { Company } from './models/company';
+import { CompanyService } from './services/company.service';
 
 @Component({
 	selector: 'app-company-listing',
@@ -11,6 +16,13 @@ import { LoginService } from '../authentication/services/login.service';
 })
 export class CompanyListingComponent implements OnInit, AfterViewInit {
 	@ViewChild('userPaginator') userPaginator: MatPaginator;
+	@ViewChild('businessPaginator') businessPaginator: MatPaginator;
+	businessList = new Array<Company>();
+	searchCriteriaObjBusiness = new SearchCriteriaObj();
+
+	businessColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+	businessDataSource = new MatTableDataSource<Company>(this.businessList);
+
 	userColumns: string[] = ['position', 'name', 'weight', 'symbol'];
 	userDataSource = new MatTableDataSource<Users>(users);
 
@@ -18,12 +30,41 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 	setOpenCompanyModal: any;
 	faUser = faUser;
 
-	constructor(private loginService: LoginService) {}
+	perPageBusiness: number;
+	// totalBusiness: number;
 
-	ngOnInit(): void {}
+	constructor(private loginService: LoginService, private companyService: CompanyService, private _snackBar: MatSnackBar) {}
+
+	ngOnInit(): void {
+		this.perPageBusiness = 10;
+		this.searchCriteriaObjBusiness.page = 1;
+		this.searchCriteriaObjBusiness.limit = 10;
+		this.getCompanyBusinessList();
+	}
 
 	ngAfterViewInit() {
 		this.userDataSource.paginator = this.userPaginator;
+		this.businessDataSource.paginator = this.businessPaginator;
+		// this.businessPaginator.pageSize = this.perPageBusiness;
+	}
+
+	getCompanyBusinessList() {
+		this.searchCriteriaObjBusiness.searchFieldsObj = new SearchFieldObj();
+		this.searchCriteriaObjBusiness.searchFieldsObj.id = this.loginService.getUser().id;
+		this.companyService.getBusinessList(this.searchCriteriaObjBusiness).subscribe(
+			response => {
+				console.log(response);
+				if (response.data.company.list) {
+					this.businessList = response.data.company.list;
+					this.businessDataSource = new MatTableDataSource<Company>(this.businessList);
+					this.businessPaginator.length = response.data.company.totalRowCount;
+				}
+			},
+			errorRes => {
+				console.error(errorRes);
+				this.snackBarPopup(errorRes.error.message);
+			}
+		);
 	}
 
 	openUserModal(userId) {
@@ -40,6 +81,14 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 
 	logout() {
 		this.loginService.logout();
+	}
+
+	snackBarPopup(message: string) {
+		this._snackBar.open(message, 'OK', {
+			duration: 3000,
+			horizontalPosition: 'center',
+			verticalPosition: 'top',
+		});
 	}
 }
 
