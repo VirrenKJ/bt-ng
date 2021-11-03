@@ -52,39 +52,27 @@
 							</div>
 						</div>
 					</mat-card>
-					<div class="card text-white bg-dark mt-2">
+					<div class="card text-white bg-dark mt-2" *ngFor="let business of businessList; let i = index">
 						<div class="row g-0">
 							<div class="col-md-1">
 								<mat-icon class="material-icons business-icon">business</mat-icon>
 							</div>
 							<div class="col-md-11">
-								<div class="card-header">Business Name</div>
+								<div class="card-header">{{ business.name }}</div>
 								<div class="card-body">
-									<h4 class="card-title m-0">virendra.jarwal@gmail.com | 9876543210</h4>
-									<p class="card-text"><small class="text-muted">Industry type: Art, writing and Photography</small></p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="card text-white bg-dark mt-2">
-						<div class="row g-0">
-							<div class="col-md-1">
-								<mat-icon class="material-icons business-icon">business</mat-icon>
-							</div>
-							<div class="col-md-11">
-								<div class="card-header">Business Name</div>
-								<div class="card-body">
-									<h4 class="card-title m-0">virendra.jarwal@gmail.com | 9876543210</h4>
-									<p class="card-text"><small class="text-muted">Industry type: Art, writing and Photography</small></p>
+									<h4 class="card-title m-0">{{ business.email }} | {{ business.contactNumber }}</h4>
+									<p class="card-text">
+										<small class="text-muted">{{ business.industryType }}</small>
+									</p>
 								</div>
 							</div>
 						</div>
 					</div>
 					<mat-paginator
-						[hidden]="businessPaginator.length <= 0"
+						[hidden]="businessList.length <= 0"
+						(page)="paginationBusiness($event)"
 						[pageSizeOptions]="[5, 10, 20]"
 						showFirstLastButtons
-						aria-label="Select page of periodic elements"
 						#businessPaginator
 					>
 					</mat-paginator>

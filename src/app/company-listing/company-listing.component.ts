@@ -20,9 +20,6 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 	businessList = new Array<Company>();
 	searchCriteriaObjBusiness = new SearchCriteriaObj();
 
-	businessColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-	businessDataSource = new MatTableDataSource<Company>(this.businessList);
-
 	userColumns: string[] = ['position', 'name', 'weight', 'symbol'];
 	userDataSource = new MatTableDataSource<Users>(users);
 
@@ -30,21 +27,19 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 	setOpenCompanyModal: any;
 	faUser = faUser;
 
-	perPageBusiness: number;
-	// totalBusiness: number;
+	// perPageBusiness: number;
 
 	constructor(private loginService: LoginService, private companyService: CompanyService, private _snackBar: MatSnackBar) {}
 
 	ngOnInit(): void {
-		this.perPageBusiness = 10;
+		// this.perPageBusiness = 5;
 		this.searchCriteriaObjBusiness.page = 1;
-		this.searchCriteriaObjBusiness.limit = 10;
+		this.searchCriteriaObjBusiness.limit = 5;
 		this.getCompanyBusinessList();
 	}
 
 	ngAfterViewInit() {
 		this.userDataSource.paginator = this.userPaginator;
-		this.businessDataSource.paginator = this.businessPaginator;
 		// this.businessPaginator.pageSize = this.perPageBusiness;
 	}
 
@@ -56,7 +51,6 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 				console.log(response);
 				if (response.data.company.list) {
 					this.businessList = response.data.company.list;
-					this.businessDataSource = new MatTableDataSource<Company>(this.businessList);
 					this.businessPaginator.length = response.data.company.totalRowCount;
 				}
 			},
@@ -65,6 +59,12 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 				this.snackBarPopup(errorRes.error.message);
 			}
 		);
+	}
+
+	paginationBusiness(event) {
+		this.searchCriteriaObjBusiness.page = event.pageIndex + 1;
+		this.searchCriteriaObjBusiness.limit = event.pageSize;
+		this.getCompanyBusinessList();
 	}
 
 	openUserModal(userId) {
