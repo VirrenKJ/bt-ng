@@ -47,6 +47,7 @@ import { CompanyListingComponent } from './company-listing/company-listing.compo
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NewCompanyComponent } from './company-listing/new-company/new-company.component';
 import { TenantInterceptor, tenantInterceptorProvider } from './base/services/tenant.interceptor';
+import { EnlistModalComponent } from './company-listing/enlist-modal/enlist-modal.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 	bgsColor: '#c33c5b',
@@ -99,6 +100,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 		HomeLayoutComponent,
 		CompanyListingComponent,
 		NewCompanyComponent,
+		EnlistModalComponent,
 	],
 
 	imports: [

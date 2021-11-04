@@ -1,0 +1,42 @@
+<ng-template #enlistEmployee let-modal>
+	<div class="modal-content">
+		<div class="modal-header">
+			<h1 class="modal-title">Add Company</h1>
+			<button type="button" class="btn-close btn-close-white" (click)="modal.dismiss()"></button>
+		</div>
+		<div class="modal-body">
+			<div class="container">
+				<form [formGroup]="enlistForm">
+					<div class="form-group">
+						<div class="row mt-3">
+							<div class="col-md-6">
+								<mat-form-field class="full-width" appearance="outline">
+									<mat-label>Companies</mat-label>
+									<mat-select formControlName="company" placeholder="Choose...">
+										<mat-option>None</mat-option>
+										<mat-option [value]="company" *ngFor="let company of companies; let i = index">{{ company }}</mat-option>
+									</mat-select>
+									<mat-error> Select a <strong>Company</strong>. </mat-error>
+								</mat-form-field>
+							</div>
+							<div class="col-md-6" formGroupName="user">
+								<mat-form-field class="full-width" appearance="outline">
+									<mat-label>Users</mat-label>
+									<mat-select formControlName="id" placeholder="Choose...">
+										<mat-option>None</mat-option>
+										<mat-option [value]="user" *ngFor="let user of users; let i = index">{{ user }}</mat-option>
+									</mat-select>
+									<mat-error> Select an <strong>User</strong>. </mat-error>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-primary" (click)="onSubmit()">Submit</button>
+			<button type="button" class="btn btn-primary" (click)="modal.close()">Cancel</button>
+		</div>
+	</div>
+</ng-template>

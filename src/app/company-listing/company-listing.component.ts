@@ -25,6 +25,7 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 
 	setOpenUserModal: any;
 	setOpenCompanyModal: any;
+	setOpenEnlistModal: any;
 	faUser = faUser;
 
 	// perPageBusiness: number;
@@ -77,6 +78,10 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 		this.setOpenCompanyModal = {
 			companyId: companyId,
 		};
+	}
+
+	openEnlistingModal() {
+		this.setOpenEnlistModal = {};
 	}
 
 	logout() {

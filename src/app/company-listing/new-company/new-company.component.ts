@@ -107,6 +107,7 @@ export class NewCompanyComponent implements OnInit {
 			showConfirmButton: false,
 			timer: 2000,
 		}).then(() => {
+			this.modalService.dismissAll();
 			// this.router.navigate(['user/login']);
 		});
 	}
