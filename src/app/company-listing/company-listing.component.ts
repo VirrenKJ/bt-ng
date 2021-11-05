@@ -47,7 +47,7 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 	getCompanyBusinessList() {
 		this.searchCriteriaObjBusiness.searchFieldsObj = new SearchFieldObj();
 		this.searchCriteriaObjBusiness.searchFieldsObj.id = this.loginService.getUser().id;
-		this.companyService.getBusinessList(this.searchCriteriaObjBusiness).subscribe(
+		this.companyService.getList(this.searchCriteriaObjBusiness).subscribe(
 			response => {
 				console.log(response);
 				if (response.data.company.list) {

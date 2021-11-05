@@ -32,10 +32,6 @@ export class CompanyService {
 		return this.httpClient.post(`${baseUrl}/company/list`, data);
 	}
 
-	public getBusinessList(data: any): Observable<any> {
-		return this.httpClient.post(`${baseUrl}/company/business-list`, data);
-	}
-
 	public getById(id: number): Observable<any> {
 		return this.httpClient.get(`${baseUrl}/company/${id}`);
 	}

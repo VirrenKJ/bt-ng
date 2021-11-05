@@ -19,7 +19,7 @@
 </mat-toolbar>
 
 <app-enlist-modal [openEnlistingModal]="setOpenEnlistModal"></app-enlist-modal>
-<app-new-company [openCompanyModal]="setOpenCompanyModal"></app-new-company>
+<app-new-company [openCompanyModal]="setOpenCompanyModal" (reloadCompanies)="getCompanyBusinessList()"></app-new-company>
 
 <div class="body">
 	<div class="container p-3">

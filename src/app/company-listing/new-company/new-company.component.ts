@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormGroupDirective } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -16,6 +16,7 @@ import { CompanyService } from '../services/company.service';
 export class NewCompanyComponent implements OnInit {
 	@ViewChild(FormGroupDirective) companyFormDirective: FormGroupDirective;
 	@ViewChild('addCompany') addCompany: TemplateRef<any>;
+	@Output() reloadCompanies = new EventEmitter();
 
 	companyForm = new FormGroup({
 		userId: new FormControl(),
@@ -107,6 +108,7 @@ export class NewCompanyComponent implements OnInit {
 			showConfirmButton: false,
 			timer: 2000,
 		}).then(() => {
+			this.reloadCompanies.emit();
 			this.modalService.dismissAll();
 			// this.router.navigate(['user/login']);
 		});

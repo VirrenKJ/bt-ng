@@ -14,7 +14,7 @@
 									<mat-label>Companies</mat-label>
 									<mat-select formControlName="company" placeholder="Choose...">
 										<mat-option>None</mat-option>
-										<mat-option [value]="company" *ngFor="let company of companies; let i = index">{{ company }}</mat-option>
+										<mat-option [value]="company" *ngFor="let company of companies; let i = index">{{ company.name }}</mat-option>
 									</mat-select>
 									<mat-error> Select a <strong>Company</strong>. </mat-error>
 								</mat-form-field>
