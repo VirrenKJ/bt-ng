@@ -19,13 +19,24 @@
 									<mat-error> Select a <strong>Company</strong>. </mat-error>
 								</mat-form-field>
 							</div>
-							<div class="col-md-6" formGroupName="user">
+							<div class="col-md-6">
 								<mat-form-field class="full-width" appearance="outline">
 									<mat-label>Users</mat-label>
-									<mat-select formControlName="id" placeholder="Choose...">
-										<mat-option>None</mat-option>
-										<mat-option [value]="user" *ngFor="let user of users; let i = index">{{ user }}</mat-option>
-									</mat-select>
+									<input
+										matInput
+										type="text"
+										placeholder="Username/Email"
+										(input)="getUsers()"
+										(click)="getUsers()"
+										[(ngModel)]="user"
+										[ngModelOptions]="{ standalone: true }"
+										[matAutocomplete]="autoUser"
+									/>
+									<mat-autocomplete class="full-mat-option" #autoUser="matAutocomplete">
+										<mat-option [value]="user.firstName" *ngFor="let user of users; let i = index" (onSelectionChange)="selectedUser(user)"
+											>{{ user.username }} | {{ user.email }}</mat-option
+										>
+									</mat-autocomplete>
 									<mat-error> Select an <strong>User</strong>. </mat-error>
 								</mat-form-field>
 							</div>

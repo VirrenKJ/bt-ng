@@ -110,7 +110,6 @@ export class NewCompanyComponent implements OnInit {
 		}).then(() => {
 			this.reloadCompanies.emit();
 			this.modalService.dismissAll();
-			// this.router.navigate(['user/login']);
 		});
 	}
 

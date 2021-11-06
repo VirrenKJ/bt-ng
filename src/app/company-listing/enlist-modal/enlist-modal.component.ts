@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { User } from 'src/app/authentication/common/models/user';
 import { LoginService } from 'src/app/authentication/services/login.service';
+import { UserService } from 'src/app/authentication/services/user.service';
 import { SearchCriteriaObj } from 'src/app/base/models/search_criteria_obj';
 import { SearchFieldObj } from 'src/app/base/models/search_field_obj';
 import { Company } from '../models/company';
@@ -18,9 +19,16 @@ export class EnlistModalComponent implements OnInit {
 
 	companies = new Array<Company>();
 	users = new Array<User>();
+
+	user: string;
 	enlistForm: FormGroup;
 
-	constructor(private modalService: NgbModal, private companyService: CompanyService, private loginService: LoginService) {}
+	constructor(
+		private modalService: NgbModal,
+		private companyService: CompanyService,
+		private loginService: LoginService,
+		private userService: UserService
+	) {}
 
 	ngOnInit(): void {
 		this.formInit();
@@ -46,7 +54,7 @@ export class EnlistModalComponent implements OnInit {
 		this.getCompanies();
 		setTimeout(() => {
 			// this.companyFormDirective.resetForm();
-			this.modalService.open(this.enlistEmployee, { size: 'md' });
+			this.modalService.open(this.enlistEmployee, { size: 'lg' });
 		});
 	}
 
@@ -67,5 +75,25 @@ export class EnlistModalComponent implements OnInit {
 		);
 	}
 
-	getUsers() {}
+	getUsers() {
+		if (this.user != null && this.user != '') {
+			let searchCriteriaObj = new SearchCriteriaObj();
+			searchCriteriaObj.searchFieldsObj = new SearchFieldObj();
+			searchCriteriaObj.searchFieldsObj.searchFor = this.user;
+			this.userService.getList(searchCriteriaObj).subscribe(
+				response => {
+					if (response.data.user.list) {
+						this.users = response.data.user.list;
+					}
+				},
+				errorRes => {
+					console.error(errorRes);
+				}
+			);
+		}
+	}
+
+	selectedUser(user) {
+		console.log(user);
+	}
 }

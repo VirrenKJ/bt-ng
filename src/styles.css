@@ -52,3 +52,6 @@ mat-paginator {
 	margin-top: 9px;
 	margin-left: 6px;
 }
+.full-width {
+	width: 100%;
+}

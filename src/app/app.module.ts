@@ -46,8 +46,9 @@ import { NgxUiLoaderConfig, NgxUiLoaderHttpModule, NgxUiLoaderModule, SPINNER, P
 import { CompanyListingComponent } from './company-listing/company-listing.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NewCompanyComponent } from './company-listing/new-company/new-company.component';
-import { TenantInterceptor, tenantInterceptorProvider } from './base/services/tenant.interceptor';
+import { tenantInterceptorProvider } from './base/services/tenant.interceptor';
 import { EnlistModalComponent } from './company-listing/enlist-modal/enlist-modal.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 	bgsColor: '#c33c5b',
@@ -112,6 +113,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 		ReactiveFormsModule,
 		FontAwesomeModule,
 		MatButtonModule,
+		MatAutocompleteModule,
 		MatToolbarModule,
 		MatSidenavModule,
 		MatIconModule,
@@ -138,7 +140,17 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 			showForeground: false,
 		}),
 	],
-	exports: [MatButtonModule, MatToolbarModule, MatSidenavModule, MatIconModule, MatListModule, MatMenuModule, MatSelectModule, MatFormFieldModule],
+	exports: [
+		MatButtonModule,
+		MatToolbarModule,
+		MatSidenavModule,
+		MatIconModule,
+		MatListModule,
+		MatMenuModule,
+		MatSelectModule,
+		MatFormFieldModule,
+		MatAutocompleteModule,
+	],
 	providers: [authInterceptorProvider, tenantInterceptorProvider],
 	bootstrap: [AppComponent],
 })
