@@ -18,8 +18,8 @@
 	</div>
 </mat-toolbar>
 
-<app-enlist-modal [openEnlistingModal]="setOpenEnlistModal"></app-enlist-modal>
-<app-new-company [openCompanyModal]="setOpenCompanyModal" (reloadCompanies)="getCompanyBusinessList()"></app-new-company>
+<app-enlist-modal [openEnlistingModal]="setOpenEnlistModal" (reloadCompanies)="getCompanyEmployerList()"></app-enlist-modal>
+<app-new-company [openCompanyModal]="setOpenCompanyModal" (reloadBusinesses)="getCompanyBusinessList()"></app-new-company>
 
 <div class="body">
 	<div class="container p-3">

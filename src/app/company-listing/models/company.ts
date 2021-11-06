@@ -1,3 +1,5 @@
+import { User } from 'src/app/authentication/common/models/user';
+
 export class Company {
 	public id: number;
 	public companyDbDetailId: number;
@@ -12,4 +14,5 @@ export class Company {
 	public state: string;
 	public city: string;
 	public deleteFlag: string;
+	public users: User[];
 }

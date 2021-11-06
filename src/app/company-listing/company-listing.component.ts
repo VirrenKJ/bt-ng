@@ -68,6 +68,8 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 		this.getCompanyBusinessList();
 	}
 
+	getCompanyEmployerList() {}
+
 	openUserModal(userId) {
 		this.setOpenUserModal = {
 			userId: userId,

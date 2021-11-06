@@ -6,47 +6,49 @@
 		</div>
 		<div class="modal-body">
 			<div class="container">
-				<form [formGroup]="enlistForm">
-					<div class="form-group">
-						<div class="row mt-3">
-							<div class="col-md-6">
-								<mat-form-field class="full-width" appearance="outline">
-									<mat-label>Companies</mat-label>
-									<mat-select formControlName="company" placeholder="Choose...">
-										<mat-option>None</mat-option>
-										<mat-option [value]="company" *ngFor="let company of companies; let i = index">{{ company.name }}</mat-option>
-									</mat-select>
-									<mat-error> Select a <strong>Company</strong>. </mat-error>
-								</mat-form-field>
-							</div>
-							<div class="col-md-6">
-								<mat-form-field class="full-width" appearance="outline">
-									<mat-label>Users</mat-label>
-									<input
-										matInput
-										type="text"
-										placeholder="Username/Email"
-										(input)="getUsers()"
-										(click)="getUsers()"
-										[(ngModel)]="user"
-										[ngModelOptions]="{ standalone: true }"
-										[matAutocomplete]="autoUser"
-									/>
-									<mat-autocomplete class="full-mat-option" #autoUser="matAutocomplete">
-										<mat-option [value]="user.firstName" *ngFor="let user of users; let i = index" (onSelectionChange)="selectedUser(user)"
-											>{{ user.username }} | {{ user.email }}</mat-option
-										>
-									</mat-autocomplete>
-									<mat-error> Select an <strong>User</strong>. </mat-error>
-								</mat-form-field>
-							</div>
+				<div class="form-group">
+					<div class="row mt-3">
+						<div class="col-md-6">
+							<mat-form-field class="full-width" appearance="outline">
+								<mat-label>Companies</mat-label>
+								<mat-select matTooltip="Required" matTooltipPosition="right" [(ngModel)]="company" placeholder="Choose...">
+									<mat-option>None</mat-option>
+									<mat-option [value]="company" *ngFor="let company of companies; let i = index">{{ company.name }}</mat-option>
+								</mat-select>
+							</mat-form-field>
+						</div>
+						<div class="col-md-6">
+							<mat-form-field class="full-width" appearance="outline">
+								<mat-label>Users</mat-label>
+								<input
+									matTooltip="Required"
+									matTooltipPosition="right"
+									matInput
+									type="text"
+									placeholder="Username/Email"
+									(input)="getUsers()"
+									(click)="getUsers()"
+									[(ngModel)]="searchFor"
+									[ngModelOptions]="{ standalone: true }"
+									[matAutocomplete]="autoUser"
+								/>
+								<mat-autocomplete class="full-mat-option" #autoUser="matAutocomplete">
+									<mat-option
+										style="background: #212529"
+										[value]="user.firstName"
+										*ngFor="let user of users; let i = index"
+										(onSelectionChange)="selectedUser(user)"
+										>{{ user.username }} | {{ user.email }}</mat-option
+									>
+								</mat-autocomplete>
+							</mat-form-field>
 						</div>
 					</div>
-				</form>
+				</div>
 			</div>
 		</div>
 		<div class="modal-footer">
-			<button type="button" class="btn btn-primary" (click)="onSubmit()">Submit</button>
+			<button type="button" class="btn btn-primary" (click)="onSubmit()" [disabled]="!company.id || !user.id">Submit</button>
 			<button type="button" class="btn btn-primary" (click)="modal.close()">Cancel</button>
 		</div>
 	</div>

@@ -16,7 +16,7 @@ import { CompanyService } from '../services/company.service';
 export class NewCompanyComponent implements OnInit {
 	@ViewChild(FormGroupDirective) companyFormDirective: FormGroupDirective;
 	@ViewChild('addCompany') addCompany: TemplateRef<any>;
-	@Output() reloadCompanies = new EventEmitter();
+	@Output() reloadBusinesses = new EventEmitter();
 
 	companyForm = new FormGroup({
 		userId: new FormControl(),
@@ -108,7 +108,7 @@ export class NewCompanyComponent implements OnInit {
 			showConfirmButton: false,
 			timer: 2000,
 		}).then(() => {
-			this.reloadCompanies.emit();
+			this.reloadBusinesses.emit();
 			this.modalService.dismissAll();
 		});
 	}
