@@ -1,55 +1,55 @@
 <mat-toolbar class="app-toolbar sub-header" color="primary">
-  <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
-    <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-  </button>
-  <span class="ml2">Sub Heading</span>
-  <span class="spacer"> </span>
-  <mat-form-field class="assign-task-list mt-1 me-3" [floatLabel]="'never'">
-    <mat-label class="clr-blue">Dropdown</mat-label>
-    <mat-select placeholder="" value="all">
-      <mat-option value="all">All Projects</mat-option>
-      <mat-option value="open">Open</mat-option>
-      <mat-option value="copy">Copy</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <form class="d-flex">
-    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-    <button class="btn btn-outline-light" type="submit">Search</button>
-  </form>
+	<button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+		<mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+	</button>
+	<span class="ml2">Sub Heading</span>
+	<span class="spacer"> </span>
+	<mat-form-field class="assign-task-list mt-1 me-3" [floatLabel]="'never'">
+		<mat-label class="clr-blue">Dropdown</mat-label>
+		<mat-select placeholder="" value="all">
+			<mat-option value="all">All Projects</mat-option>
+			<mat-option value="open">Open</mat-option>
+			<mat-option value="copy">Copy</mat-option>
+		</mat-select>
+	</mat-form-field>
+	<form class="d-flex">
+		<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+		<button class="btn btn-outline-light" type="submit">Search</button>
+	</form>
 </mat-toolbar>
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav
-    #drawer
-    class="sidenav"
-    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'side'"
-    [opened]="(isHandset$ | async) === false"
-  >
-    <mat-nav-list>
-      <mat-list-item routerLink="/main/home" [routerLinkActive]="['is-active']" *ngIf="userRole != 'Viewer'">
-        <mat-icon mat-list-icon>home</mat-icon>
-        <span>Home</span>
-      </mat-list-item>
-      <mat-list-item routerLink="/main/view-issue" [routerLinkActive]="['is-active']">
-        <mat-icon mat-list-icon>format_list_bulleted</mat-icon>
-        <span>View Issues</span>
-      </mat-list-item>
-      <mat-list-item routerLink="/main/add-issue" [routerLinkActive]="['is-active']" *ngIf="userRole != 'Viewer'">
-        <mat-icon mat-list-icon>bug_report</mat-icon>
-        <span>Report Issue</span>
-      </mat-list-item>
-      <mat-list-item routerLink="/main/summary" [routerLinkActive]="['is-active']">
-        <mat-icon mat-list-icon>list_alt</mat-icon>
-        <span>Summary</span>
-      </mat-list-item>
-      <mat-list-item routerLink="/main/manage" [routerLinkActive]="['is-active']" *ngIf="userRole === 'Admin' || userRole === 'Manager'">
-        <mat-icon mat-list-icon>admin_panel_settings</mat-icon>
-        <span>Manage</span>
-      </mat-list-item>
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <!-- Add Content Here -->
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
+	<mat-sidenav
+		#drawer
+		class="sidenav"
+		[attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+		[mode]="(isHandset$ | async) ? 'over' : 'side'"
+		[opened]="(isHandset$ | async) === false"
+	>
+		<mat-nav-list>
+			<mat-list-item routerLink="/bug-tracker/home" [routerLinkActive]="['is-active']" *ngIf="userRole != 'Viewer'">
+				<mat-icon mat-list-icon>home</mat-icon>
+				<span>Home</span>
+			</mat-list-item>
+			<mat-list-item routerLink="/bug-tracker/view-issue" [routerLinkActive]="['is-active']">
+				<mat-icon mat-list-icon>format_list_bulleted</mat-icon>
+				<span>View Issues</span>
+			</mat-list-item>
+			<mat-list-item routerLink="/bug-tracker/add-issue" [routerLinkActive]="['is-active']" *ngIf="userRole != 'Viewer'">
+				<mat-icon mat-list-icon>bug_report</mat-icon>
+				<span>Report Issue</span>
+			</mat-list-item>
+			<mat-list-item routerLink="/bug-tracker/summary" [routerLinkActive]="['is-active']">
+				<mat-icon mat-list-icon>list_alt</mat-icon>
+				<span>Summary</span>
+			</mat-list-item>
+			<mat-list-item routerLink="/bug-tracker/manage" [routerLinkActive]="['is-active']" *ngIf="userRole === 'Admin' || userRole === 'Manager'">
+				<mat-icon mat-list-icon>admin_panel_settings</mat-icon>
+				<span>Manage</span>
+			</mat-list-item>
+		</mat-nav-list>
+	</mat-sidenav>
+	<mat-sidenav-content>
+		<!-- Add Content Here -->
+		<router-outlet></router-outlet>
+	</mat-sidenav-content>
 </mat-sidenav-container>

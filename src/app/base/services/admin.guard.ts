@@ -4,20 +4,20 @@ import { Observable } from 'rxjs';
 import { LoginService } from 'src/app/authentication/services/login.service';
 
 @Injectable({
-  providedIn: 'root',
+	providedIn: 'root',
 })
 export class AdminGuard implements CanActivate {
-  constructor(private loginService: LoginService, private router: Router) {}
+	constructor(private loginService: LoginService, private router: Router) {}
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.loginService.isLoggedIn() && (this.loginService.getUserRole() == 'Admin' || this.loginService.getUserRole() == 'Manager')) {
-      return true;
-    } else {
-      this.router.navigate(['/main']);
-      return false;
-    }
-  }
+	canActivate(
+		route: ActivatedRouteSnapshot,
+		state: RouterStateSnapshot
+	): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+		if (this.loginService.isLoggedIn() && (this.loginService.getUserRole() == 'Admin' || this.loginService.getUserRole() == 'Manager')) {
+			return true;
+		} else {
+			this.router.navigate(['/bug-tracker']);
+			return false;
+		}
+	}
 }

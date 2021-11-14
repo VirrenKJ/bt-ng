@@ -11,13 +11,18 @@ import { Company } from '../models/company';
 export class CompanyService {
 	constructor(private httpClient: HttpClient) {}
 
-	public setTenant(company: Company) {
-		localStorage.setItem('x-tenant', company.dbName);
+	public setTenant(dbUuid: string) {
+		localStorage.setItem('x-tenant', dbUuid);
 		return true;
 	}
 
 	public getTenant() {
 		return localStorage.getItem('x-tenant');
+	}
+
+	public exitBugTracker() {
+		localStorage.removeItem('x-tenant');
+		return true;
 	}
 
 	public add(data: any): Observable<any> {

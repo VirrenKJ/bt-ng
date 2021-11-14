@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { LoginService } from '../authentication/services/login.service';
 import { SearchCriteriaObj } from '../base/models/search_criteria_obj';
@@ -18,6 +19,7 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 	@ViewChild('userPaginator') userPaginator: MatPaginator;
 	@ViewChild('businessPaginator') businessPaginator: MatPaginator;
 	businessList = new Array<Company>();
+	companyList = new Array<Company>();
 	searchCriteriaObjBusiness = new SearchCriteriaObj();
 
 	userColumns: string[] = ['position', 'name', 'weight', 'symbol'];
@@ -30,13 +32,14 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 
 	// perPageBusiness: number;
 
-	constructor(private loginService: LoginService, private companyService: CompanyService, private _snackBar: MatSnackBar) {}
+	constructor(private loginService: LoginService, private companyService: CompanyService, private _snackBar: MatSnackBar, private router: Router) {}
 
 	ngOnInit(): void {
 		// this.perPageBusiness = 5;
 		this.searchCriteriaObjBusiness.page = 1;
 		this.searchCriteriaObjBusiness.limit = 5;
 		this.getCompanyBusinessList();
+		this.getCompanyEmployerList();
 	}
 
 	ngAfterViewInit() {
@@ -68,7 +71,16 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 		this.getCompanyBusinessList();
 	}
 
-	getCompanyEmployerList() {}
+	getCompanyEmployerList() {
+		this.companyList = this.loginService.getUser().companies;
+		console.log(this.companyList);
+	}
+
+	gotoBugTracker(dbUuid: string) {
+		console.log('Bug Tracker: ' + dbUuid);
+		this.companyService.setTenant(dbUuid);
+		this.router.navigateByUrl('bug-tracker');
+	}
 
 	openUserModal(userId) {
 		this.setOpenUserModal = {

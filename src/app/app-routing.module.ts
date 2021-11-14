@@ -5,6 +5,8 @@ import { LoginComponent } from './authentication/login/login.component';
 import { SignupComponent } from './authentication/signup/signup.component';
 import { AdminGuard } from './base/services/admin.guard';
 import { AuthGuard } from './base/services/auth.guard';
+import { BugTrackerExitGuard } from './base/services/bug-tracker-exit.guard';
+import { BugTrackerGuard } from './base/services/bug-tracker.guard';
 import { LoggedInGuard } from './base/services/logged-in.guard';
 import { ViewerGuard } from './base/services/viewer.guard';
 import { CompanyListingComponent } from './company-listing/company-listing.component';
@@ -36,22 +38,15 @@ const routes: Routes = [
 				pathMatch: 'full',
 			},
 		],
-		canActivate: [LoggedInGuard],
+		canActivate: [LoggedInGuard, BugTrackerExitGuard],
 	},
 	{
 		path: 'companies',
 		component: CompanyListingComponent,
-		canActivate: [AuthGuard],
-		// children: [
-		// 	{
-		// 		path: '',
-		// 		redirectTo: 'home',
-		// 		pathMatch: 'full',
-		// 	},
-		// ],
+		canActivate: [AuthGuard, BugTrackerExitGuard],
 	},
 	{
-		path: 'main',
+		path: 'bug-tracker',
 		component: HomeLayoutComponent,
 		children: [
 			{
@@ -65,7 +60,7 @@ const routes: Routes = [
 			{ path: 'summary', component: SummaryComponent },
 			{ path: 'manage', component: ManageComponent, pathMatch: 'full', canActivate: [AdminGuard] },
 		],
-		canActivate: [AuthGuard],
+		canActivate: [AuthGuard, BugTrackerGuard],
 	},
 ];
 
