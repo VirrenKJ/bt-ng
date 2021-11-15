@@ -33,6 +33,10 @@ export class CompanyService {
 		return this.httpClient.post(`${baseUrl}/company/update`, data);
 	}
 
+	public copyCompanyToTenant(data: any, dbUuid: string): Observable<any> {
+		return this.httpClient.post(`${baseUrl}/company/copy-company`, data, { headers: { 'x-tenant': dbUuid } });
+	}
+
 	public getList(data: any): Observable<any> {
 		return this.httpClient.post(`${baseUrl}/company/list`, data);
 	}

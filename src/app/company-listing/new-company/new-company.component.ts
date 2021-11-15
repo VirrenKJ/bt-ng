@@ -4,8 +4,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { pipe } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { User } from 'src/app/authentication/common/models/user';
 import { CustomValidationService } from 'src/app/authentication/services/custom-validation.service';
+import { LoginService } from 'src/app/authentication/services/login.service';
+import { UserService } from 'src/app/authentication/services/user.service';
 import Swal from 'sweetalert2';
+import { Company } from '../models/company';
 import { CompanyService } from '../services/company.service';
 
 @Component({
@@ -31,6 +35,8 @@ export class NewCompanyComponent implements OnInit {
 
 	constructor(
 		private companyService: CompanyService,
+		private userService: UserService,
+		private loginService: LoginService,
 		private config: NgbModalConfig,
 		private modalService: NgbModal,
 		private customValidationService: CustomValidationService,
@@ -64,13 +70,25 @@ export class NewCompanyComponent implements OnInit {
 	onSubmit() {
 		if (this.companyForm.valid) {
 			this.companyService.add(this.companyForm.value).subscribe(
-				response => {
-					console.log(response);
-					this.confirmationPopup();
+				responseCompany => {
+					if (responseCompany.data && responseCompany.data.company) {
+						let company: Company = responseCompany.data.company;
+						console.log('New Company: ' + company);
+						// this.companyService.setTenant(company.dbUuid);
+						this.companyService.copyCompanyToTenant(company, company.dbUuid).subscribe(responseCopy => {
+							if (responseCopy.data && responseCopy.data.company) {
+								console.log('Copied Company: ' + responseCopy.data.company);
+								this.companyService.exitBugTracker();
+							}
+						});
+					}
 				},
 				errorRes => {
 					console.error(errorRes);
 					this.snackBarPopup(errorRes.error.message);
+				},
+				() => {
+					this.confirmationPopup();
 				}
 			);
 		} else {
