@@ -74,8 +74,6 @@ export class NewCompanyComponent implements OnInit {
 					if (responseCompany.data && responseCompany.data.company) {
 						let company: Company = responseCompany.data.company;
 						console.log('New Company: ' + company);
-						// this.companyService.setTenant(company.dbUuid);
-						//
 						this.companyService.copyCompanyToTenant(company, company.dbUuid).subscribe(responseCopy => {
 							if (responseCopy.data && responseCopy.data.company) {
 								console.log('Copied Company: ' + responseCopy.data.company);

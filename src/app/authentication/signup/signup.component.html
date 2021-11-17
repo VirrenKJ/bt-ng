@@ -72,14 +72,6 @@
 							<mat-hint *ngIf="!signupForm.get('email').valid && signupForm.get('email').touched">Please enter a valid email!!</mat-hint>
 						</mat-form-field>
 
-						<!-- <mat-form-field appearance="outline">
-              <mat-label>Role</mat-label>
-              <mat-select formControlName="roles" required>
-                <mat-option [value]="role.roleId" *ngFor="let role of roles; let i = index">{{ role.roleName }}</mat-option>
-              </mat-select>
-              <mat-hint *ngIf="!signupForm.get('roles').valid && signupForm.get('roles').touched">Please enter a Role!!</mat-hint>
-            </mat-form-field> -->
-
 						<div class="container text-center">
 							<button type="submit" class="me-2" mat-raised-button color="primary">Sign Up</button>
 							<button mat-raised-button color="primary" [routerLink]="'/user/login'">Already have an account</button>

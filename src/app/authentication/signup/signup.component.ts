@@ -15,7 +15,6 @@ import { UserService } from '../services/user.service';
 export class SignupComponent implements OnInit {
 	@ViewChild(FormGroupDirective) signupFormDirective: FormGroupDirective;
 
-	roles = new Array<Role>();
 	showPassword: boolean = false;
 	showConfirmPassword: boolean = false;
 

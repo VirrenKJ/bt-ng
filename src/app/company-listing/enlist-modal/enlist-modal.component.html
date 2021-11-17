@@ -8,7 +8,7 @@
 			<div class="container">
 				<div class="form-group">
 					<div class="row mt-3">
-						<div class="col-md-6">
+						<div class="col-md-4">
 							<mat-form-field class="full-width" appearance="outline">
 								<mat-label>Companies</mat-label>
 								<mat-select matTooltip="Required" matTooltipPosition="right" [(ngModel)]="company" placeholder="Choose...">
@@ -17,7 +17,7 @@
 								</mat-select>
 							</mat-form-field>
 						</div>
-						<div class="col-md-6">
+						<div class="col-md-4">
 							<mat-form-field class="full-width" appearance="outline">
 								<mat-label>Users</mat-label>
 								<input
@@ -37,10 +37,19 @@
 										style="background: #212529"
 										[value]="user.firstName"
 										*ngFor="let user of users; let i = index"
-										(onSelectionChange)="selectedUser(user)"
+										(onSelectionChange)="selectedUser(user.id)"
 										>{{ user.username }} | {{ user.email }}</mat-option
 									>
 								</mat-autocomplete>
+							</mat-form-field>
+						</div>
+						<div class="col-md-4">
+							<mat-form-field class="full-width" appearance="outline">
+								<mat-label>Role</mat-label>
+								<mat-select matTooltip="Required" matTooltipPosition="right" [(ngModel)]="role.roleId" placeholder="Choose...">
+									<mat-option>None</mat-option>
+									<mat-option [value]="role.roleId" *ngFor="let role of roles; let i = index">{{ role.roleName }}</mat-option>
+								</mat-select>
 							</mat-form-field>
 						</div>
 					</div>

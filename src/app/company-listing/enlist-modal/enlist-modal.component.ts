@@ -2,8 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Role } from 'src/app/authentication/common/models/role';
 import { User } from 'src/app/authentication/common/models/user';
 import { LoginService } from 'src/app/authentication/services/login.service';
+import { RoleService } from 'src/app/authentication/services/role.service';
 import { UserService } from 'src/app/authentication/services/user.service';
 import { SearchCriteriaObj } from 'src/app/base/models/search_criteria_obj';
 import { SearchFieldObj } from 'src/app/base/models/search_field_obj';
@@ -22,14 +24,17 @@ export class EnlistModalComponent implements OnInit {
 
 	companies = new Array<Company>();
 	users = new Array<User>();
+	roles = new Array<Role>();
 	company = new Company();
 	user = new User();
+	role = new Role();
 
 	searchFor: string;
 
 	constructor(
 		private modalService: NgbModal,
 		private companyService: CompanyService,
+		private roleService: RoleService,
 		private loginService: LoginService,
 		private userService: UserService,
 		private _snackBar: MatSnackBar
@@ -53,6 +58,7 @@ export class EnlistModalComponent implements OnInit {
 
 	onInit() {
 		this.getCompanies();
+		this.getRoles();
 		this.users = new Array<User>();
 		this.company = new Company();
 		this.user = new User();
@@ -66,13 +72,27 @@ export class EnlistModalComponent implements OnInit {
 		this.companyService.getList(searchCriteriaObj).subscribe(
 			response => {
 				console.log(response);
-				if (response.data.company.list) {
+				if (response.data && response.data.company && response.data.company.list) {
 					this.companies = response.data.company.list;
 				}
 			},
 			errorRes => {
 				console.error(errorRes);
 				this.snackBarPopup(errorRes.error.message);
+			}
+		);
+	}
+
+	getRoles() {
+		let searchCriteriaObj = new SearchCriteriaObj();
+		this.roleService.getList(searchCriteriaObj).subscribe(
+			response => {
+				if (response.data && response.data.role) {
+					this.roles = response;
+				}
+			},
+			errorRes => {
+				console.error(errorRes);
 			}
 		);
 	}
@@ -96,12 +116,17 @@ export class EnlistModalComponent implements OnInit {
 		);
 	}
 
-	selectedUser(user: User) {
-		console.log(user);
-		this.user.id = user.id;
+	selectedUser(userId: number) {
+		console.log(userId);
+		this.user.id = userId;
+	}
+
+	setRole() {
+		this.user.roles.push(this.role);
 	}
 
 	onSubmit() {
+		this.setRole();
 		this.company.users = new Array<User>();
 		this.company.users.push(this.user);
 		console.log(this.company);
