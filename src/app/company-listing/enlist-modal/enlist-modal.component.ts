@@ -88,7 +88,7 @@ export class EnlistModalComponent implements OnInit {
 		this.roleService.getList(searchCriteriaObj).subscribe(
 			response => {
 				if (response.data && response.data.role) {
-					this.roles = response;
+					this.roles = response.data.role;
 				}
 			},
 			errorRes => {
@@ -102,6 +102,7 @@ export class EnlistModalComponent implements OnInit {
 		searchCriteriaObj.limit = 10;
 		searchCriteriaObj.page = 1;
 		searchCriteriaObj.searchFieldsObj = new SearchFieldObj();
+		searchCriteriaObj.searchFieldsObj.id = this.loginService.getUser().id;
 		searchCriteriaObj.searchFieldsObj.searchFor = this.searchFor;
 		this.userService.getList(searchCriteriaObj).subscribe(
 			response => {
