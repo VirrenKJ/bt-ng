@@ -37,7 +37,7 @@
 										style="background: #212529"
 										[value]="user.firstName"
 										*ngFor="let user of users; let i = index"
-										(onSelectionChange)="selectedUser(user.id)"
+										(onSelectionChange)="selectedUser(user)"
 										>{{ user.username }} | {{ user.email }}</mat-option
 									>
 								</mat-autocomplete>

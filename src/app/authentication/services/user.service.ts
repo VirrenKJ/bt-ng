@@ -5,32 +5,36 @@ import baseUrl from '../common/models/base-url';
 import { User } from '../common/models/user';
 
 @Injectable({
-  providedIn: 'root',
+	providedIn: 'root',
 })
 export class UserService {
-  constructor(private httpClient: HttpClient) {}
+	constructor(private httpClient: HttpClient) {}
 
-  public add(user: User): Observable<any> {
-    return this.httpClient.post(`${baseUrl}/user/add`, user);
-  }
+	public add(user: User): Observable<any> {
+		return this.httpClient.post(`${baseUrl}/user/add`, user);
+	}
 
-  public update(user: User): Observable<any> {
-    return this.httpClient.post(`${baseUrl}/user/update`, user);
-  }
+	public addUserDetailsToCompany(user: User, dbUuid): Observable<any> {
+		return this.httpClient.post(`${baseUrl}/user/add`, user, { headers: { 'x-tenant': dbUuid } });
+	}
 
-  public getList(data: any): Observable<any> {
-    return this.httpClient.post(`${baseUrl}/user/list`, data);
-  }
+	public update(user: User): Observable<any> {
+		return this.httpClient.post(`${baseUrl}/user/update`, user);
+	}
 
-  public getById(id: number): Observable<any> {
-    return this.httpClient.get(`${baseUrl}/user/${id}`);
-  }
+	public getList(data: any): Observable<any> {
+		return this.httpClient.post(`${baseUrl}/user/list`, data);
+	}
 
-  public getByUsername(username: string): Observable<any> {
-    return this.httpClient.get(`${baseUrl}/user/username`, { params: new HttpParams().set('username', username) });
-  }
+	public getById(id: number): Observable<any> {
+		return this.httpClient.get(`${baseUrl}/user/${id}`);
+	}
 
-  public delete(id): Observable<any> {
-    return this.httpClient.delete(`${baseUrl}/user/delete`, { params: new HttpParams().set('id', id) });
-  }
+	public getByUsername(username: string): Observable<any> {
+		return this.httpClient.get(`${baseUrl}/user/username`, { params: new HttpParams().set('username', username) });
+	}
+
+	public delete(id): Observable<any> {
+		return this.httpClient.delete(`${baseUrl}/user/delete`, { params: new HttpParams().set('id', id) });
+	}
 }

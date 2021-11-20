@@ -77,7 +77,6 @@ export class NewCompanyComponent implements OnInit {
 						this.companyService.copyCompanyToTenant(company, company.dbUuid).subscribe(responseCopy => {
 							if (responseCopy.data && responseCopy.data.company) {
 								console.log('Copied Company: ' + responseCopy.data.company);
-								this.companyService.exitBugTracker();
 							}
 						});
 					}

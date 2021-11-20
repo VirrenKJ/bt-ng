@@ -74,6 +74,7 @@ export class EnlistModalComponent implements OnInit {
 				console.log(response);
 				if (response.data && response.data.company && response.data.company.list) {
 					this.companies = response.data.company.list;
+					console.log(this.companies);
 				}
 			},
 			errorRes => {
@@ -117,9 +118,9 @@ export class EnlistModalComponent implements OnInit {
 		);
 	}
 
-	selectedUser(userId: number) {
-		console.log(userId);
-		this.user.id = userId;
+	selectedUser(user) {
+		console.log(user);
+		this.user = user;
 	}
 
 	setRole() {
@@ -128,12 +129,17 @@ export class EnlistModalComponent implements OnInit {
 
 	onSubmit() {
 		this.setRole();
-		this.company.users = new Array<User>();
-		this.company.users.push(this.user);
+		if (!this.company.users) {
+			this.company.users = new Array<User>();
+		}
+		let user = new User();
+		user.id = this.user.id;
+		this.company.users.push(user);
 		console.log(this.company);
 		this.companyService.update(this.company).subscribe(
 			response => {
 				console.log(response);
+				this.userService.addUserDetailsToCompany(this.user, this.company.dbUuid);
 				this.confirmationPopup();
 			},
 			errorRes => {
