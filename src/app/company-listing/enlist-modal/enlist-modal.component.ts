@@ -74,7 +74,6 @@ export class EnlistModalComponent implements OnInit {
 				console.log(response);
 				if (response.data && response.data.company && response.data.company.list) {
 					this.companies = response.data.company.list;
-					console.log(this.companies);
 				}
 			},
 			errorRes => {
