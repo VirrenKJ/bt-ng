@@ -41,6 +41,10 @@ export class CompanyService {
 		return this.httpClient.post(`${baseUrl}/company/list`, data);
 	}
 
+	public getListByEmployeeId(id: number): Observable<any> {
+		return this.httpClient.get(`${baseUrl}/company/employer-list/${id}`);
+	}
+
 	public getById(id: number): Observable<any> {
 		return this.httpClient.get(`${baseUrl}/company/${id}`);
 	}

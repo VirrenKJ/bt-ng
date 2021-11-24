@@ -72,8 +72,17 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 	}
 
 	getCompanyEmployerList() {
-		this.companyList = this.loginService.getUser().companies;
-		console.log(this.companyList);
+		this.companyService.getListByEmployeeId(this.loginService.getUser().id).subscribe(
+			response => {
+				console.log(response);
+				if (response.status == 200 && response.data && response.data.company) {
+					this.companyList = response.data.company;
+				}
+			},
+			errorRes => {
+				console.error(errorRes);
+			}
+		);
 	}
 
 	gotoBugTracker(dbUuid: string) {
