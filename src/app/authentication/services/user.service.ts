@@ -26,6 +26,10 @@ export class UserService {
 		return this.httpClient.post(`${baseUrl}/user/list`, data);
 	}
 
+	public getEmployeeList(data: any): Observable<any> {
+		return this.httpClient.post(`${baseUrl}/user/employee-list`, data);
+	}
+
 	public getById(id: number): Observable<any> {
 		return this.httpClient.get(`${baseUrl}/user/${id}`);
 	}

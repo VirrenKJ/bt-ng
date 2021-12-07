@@ -1,6 +1,7 @@
+import { Company } from 'src/app/company-listing/models/company';
 import { Role } from './role';
 
-export class User {
+export class UserDetail {
 	public id: number;
 	public firstName: string;
 	public lastName: string;
@@ -10,4 +11,5 @@ export class User {
 	public enabled: boolean = true;
 	public deleteFlag: boolean;
 	public roles = new Array<Role>();
+	public companies: Company[];
 }

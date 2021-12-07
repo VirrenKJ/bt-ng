@@ -2,8 +2,6 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import baseUrl from 'src/app/authentication/common/models/base-url';
-import { User } from 'src/app/authentication/common/models/user';
-import { Company } from '../models/company';
 
 @Injectable({
 	providedIn: 'root',
