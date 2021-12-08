@@ -186,9 +186,10 @@
 
 					<mat-paginator
 						class="mt-0"
+						[hidden]="employeeList.length <= 0"
+						(page)="paginationEmployees($event)"
 						[pageSizeOptions]="[5, 10, 20]"
 						showFirstLastButtons
-						aria-label="Select page of periodic elements"
 						#employeePaginator
 					>
 					</mat-paginator>

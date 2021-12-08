@@ -107,6 +107,7 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 				if (response.status == 200 && response.data && response.data.user && response.data.user.list && response.data.user.list.length > 0) {
 					this.employeeList = response.data.user.list;
 					this.employeeDataSource = new MatTableDataSource<UserDetail>(this.employeeList);
+					this.employeePaginator.length = response.data.user.totalRowCount;
 				}
 			},
 			errorRes => {
