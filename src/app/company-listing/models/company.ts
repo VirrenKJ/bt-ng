@@ -13,6 +13,6 @@ export class Company {
 	public pinCode: number;
 	public state: string;
 	public city: string;
-	public deleteFlag: string;
+	public deleteFlag: boolean;
 	public users: User[];
 }
