@@ -61,8 +61,7 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 	}
 
 	getCompanyBusinessList() {
-		this.searchCriteriaObjBusiness.searchFieldsObj = new SearchFieldObj();
-		this.searchCriteriaObjBusiness.searchFieldsObj.id = this.loginService.getUser().id;
+		this.searchCriteriaObjBusiness.id = this.loginService.getUser().id;
 		this.companyService.getList(this.searchCriteriaObjBusiness).subscribe(
 			response => {
 				console.log(response);
@@ -99,8 +98,7 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 	}
 
 	getAllEmployeeList() {
-		this.searchCriteriaObjEmployees.searchFieldsObj = new SearchFieldObj();
-		this.searchCriteriaObjEmployees.searchFieldsObj.id = this.loginService.getUser().id;
+		this.searchCriteriaObjEmployees.id = this.loginService.getUser().id;
 		this.userService.getEmployeeList(this.searchCriteriaObjEmployees).subscribe(
 			response => {
 				console.log(response);

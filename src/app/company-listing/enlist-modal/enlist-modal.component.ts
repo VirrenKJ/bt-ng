@@ -66,8 +66,7 @@ export class EnlistModalComponent implements OnInit {
 
 	getCompanies() {
 		let searchCriteriaObj = new SearchCriteriaObj();
-		searchCriteriaObj.searchFieldsObj = new SearchFieldObj();
-		searchCriteriaObj.searchFieldsObj.id = this.loginService.getUser().id;
+		searchCriteriaObj.id = this.loginService.getUser().id;
 		this.companyService.getList(searchCriteriaObj).subscribe(
 			response => {
 				console.log(response);
@@ -100,9 +99,8 @@ export class EnlistModalComponent implements OnInit {
 		let searchCriteriaObj = new SearchCriteriaObj();
 		searchCriteriaObj.limit = 10;
 		searchCriteriaObj.page = 1;
-		searchCriteriaObj.searchFieldsObj = new SearchFieldObj();
-		searchCriteriaObj.searchFieldsObj.id = this.loginService.getUser().id;
-		searchCriteriaObj.searchFieldsObj.searchFor = this.searchFor;
+		searchCriteriaObj.id = this.loginService.getUser().id;
+		searchCriteriaObj.searchFor = this.searchFor;
 		this.userService.getList(searchCriteriaObj).subscribe(
 			response => {
 				if (response.data.user.list) {
