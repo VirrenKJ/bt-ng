@@ -1,5 +1,3 @@
-import { SearchFieldObj } from './search_field_obj';
-
 export class SearchCriteriaObj {
 	public page: number;
 	public limit: number;

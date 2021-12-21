@@ -8,7 +8,6 @@ import { UserDetail } from '../authentication/common/models/user-detail';
 import { LoginService } from '../authentication/services/login.service';
 import { UserService } from '../authentication/services/user.service';
 import { SearchCriteriaObj } from '../base/models/search_criteria_obj';
-import { SearchFieldObj } from '../base/models/search_field_obj';
 import { Company } from './models/company';
 import { CompanyService } from './services/company.service';
 

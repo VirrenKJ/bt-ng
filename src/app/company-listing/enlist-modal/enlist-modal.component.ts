@@ -7,7 +7,6 @@ import { LoginService } from 'src/app/authentication/services/login.service';
 import { RoleService } from 'src/app/authentication/services/role.service';
 import { UserService } from 'src/app/authentication/services/user.service';
 import { SearchCriteriaObj } from 'src/app/base/models/search_criteria_obj';
-import { SearchFieldObj } from 'src/app/base/models/search_field_obj';
 import Swal from 'sweetalert2';
 import { Company } from '../models/company';
 import { CompanyService } from '../services/company.service';
