@@ -3,6 +3,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { LoginService } from '../../authentication/services/login.service';
+import { CompanyService } from 'src/app/company-listing/services/company.service';
+import { Company } from 'src/app/company-listing/models/company';
 
 @Component({
 	selector: 'app-main-nav',
@@ -11,17 +13,23 @@ import { LoginService } from '../../authentication/services/login.service';
 })
 export class MainNavComponent implements OnInit {
 	userRole: string = 'Viewer';
+	company: Company;
 
 	isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
 		map(result => result.matches),
 		shareReplay()
 	);
 
-	constructor(private breakpointObserver: BreakpointObserver, private loginService: LoginService) {}
+	constructor(private breakpointObserver: BreakpointObserver, private loginService: LoginService, private companyService: CompanyService) {}
 
 	ngOnInit() {
 		setTimeout(() => {
 			this.userRole = this.loginService.getUserRole();
 		});
+		this.getCompany();
+	}
+
+	getCompany() {
+		this.company = JSON.parse(this.companyService.getCompany());
 	}
 }

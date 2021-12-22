@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import baseUrl from 'src/app/authentication/common/models/base-url';
+import { Company } from '../models/company';
 
 @Injectable({
 	providedIn: 'root',
@@ -16,6 +17,15 @@ export class CompanyService {
 
 	public getTenant() {
 		return localStorage.getItem('x-tenant');
+	}
+
+	public setCompany(company: Company) {
+		localStorage.setItem('x-company', JSON.stringify(company));
+		return true;
+	}
+
+	public getCompany() {
+		return localStorage.getItem('x-company');
 	}
 
 	public exitBugTracker() {

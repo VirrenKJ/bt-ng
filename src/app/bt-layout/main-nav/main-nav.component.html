@@ -2,7 +2,7 @@
 	<button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
 		<mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
 	</button>
-	<span class="ml2">Sub Heading</span>
+	<span class="ml2">{{ company?.name }}</span>
 	<span class="spacer"> </span>
 	<mat-form-field class="assign-task-list mt-1 me-3" [floatLabel]="'never'">
 		<mat-label class="clr-blue">Dropdown</mat-label>

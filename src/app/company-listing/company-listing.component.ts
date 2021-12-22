@@ -119,9 +119,10 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 		this.getCompanyBusinessList();
 	}
 
-	gotoBugTracker(dbUuid: string) {
-		console.log('Bug Tracker: ' + dbUuid);
-		this.companyService.setTenant(dbUuid);
+	gotoBugTracker(company: Company) {
+		console.log('Bug Tracker: ' + company.dbUuid);
+		this.companyService.setTenant(company.dbUuid);
+		this.companyService.setCompany(company);
 		this.router.navigateByUrl('bug-tracker');
 	}
 

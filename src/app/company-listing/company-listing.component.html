@@ -109,7 +109,7 @@
 					<div class="card text-white bg-dark mt-2" *ngFor="let company of companyList; let i = index">
 						<div class="row g-0">
 							<div class="col-md-1">
-								<mat-icon class="material-icons business-icon" (click)="gotoBugTracker(company.dbUuid)">business</mat-icon>
+								<mat-icon class="material-icons business-icon" (click)="gotoBugTracker(company)">business</mat-icon>
 							</div>
 							<div class="col-md-11">
 								<div class="card-header">{{ company.name }}</div>
