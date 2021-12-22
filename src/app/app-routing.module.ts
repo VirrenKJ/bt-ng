@@ -10,12 +10,12 @@ import { BugTrackerGuard } from './base/services/bug-tracker.guard';
 import { LoggedInGuard } from './base/services/logged-in.guard';
 import { ViewerGuard } from './base/services/viewer.guard';
 import { CompanyListingComponent } from './company-listing/company-listing.component';
-import { HomeLayoutComponent } from './home-layout/home-layout.component';
-import { HomeComponent } from './home/home.component';
-import { AddIssueComponent } from './issue/add-issue/add-issue.component';
-import { ViewIssueComponent } from './issue/view-issue/view-issue.component';
-import { ManageComponent } from './manage/manage.component';
-import { SummaryComponent } from './summary/summary.component';
+import { BtLayoutComponent } from './bt-layout/bt-layout.component';
+import { HomeComponent } from './bt-layout/home/home.component';
+import { AddIssueComponent } from './bt-layout/issue/add-issue/add-issue.component';
+import { ViewIssueComponent } from './bt-layout/issue/view-issue/view-issue.component';
+import { ManageComponent } from './bt-layout/manage/manage.component';
+import { SummaryComponent } from './bt-layout/summary/summary.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: 'user', pathMatch: 'full' },
@@ -47,7 +47,7 @@ const routes: Routes = [
 	},
 	{
 		path: 'bug-tracker',
-		component: HomeLayoutComponent,
+		component: BtLayoutComponent,
 		children: [
 			{
 				path: '',
