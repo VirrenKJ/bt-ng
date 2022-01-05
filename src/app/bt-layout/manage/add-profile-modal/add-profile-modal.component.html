@@ -1,43 +1,62 @@
 <ng-template #addProfile let-modal>
-  <div class="modal-content">
-    <div class="modal-header">
-      <h1 class="modal-title">Add Profile</h1>
-      <button type="button" class="btn-close btn-close-white" (click)="modal.dismiss('Cross click')"></button>
-    </div>
-    <div class="modal-body mb-2">
-      <div class="container">
-        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
-          <div class="form-group">
-            <div class="row">
-              <div class="col-md-4">
-                <label class="form-label" for="platform">Platform</label>
-                <input type="text" class="form-control bg-dark text-white" id="platform" placeholder="Platform" />
-                <div class="invalid-feedback">Valid name is required.</div>
-              </div>
-              <div class="col-md-4">
-                <label class="form-label" for="os">OS</label>
-                <input type="text" class="form-control bg-dark text-white" id="os" placeholder="OS" />
-                <div class="invalid-feedback">Valid name is required.</div>
-              </div>
-              <div class="col-md-4">
-                <label class="form-label" for="version">OS Version</label>
-                <input type="text" class="form-control bg-dark text-white" id="version" placeholder="OS Version" />
-                <div class="invalid-feedback">Valid name is required.</div>
-              </div>
-            </div>
-            <div class="row mt-3">
-              <div class="col">
-                <label class="form-label" for="description">Description</label>
-                <textarea class="form-control bg-dark text-white" id="description" rows="3"></textarea>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-primary">Submit</button>
-      <button type="button" class="btn btn-primary" (click)="modal.close('Save click')">Cancel</button>
-    </div>
-  </div>
+	<div class="modal-content">
+		<div class="modal-header">
+			<h1 class="modal-title">Add Profile</h1>
+			<button type="button" class="btn-close btn-close-white" (click)="modal.dismiss('Cross click')"></button>
+		</div>
+		<div class="modal-body mb-2">
+			<div class="container">
+				<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+					<div class="row">
+						<div class="col-md-4">
+							<mat-form-field appearance="outline">
+								<mat-label>Platform</mat-label>
+								<input type="text" formControlName="platform" autocomplete="platform" matInput placeholder="Enter here!" required />
+								<mat-hint *ngIf="!profileForm.get('platform').valid && profileForm.get('platform').touched">Please enter a valid platform!!</mat-hint>
+							</mat-form-field>
+						</div>
+						<div class="col-md-4">
+							<mat-form-field appearance="outline">
+								<mat-label>OS</mat-label>
+								<input type="text" formControlName="osName" autocomplete="osName" matInput placeholder="Enter here!" required />
+								<mat-hint *ngIf="!profileForm.get('osName').valid && profileForm.get('osName').touched">Please enter a valid OS!!</mat-hint>
+							</mat-form-field>
+						</div>
+						<div class="col-md-4">
+							<mat-form-field appearance="outline">
+								<mat-label>OS Version</mat-label>
+								<input type="text" formControlName="osVersion" autocomplete="osVersion" matInput placeholder="Enter here!" required />
+								<mat-hint *ngIf="!profileForm.get('osVersion').valid && profileForm.get('osVersion').touched"
+									>Please enter a valid OS Version!!</mat-hint
+								>
+							</mat-form-field>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<mat-form-field appearance="outline">
+								<mat-label>Description</mat-label>
+								<textarea
+									id="description"
+									rows="3"
+									formControlName="description"
+									autocomplete="description"
+									matInput
+									placeholder="Enter here!"
+									required
+								></textarea>
+								<mat-hint *ngIf="!profileForm.get('description').valid && profileForm.get('description').touched"
+									>Please enter a valid description!!</mat-hint
+								>
+							</mat-form-field>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-primary">Submit</button>
+			<button type="button" class="btn btn-primary" (click)="modal.close('Save click')">Cancel</button>
+		</div>
+	</div>
 </ng-template>

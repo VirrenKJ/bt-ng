@@ -1,49 +1,51 @@
 import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-add-profile-modal',
-  templateUrl: './add-profile-modal.component.html',
-  styleUrls: ['./add-profile-modal.component.css'],
-  providers: [NgbModalConfig, NgbModal],
+	selector: 'app-add-profile-modal',
+	templateUrl: './add-profile-modal.component.html',
+	styleUrls: ['./add-profile-modal.component.css'],
+	providers: [NgbModalConfig, NgbModal],
 })
 export class AddProfileModalComponent implements OnInit {
-  @ViewChild('addProfile') addProfile: TemplateRef<any>;
+	@ViewChild('addProfile') addProfile: TemplateRef<any>;
 
-  constructor(config: NgbModalConfig, private modalService: NgbModal) {
-    config.backdrop = 'static';
-    config.keyboard = false;
-  }
+	profileForm: FormGroup;
 
-  ngOnInit(): void {}
+	constructor(config: NgbModalConfig, private modalService: NgbModal) {
+		config.backdrop = 'static';
+		config.keyboard = false;
+	}
 
-  @Input()
-  set openProfileModal(data: any) {
-    if (data && !data.profileId) {
-      this.openModal(this.addProfile);
-    }
-    if (data && data.profileId) {
-      this.openModal(this.addProfile, data.profileId);
-    }
-  }
+	ngOnInit(): void {
+		this.profileForm = new FormGroup({
+			id: new FormControl(),
+			platform: new FormControl(null, Validators.required),
+			osName: new FormControl(null, Validators.required),
+			osVersion: new FormControl(null, Validators.required),
+			description: new FormControl(null, Validators.required),
+			deleteFlag: new FormControl(),
+		});
+	}
 
-  openModal(template: TemplateRef<any>, profileId = null) {
-    setTimeout(() => {
-      this.modalService.open(template, { size: 'lg' });
-    });
-  }
+	@Input()
+	set openProfileModal(data: any) {
+		if (data && !data.profileId) {
+			this.openModal(this.addProfile);
+		}
+		if (data && data.profileId) {
+			this.openModal(this.addProfile, data.profileId);
+		}
+	}
 
-  contactForm = new FormGroup({
-    firstName: new FormControl(),
-    lastName: new FormControl(),
-    email: new FormControl(),
-    gender: new FormControl(),
-    isMarried: new FormControl(),
-    country: new FormControl(),
-  });
+	openModal(template: TemplateRef<any>, profileId = null) {
+		setTimeout(() => {
+			this.modalService.open(template, { size: 'lg' });
+		});
+	}
 
-  onSubmit() {
-    console.log('Submitted!');
-  }
+	onSubmit() {
+		console.log('Submitted!');
+	}
 }
