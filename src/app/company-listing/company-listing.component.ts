@@ -7,7 +7,7 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { UserDetail } from '../authentication/common/models/user-detail';
 import { LoginService } from '../authentication/services/login.service';
 import { UserService } from '../authentication/services/user.service';
-import { SearchCriteriaObj } from '../base/models/search_criteria_obj';
+import { PaginationCriteria } from '../base/models/pagination_criteria';
 import { Company } from './models/company';
 import { CompanyService } from './services/company.service';
 
@@ -22,8 +22,8 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 	businessList = new Array<Company>();
 	companyList = new Array<Company>();
 	employeeList = new Array<UserDetail>();
-	searchCriteriaObjBusiness = new SearchCriteriaObj();
-	searchCriteriaObjEmployees = new SearchCriteriaObj();
+	paginationCriteriaBusiness = new PaginationCriteria();
+	paginationCriteriaEmployees = new PaginationCriteria();
 
 	employeeColumns: string[] = ['sno', 'name', 'companies', 'username', 'email'];
 	employeeDataSource = new MatTableDataSource<UserDetail>(this.employeeList);
@@ -45,12 +45,12 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 
 	ngOnInit(): void {
 		// this.perPageBusiness = 5;
-		this.searchCriteriaObjBusiness.page = 1;
-		this.searchCriteriaObjBusiness.limit = 5;
+		this.paginationCriteriaBusiness.page = 1;
+		this.paginationCriteriaBusiness.limit = 5;
 		this.getCompanyBusinessList();
 		this.getCompanyEmployerList();
-		this.searchCriteriaObjEmployees.page = 1;
-		this.searchCriteriaObjEmployees.limit = 5;
+		this.paginationCriteriaEmployees.page = 1;
+		this.paginationCriteriaEmployees.limit = 5;
 		this.getAllEmployeeList();
 	}
 
@@ -60,8 +60,8 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 	}
 
 	getCompanyBusinessList() {
-		this.searchCriteriaObjBusiness.id = this.loginService.getUser().id;
-		this.companyService.getList(this.searchCriteriaObjBusiness).subscribe(
+		this.paginationCriteriaBusiness.id = this.loginService.getUser().id;
+		this.companyService.getList(this.paginationCriteriaBusiness).subscribe(
 			response => {
 				console.log(response);
 				if (response.status == 200 && response.data && response.data.company && response.data.company.list && response.data.company.list.length > 0) {
@@ -77,8 +77,8 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 	}
 
 	paginationBusiness(event) {
-		this.searchCriteriaObjBusiness.page = event.pageIndex + 1;
-		this.searchCriteriaObjBusiness.limit = event.pageSize;
+		this.paginationCriteriaBusiness.page = event.pageIndex + 1;
+		this.paginationCriteriaBusiness.limit = event.pageSize;
 		this.getCompanyBusinessList();
 	}
 
@@ -97,8 +97,8 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 	}
 
 	getAllEmployeeList() {
-		this.searchCriteriaObjEmployees.id = this.loginService.getUser().id;
-		this.userService.getEmployeeList(this.searchCriteriaObjEmployees).subscribe(
+		this.paginationCriteriaEmployees.id = this.loginService.getUser().id;
+		this.userService.getEmployeeList(this.paginationCriteriaEmployees).subscribe(
 			response => {
 				console.log(response);
 				if (response.status == 200 && response.data && response.data.user && response.data.user.list && response.data.user.list.length > 0) {
@@ -114,9 +114,9 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 	}
 
 	paginationEmployees(event) {
-		this.searchCriteriaObjBusiness.page = event.pageIndex + 1;
-		this.searchCriteriaObjBusiness.limit = event.pageSize;
-		this.getCompanyBusinessList();
+		this.paginationCriteriaEmployees.page = event.pageIndex + 1;
+		this.paginationCriteriaEmployees.limit = event.pageSize;
+		this.getAllEmployeeList();
 	}
 
 	gotoBugTracker(company: Company) {

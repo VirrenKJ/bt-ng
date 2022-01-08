@@ -6,7 +6,7 @@ import { User } from 'src/app/authentication/common/models/user';
 import { LoginService } from 'src/app/authentication/services/login.service';
 import { RoleService } from 'src/app/authentication/services/role.service';
 import { UserService } from 'src/app/authentication/services/user.service';
-import { SearchCriteriaObj } from 'src/app/base/models/search_criteria_obj';
+import { PaginationCriteria } from 'src/app/base/models/pagination_criteria';
 import Swal from 'sweetalert2';
 import { Company } from '../models/company';
 import { CompanyService } from '../services/company.service';
@@ -64,9 +64,9 @@ export class EnlistModalComponent implements OnInit {
 	}
 
 	getCompanies() {
-		let searchCriteriaObj = new SearchCriteriaObj();
-		searchCriteriaObj.id = this.loginService.getUser().id;
-		this.companyService.getList(searchCriteriaObj).subscribe(
+		let paginationCriteria = new PaginationCriteria();
+		paginationCriteria.id = this.loginService.getUser().id;
+		this.companyService.getList(paginationCriteria).subscribe(
 			response => {
 				console.log(response);
 				if (response.data && response.data.company && response.data.company.list) {
@@ -81,8 +81,8 @@ export class EnlistModalComponent implements OnInit {
 	}
 
 	getRoles() {
-		let searchCriteriaObj = new SearchCriteriaObj();
-		this.roleService.getList(searchCriteriaObj).subscribe(
+		let paginationCriteria = new PaginationCriteria();
+		this.roleService.getList(paginationCriteria).subscribe(
 			response => {
 				if (response.data && response.data.role) {
 					this.roles = response.data.role;
@@ -95,12 +95,12 @@ export class EnlistModalComponent implements OnInit {
 	}
 
 	getUsers() {
-		let searchCriteriaObj = new SearchCriteriaObj();
-		searchCriteriaObj.limit = 10;
-		searchCriteriaObj.page = 1;
-		searchCriteriaObj.id = this.loginService.getUser().id;
-		searchCriteriaObj.searchFor = this.searchFor;
-		this.userService.getList(searchCriteriaObj).subscribe(
+		let paginationCriteria = new PaginationCriteria();
+		paginationCriteria.limit = 10;
+		paginationCriteria.page = 1;
+		paginationCriteria.id = this.loginService.getUser().id;
+		paginationCriteria.searchFor = this.searchFor;
+		this.userService.getList(paginationCriteria).subscribe(
 			response => {
 				if (response.data.user.list) {
 					this.users = response.data.user.list;

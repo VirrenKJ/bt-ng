@@ -1,4 +1,4 @@
-export class SearchCriteriaObj {
+export class PaginationCriteria {
 	public page: number;
 	public limit: number;
 	public sortType: number;
