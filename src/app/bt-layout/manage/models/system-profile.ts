@@ -1,4 +1,4 @@
-export class Profile {
+export class SystemProfile {
 	public id: number;
 	public platform: string;
 	public osName: string;

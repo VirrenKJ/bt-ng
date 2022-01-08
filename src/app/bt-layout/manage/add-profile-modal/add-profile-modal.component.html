@@ -4,7 +4,7 @@
 			<h1 class="modal-title">Add Profile</h1>
 			<button type="button" class="btn-close btn-close-white" (click)="modal.dismiss('Cross click')"></button>
 		</div>
-		<div class="modal-body mb-2">
+		<div class="modal-body mt-3">
 			<div class="container">
 				<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
 					<div class="row">
@@ -43,7 +43,6 @@
 									autocomplete="description"
 									matInput
 									placeholder="Enter here!"
-									required
 								></textarea>
 								<mat-hint *ngIf="!profileForm.get('description').valid && profileForm.get('description').touched"
 									>Please enter a valid description!!</mat-hint
@@ -55,7 +54,7 @@
 			</div>
 		</div>
 		<div class="modal-footer">
-			<button type="button" class="btn btn-primary">Submit</button>
+			<button type="button" class="btn btn-primary" (click)="onSubmit()">Submit</button>
 			<button type="button" class="btn btn-primary" (click)="modal.close('Save click')">Cancel</button>
 		</div>
 	</div>

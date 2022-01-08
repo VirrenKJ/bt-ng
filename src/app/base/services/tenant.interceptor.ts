@@ -13,7 +13,7 @@ export class TenantInterceptor implements HttpInterceptor {
 		if (dbUUID != null) {
 			authReq = authReq.clone({ setHeaders: { 'x-tenant': dbUUID } });
 		}
-		return next.handle(request);
+		return next.handle(authReq);
 	}
 }
 export const tenantInterceptorProvider = [
