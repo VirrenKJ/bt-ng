@@ -23,7 +23,7 @@ export class ManageComponent implements OnInit, AfterViewInit {
 
 	userColumns: string[] = ['position', 'name', 'weight', 'symbol'];
 	projectColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-	profileColumns: string[] = ['sno', 'platform', 'os', 'version', 'desc'];
+	profileColumns: string[] = ['sno', 'platform', 'os', 'version', 'desc', 'action'];
 	categoryColumns: string[] = ['position', 'name', 'weight', 'symbol'];
 
 	userDataSource = new MatTableDataSource<Users>(users);

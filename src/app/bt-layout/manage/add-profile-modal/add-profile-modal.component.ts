@@ -87,6 +87,7 @@ export class AddProfileModalComponent implements OnInit {
 			timer: 2000,
 		}).then(() => {
 			this.profileListEvent.emit();
+			this.modalService.dismissAll();
 		});
 	}
 
