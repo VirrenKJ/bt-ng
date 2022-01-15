@@ -1,3 +1,9 @@
+import { GlobalCategoryService } from './services/global-category.service';
+import { UserService } from './../../authentication/services/user.service';
+import { GlobalCategory } from './models/global-category';
+import { Project } from './models/project';
+import { User } from './../../authentication/common/models/user';
+import { ProjectService } from './services/project.service';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -19,18 +25,25 @@ export class ManageComponent implements OnInit, AfterViewInit {
 	@ViewChild('profilePaginator') profilePaginator: MatPaginator;
 	@ViewChild('categoryPaginator') categoryPaginator: MatPaginator;
 
+	paginationCriteriaUser = new PaginationCriteria();
+	paginationCriteriaProject = new PaginationCriteria();
+	paginationCriteriaCategory = new PaginationCriteria();
 	paginationCriteriaProfile = new PaginationCriteria();
+
+	userList = new Array<User>();
+	projectList = new Array<Project>();
+	categoryList = new Array<GlobalCategory>();
 	systemProfileList = new Array<SystemProfile>();
 
 	userColumns: string[] = ['position', 'name', 'weight', 'symbol'];
 	projectColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-	profileColumns: string[] = ['sno', 'platform', 'os', 'version', 'desc', 'action'];
 	categoryColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+	profileColumns: string[] = ['sno', 'platform', 'os', 'version', 'desc', 'action'];
 
-	userDataSource = new MatTableDataSource<Users>(users);
-	projectDataSource = new MatTableDataSource<Users>(projects);
+	userDataSource = new MatTableDataSource<User>(this.userList);
+	projectDataSource = new MatTableDataSource<Project>(this.projectList);
+	categoryDataSource = new MatTableDataSource<GlobalCategory>(this.categoryList);
 	profileDataSource = new MatTableDataSource<SystemProfile>(this.systemProfileList);
-	categoryDataSource = new MatTableDataSource<Users>(globalCategories);
 
 	setOpenUserModal: any;
 	setOpenProjectModal: any;
@@ -39,35 +52,120 @@ export class ManageComponent implements OnInit, AfterViewInit {
 
 	adminRole: boolean = false;
 
-	constructor(private loginService: LoginService, private systemProfileService: SystemProfileService, private _snackBar: MatSnackBar) {}
+	constructor(
+		private loginService: LoginService,
+		private userService: UserService,
+		private projectService: ProjectService,
+		private globalCategoryService: GlobalCategoryService,
+		private systemProfileService: SystemProfileService,
+		private _snackBar: MatSnackBar
+	) {}
 
 	ngOnInit(): void {
 		if (this.loginService.getUserRole() == 'Admin') {
 			this.adminRole = true;
 		}
+		this.paginationInIt();
+		this.apiInIt();
+	}
+
+	apiInIt() {
+		this.getProjectList();
+		this.getSystemProfileList();
+	}
+
+	paginationInIt() {
+		this.paginationCriteriaUser.page = 1;
+		this.paginationCriteriaUser.limit = 5;
+		this.paginationCriteriaProject.page = 1;
+		this.paginationCriteriaProject.limit = 5;
+		this.paginationCriteriaCategory.page = 1;
+		this.paginationCriteriaCategory.limit = 5;
 		this.paginationCriteriaProfile.page = 1;
 		this.paginationCriteriaProfile.limit = 5;
-		this.getSystemProfileList();
 	}
 
 	ngAfterViewInit() {
 		this.userDataSource.paginator = this.userPaginator;
 		this.projectDataSource.paginator = this.projectPaginator;
-		this.profileDataSource.paginator = this.profilePaginator;
 		this.categoryDataSource.paginator = this.categoryPaginator;
+		this.profileDataSource.paginator = this.profilePaginator;
+	}
+
+	getUserList() {
+		this.userService.getList(this.paginationCriteriaUser).subscribe(
+			response => {
+				console.log(response);
+				if (response.status == 200 && response.data && response.data.user && response.data.user.list) {
+					this.userList = response.data.user.list;
+					this.userDataSource = new MatTableDataSource<User>(this.userList);
+					this.userPaginator.length = response.data.user.totalRowCount;
+				}
+			},
+			errorRes => {
+				console.error(errorRes);
+				this.snackBarPopup(errorRes.error.message);
+			}
+		);
+	}
+
+	paginationUser(event) {
+		this.paginationCriteriaUser.page = event.pageIndex + 1;
+		this.paginationCriteriaUser.limit = event.pageSize;
+		this.getUserList();
+	}
+
+	getProjectList() {
+		this.projectService.getList(this.paginationCriteriaProject).subscribe(
+			response => {
+				console.log(response);
+				if (response.status == 200 && response.data && response.data.project && response.data.project.list) {
+					this.projectList = response.data.project.list;
+					this.projectDataSource = new MatTableDataSource<Project>(this.projectList);
+					this.projectPaginator.length = response.data.project.totalRowCount;
+				}
+			},
+			errorRes => {
+				console.error(errorRes);
+				this.snackBarPopup(errorRes.error.message);
+			}
+		);
+	}
+
+	paginationProject(event) {
+		this.paginationCriteriaProject.page = event.pageIndex + 1;
+		this.paginationCriteriaProject.limit = event.pageSize;
+		this.getProjectList();
+	}
+
+	getGlobalCategoryList() {
+		this.globalCategoryService.getList(this.paginationCriteriaCategory).subscribe(
+			response => {
+				console.log(response);
+				if (response.status == 200 && response.data && response.data.category && response.data.category.list) {
+					this.categoryList = response.data.category.list;
+					this.categoryDataSource = new MatTableDataSource<GlobalCategory>(this.categoryList);
+					this.categoryPaginator.length = response.data.category.totalRowCount;
+				}
+			},
+			errorRes => {
+				console.error(errorRes);
+				this.snackBarPopup(errorRes.error.message);
+			}
+		);
+	}
+
+	paginationGlobalCategory(event) {
+		this.paginationCriteriaCategory.page = event.pageIndex + 1;
+		this.paginationCriteriaCategory.limit = event.pageSize;
+		this.getGlobalCategoryList();
 	}
 
 	getSystemProfileList() {
 		this.systemProfileService.getList(this.paginationCriteriaProfile).subscribe(
 			response => {
 				console.log(response);
-				if (
-					response.status == 200 &&
-					response.data &&
-					response.data.systemProfile &&
-					response.data.systemProfile.list &&
-					response.data.systemProfile.list.length > 0
-				) {
+				if (response.status == 200 && response.data && response.data.systemProfile && response.data.systemProfile.list) {
 					this.systemProfileList = response.data.systemProfile.list;
 					this.profileDataSource = new MatTableDataSource<SystemProfile>(this.systemProfileList);
 					this.profilePaginator.length = response.data.systemProfile.totalRowCount;
@@ -108,6 +206,42 @@ export class ManageComponent implements OnInit, AfterViewInit {
 		this.setOpenProfileModal = {
 			profileId: profileId,
 		};
+	}
+
+	deleteUser(userId) {
+		this.deleteConfirmationPopup().then(result => {
+			if (result.value) {
+				this.userService.delete(userId).subscribe(response => {
+					if (response.status == 200) {
+						this.deletedConfirmationPopup(response.message, 'User');
+					}
+				});
+			}
+		});
+	}
+
+	deleteProject(projectId) {
+		this.deleteConfirmationPopup().then(result => {
+			if (result.value) {
+				this.projectService.delete(projectId).subscribe(response => {
+					if (response.status == 200) {
+						this.deletedConfirmationPopup(response.message, 'Project');
+					}
+				});
+			}
+		});
+	}
+
+	deleteCategory(categoryId) {
+		this.deleteConfirmationPopup().then(result => {
+			if (result.value) {
+				this.globalCategoryService.delete(categoryId).subscribe(response => {
+					if (response.status == 200) {
+						this.deletedConfirmationPopup(response.message, 'Global Category');
+					}
+				});
+			}
+		});
 	}
 
 	deleteProfile(profileId) {
@@ -174,13 +308,6 @@ export interface Projects {
 	symbol: string;
 }
 
-export interface GlobalCategory {
-	name: string;
-	position: number;
-	weight: number;
-	symbol: string;
-}
-
 const users: Users[] = [
 	{ position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
 	{ position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
@@ -205,29 +332,6 @@ const users: Users[] = [
 ];
 
 const projects: Projects[] = [
-	{ position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-	{ position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-	{ position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-	{ position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-	{ position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-	{ position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-	{ position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-	{ position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-	{ position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-	{ position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-	{ position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na' },
-	{ position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg' },
-	{ position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al' },
-	{ position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si' },
-	{ position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P' },
-	{ position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S' },
-	{ position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl' },
-	{ position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar' },
-	{ position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K' },
-	{ position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca' },
-];
-
-const globalCategories: GlobalCategory[] = [
 	{ position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
 	{ position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
 	{ position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
