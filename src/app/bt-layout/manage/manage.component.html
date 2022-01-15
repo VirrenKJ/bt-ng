@@ -256,7 +256,8 @@
 						<ng-container matColumnDef="action">
 							<th mat-header-cell *matHeaderCellDef>Action</th>
 							<td mat-cell *matCellDef="let element">
-								<span class="material-icons" style="cursor: pointer"> edit </span><span class="material-icons" style="cursor: pointer"> delete </span>
+								<span class="material-icons" (click)="openProfileModal(element.id)" style="cursor: pointer"> edit </span>
+								<span class="material-icons" (click)="deleteProfile(element.id)" style="cursor: pointer"> delete </span>
 							</td>
 						</ng-container>
 

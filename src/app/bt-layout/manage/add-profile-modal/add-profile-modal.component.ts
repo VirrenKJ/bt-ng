@@ -1,3 +1,4 @@
+import { SystemProfile } from './../models/system-profile';
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -51,12 +52,15 @@ export class AddProfileModalComponent implements OnInit {
 	}
 
 	openModal(template: TemplateRef<any>, profileId = null) {
+		if (profileId) {
+			this.getDeduction(profileId);
+		}
 		setTimeout(() => {
 			this.modalService.open(template, { size: 'lg' });
 		});
 	}
 
-	onSubmit() {
+	addUpdateProfile() {
 		if (this.profileForm.valid) {
 			this.profileForm.get('platform').setValue(this.profileForm.get('platform').value.trim());
 			this.profileForm.get('osName').setValue(this.profileForm.get('osName').value.trim());
@@ -67,7 +71,9 @@ export class AddProfileModalComponent implements OnInit {
 			this.systemProfileService.add(this.profileForm.value).subscribe(
 				response => {
 					console.log(response);
-					this.confirmationPopup('System Profile Saved.');
+					if (response.status === 200 && response.data && response.data.systemProfile) {
+						this.confirmationPopup('System Profile Saved.');
+					}
 				},
 				errorRes => {
 					console.error(errorRes);
@@ -77,6 +83,22 @@ export class AddProfileModalComponent implements OnInit {
 		} else {
 			this.snackBarPopup('Invalid Form');
 		}
+	}
+
+	getDeduction(profileId) {
+		this.systemProfileService.getById(profileId).subscribe(response => {
+			console.log(response);
+			if (response.status === 200 && response.data && response.data.systemProfile) {
+				this.profileForm.setValue({
+					id: response.data.systemProfile.id,
+					platform: response.data.systemProfile.platform,
+					osName: response.data.systemProfile.osName,
+					osVersion: response.data.systemProfile.osVersion,
+					description: response.data.systemProfile.description,
+					deleteFlag: response.data.systemProfile.deleteFlag,
+				});
+			}
+		});
 	}
 
 	confirmationPopup(title: string) {

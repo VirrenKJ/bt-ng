@@ -3,6 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { PaginationCriteria } from 'src/app/base/models/pagination_criteria';
+import Swal from 'sweetalert2';
 import { LoginService } from '../../authentication/services/login.service';
 import { SystemProfile } from './models/system-profile';
 import { SystemProfileService } from './services/system-profile.service';
@@ -109,11 +110,52 @@ export class ManageComponent implements OnInit, AfterViewInit {
 		};
 	}
 
+	deleteProfile(profileId) {
+		this.deleteConfirmationPopup().then(result => {
+			if (result.value) {
+				this.systemProfileService.delete(profileId).subscribe(response => {
+					if (response.status == 200) {
+						this.deletedConfirmationPopup(response.message, 'Profile');
+					}
+				});
+			}
+		});
+	}
+
 	snackBarPopup(message: string) {
 		this._snackBar.open(message, 'OK', {
 			duration: 3000,
 			horizontalPosition: 'center',
 			verticalPosition: 'top',
+		});
+	}
+
+	deleteConfirmationPopup() {
+		return Swal.fire({
+			title: 'Warning',
+			text: 'Are you sure that you want to perform this action?',
+			icon: 'question',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes',
+			cancelButtonText: 'No',
+			allowOutsideClick: false,
+			allowEscapeKey: false,
+		});
+	}
+
+	deletedConfirmationPopup(message, title) {
+		Swal.fire({
+			title: title,
+			text: message,
+			icon: 'success',
+			allowOutsideClick: false,
+			allowEscapeKey: false,
+		}).then(result => {
+			if (result.value) {
+				this.getSystemProfileList();
+			}
 		});
 	}
 }
