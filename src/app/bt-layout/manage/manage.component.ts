@@ -36,7 +36,7 @@ export class ManageComponent implements OnInit, AfterViewInit {
 	systemProfileList = new Array<SystemProfile>();
 
 	userColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-	projectColumns: string[] = ['sno', 'name', 'status', 'viewStatus', 'categoryFlag', 'description'];
+	projectColumns: string[] = ['sno', 'name', 'status', 'viewStatus', 'categoryFlag', 'description', 'action'];
 	categoryColumns: string[] = ['position', 'name', 'weight', 'symbol'];
 	profileColumns: string[] = ['sno', 'platform', 'os', 'version', 'desc', 'action'];
 

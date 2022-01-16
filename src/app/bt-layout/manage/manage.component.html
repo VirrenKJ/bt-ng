@@ -129,6 +129,15 @@
 							<th mat-header-cell *matHeaderCellDef>Description</th>
 							<td mat-cell *matCellDef="let element">{{ element.description }}</td>
 						</ng-container>
+
+						<ng-container matColumnDef="action">
+							<th mat-header-cell *matHeaderCellDef>Action</th>
+							<td mat-cell *matCellDef="let element">
+								<span class="material-icons" (click)="openProjectModal(element.id)" style="cursor: pointer"> edit </span>
+								<span class="material-icons" (click)="deleteProject(element.id)" style="cursor: pointer"> delete </span>
+							</td>
+						</ng-container>
+
 						<tr mat-header-row *matHeaderRowDef="projectColumns"></tr>
 						<tr mat-row *matRowDef="let row; columns: projectColumns"></tr>
 					</table>
