@@ -1,9 +1,9 @@
 export class Project {
 	public id: number;
 	public name: string;
-	public statusId: number;
+	public status: string;
 	public inheritCategoryFlag: boolean;
-	public viewStatusId: number;
+	public viewStatus: string;
 	public description: string;
 	public deleteFlag: boolean;
 }

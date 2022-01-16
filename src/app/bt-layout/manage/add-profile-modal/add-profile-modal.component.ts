@@ -1,6 +1,6 @@
 import { SystemProfile } from './../models/system-profile';
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormGroupDirective } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomValidationService } from 'src/app/authentication/services/custom-validation.service';
@@ -78,6 +78,9 @@ export class AddProfileModalComponent implements OnInit {
 				errorRes => {
 					console.error(errorRes);
 					this.snackBarPopup(errorRes.error.message);
+				},
+				() => {
+					this.profileForm.reset();
 				}
 			);
 		} else {
