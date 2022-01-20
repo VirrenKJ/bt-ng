@@ -1,49 +1,140 @@
-import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { GlobalCategoryService } from './../services/global-category.service';
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CustomValidationService } from 'src/app/authentication/services/custom-validation.service';
+import Swal from 'sweetalert2';
+import { MatTableDataSource } from '@angular/material/table';
+import { Project } from '../models/project';
+import { ProjectService } from '../services/project.service';
+import { PaginationCriteria } from 'src/app/base/models/pagination_criteria';
 
 @Component({
-  selector: 'app-add-category-modal',
-  templateUrl: './add-category-modal.component.html',
-  styleUrls: ['./add-category-modal.component.css'],
-  providers: [NgbModalConfig, NgbModal],
+	selector: 'app-add-category-modal',
+	templateUrl: './add-category-modal.component.html',
+	styleUrls: ['./add-category-modal.component.css'],
+	providers: [NgbModalConfig, NgbModal],
 })
 export class AddCategoryModalComponent implements OnInit {
-  @ViewChild('addCategory') addCategory: TemplateRef<any>;
+	@ViewChild('addCategory') addCategory: TemplateRef<any>;
+	@Output() categoryListEvent = new EventEmitter();
 
-  constructor(config: NgbModalConfig, private modalService: NgbModal) {
-    config.backdrop = 'static';
-    config.keyboard = false;
-  }
+	projectList = new Array<Project>();
+	paginationCriteriaProject = new PaginationCriteria();
 
-  ngOnInit(): void {}
+	categoryForm: FormGroup;
 
-  @Input()
-  set openCategoryModal(data: any) {
-    if (data && !data.categoryId) {
-      this.openModal(this.addCategory);
-    }
-    if (data && data.categoryId) {
-      this.openModal(this.addCategory, data.categoryId);
-    }
-  }
+	constructor(
+		config: NgbModalConfig,
+		private _snackBar: MatSnackBar,
+		private globalCategoryService: GlobalCategoryService,
+		private customValidationService: CustomValidationService,
+		private projectService: ProjectService,
+		private modalService: NgbModal
+	) {
+		config.backdrop = 'static';
+		config.keyboard = false;
+	}
 
-  openModal(template: TemplateRef<any>, categoryId = null) {
-    setTimeout(() => {
-      this.modalService.open(template, { size: 'lg' });
-    });
-  }
+	ngOnInit(): void {
+		this.categoryForm = new FormGroup({
+			id: new FormControl(null),
+			name: new FormControl(null, [Validators.required, this.customValidationService.noWhitespace]),
+			assignedId: new FormControl(null, Validators.required),
+			deleteFlag: new FormControl(null),
+		});
+		this.getProjectList();
+	}
 
-  contactForm = new FormGroup({
-    firstName: new FormControl(),
-    lastName: new FormControl(),
-    email: new FormControl(),
-    gender: new FormControl(),
-    isMarried: new FormControl(),
-    country: new FormControl(),
-  });
+	@Input()
+	set openCategoryModal(data: any) {
+		if (data && !data.categoryId) {
+			this.openModal(this.addCategory);
+		}
+		if (data && data.categoryId) {
+			this.openModal(this.addCategory, data.categoryId);
+		}
+	}
 
-  onSubmit() {
-    console.log('Submitted!');
-  }
+	openModal(template: TemplateRef<any>, categoryId = null) {
+		if (categoryId) {
+			this.getCategory(categoryId);
+		}
+		setTimeout(() => {
+			this.modalService.open(template, { size: 'lg' });
+		});
+	}
+
+	addUpdateCategory() {
+		if (this.categoryForm.valid) {
+			this.categoryForm.get('name').setValue(this.categoryForm.get('name').value.trim());
+			this.globalCategoryService.add(this.categoryForm.value).subscribe(
+				response => {
+					console.log(response);
+					if (response.status === 200 && response.data && response.data.globalCategory) {
+						this.confirmationPopup('Global Category Saved.');
+					}
+				},
+				errorRes => {
+					console.error(errorRes);
+					this.snackBarPopup(errorRes.error.message);
+				},
+				() => {
+					this.categoryForm.reset();
+				}
+			);
+		} else {
+			this.snackBarPopup('Invalid Form');
+		}
+	}
+
+	getCategory(categoryId) {
+		this.globalCategoryService.getById(categoryId).subscribe(response => {
+			console.log(response);
+			if (response.status === 200 && response.data && response.data.globalCategory) {
+				this.categoryForm.setValue({
+					id: response.data.globalCategory.id,
+					name: response.data.globalCategory.name,
+					assignedId: response.data.globalCategory.assignedId,
+					deleteFlag: response.data.globalCategory.deleteFlag,
+				});
+			}
+		});
+	}
+
+	getProjectList() {
+		this.projectService.getList(this.paginationCriteriaProject).subscribe(
+			response => {
+				console.log(response);
+				if (response.status == 200 && response.data && response.data.project && response.data.project.list) {
+					this.projectList = response.data.project.list;
+				}
+			},
+			errorRes => {
+				console.error(errorRes);
+				this.snackBarPopup(errorRes.error.message);
+			}
+		);
+	}
+
+	confirmationPopup(title: string) {
+		Swal.fire({
+			icon: 'success',
+			title: title,
+			showConfirmButton: false,
+			timer: 2000,
+		}).then(() => {
+			this.categoryListEvent.emit();
+			this.modalService.dismissAll();
+		});
+	}
+
+	snackBarPopup(message: string) {
+		this._snackBar.open(message, 'OK', {
+			duration: 3000,
+			horizontalPosition: 'center',
+			verticalPosition: 'top',
+		});
+	}
 }

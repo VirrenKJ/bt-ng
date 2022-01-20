@@ -1,6 +1,5 @@
-import { SystemProfile } from './../models/system-profile';
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormGroupDirective } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomValidationService } from 'src/app/authentication/services/custom-validation.service';
@@ -53,7 +52,7 @@ export class AddProfileModalComponent implements OnInit {
 
 	openModal(template: TemplateRef<any>, profileId = null) {
 		if (profileId) {
-			this.getDeduction(profileId);
+			this.getProfile(profileId);
 		}
 		setTimeout(() => {
 			this.modalService.open(template, { size: 'lg' });
@@ -88,7 +87,7 @@ export class AddProfileModalComponent implements OnInit {
 		}
 	}
 
-	getDeduction(profileId) {
+	getProfile(profileId) {
 		this.systemProfileService.getById(profileId).subscribe(response => {
 			console.log(response);
 			if (response.status === 200 && response.data && response.data.systemProfile) {

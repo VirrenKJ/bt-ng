@@ -37,7 +37,7 @@ export class ManageComponent implements OnInit, AfterViewInit {
 
 	userColumns: string[] = ['position', 'name', 'weight', 'symbol'];
 	projectColumns: string[] = ['sno', 'name', 'status', 'viewStatus', 'categoryFlag', 'description', 'action'];
-	categoryColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+	categoryColumns: string[] = ['sno', 'name', 'project', 'action'];
 	profileColumns: string[] = ['sno', 'platform', 'os', 'version', 'desc', 'action'];
 
 	userDataSource = new MatTableDataSource<User>(this.userList);
@@ -144,10 +144,10 @@ export class ManageComponent implements OnInit, AfterViewInit {
 		this.globalCategoryService.getList(this.paginationCriteriaCategory).subscribe(
 			response => {
 				console.log(response);
-				if (response.status == 200 && response.data && response.data.category && response.data.category.list) {
-					this.categoryList = response.data.category.list;
+				if (response.status == 200 && response.data && response.data.globalCategory && response.data.globalCategory.list) {
+					this.categoryList = response.data.globalCategory.list;
 					this.categoryDataSource = new MatTableDataSource<GlobalCategory>(this.categoryList);
-					this.categoryPaginator.length = response.data.category.totalRowCount;
+					this.categoryPaginator.length = response.data.globalCategory.totalRowCount;
 				}
 			},
 			errorRes => {
