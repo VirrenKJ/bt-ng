@@ -1,68 +1,114 @@
 <ng-template #addUser let-modal>
-  <div class="modal-content">
-    <div class="modal-header">
-      <h1 class="modal-title">Add User</h1>
-      <button type="button" class="btn-close btn-close-white" (click)="modal.dismiss('Cross click')"></button>
-    </div>
-    <div class="modal-body">
-      <div class="container">
-        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
-          <div class="form-group">
-            <div class="row">
-              <div class="col-md-6">
-                <label class="form-label" for="country">Username</label>
-                <div class="input-group">
-                  <span class="input-group-text bg-dark text-white">@</span>
-                  <input type="text" class="form-control bg-dark text-white" id="username" placeholder="Username" />
-                </div>
-                <div class="invalid-feedback">Valid Username is required.</div>
-              </div>
-              <div class="col-md-6">
-                <label class="form-label" for="name">Name</label>
-                <input type="text" class="form-control bg-dark text-white" id="name" placeholder="Name" />
-                <div class="invalid-feedback">Valid name is required.</div>
-              </div>
-            </div>
-            <div class="row mt-3">
-              <div class="col-md-6">
-                <label class="form-label" for="mail">E-mail</label>
-                <input type="mail" class="form-control bg-dark text-white" id="mail" placeholder="xyz@gmail.com" />
-                <div class="invalid-feedback">Valid Username is required.</div>
-              </div>
-              <div class="col-md-6">
-                <label class="form-label" for="access">Access Level</label>
-                <select class="form-control bg-dark text-white" id="access">
-                  <option value="">Choose...</option>
-                  <option value="australia">Project 1</option>
-                  <option value="usa">Project 2</option>
-                </select>
-                <div class="invalid-feedback">Valid Username is required.</div>
-              </div>
-            </div>
+	<div class="modal-content">
+		<div class="modal-header">
+			<h1 class="modal-title">Add User</h1>
+			<button type="button" class="btn-close btn-close-white" (click)="modal.dismiss('Cross click')"></button>
+		</div>
+		<div class="modal-body">
+			<div class="container">
+				<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+					<div class="form-group">
+						<div class="row">
+							<div class="col-md-6">
+								<mat-form-field appearance="outline">
+									<mat-label>First name</mat-label>
+									<input type="text" formControlName="firstName" autocomplete="name" matInput placeholder="Enter here!" />
+									<mat-hint *ngIf="!userForm.get('firstName').valid && userForm.get('firstName').touched">Please enter a valid firstName!!</mat-hint>
+								</mat-form-field>
+							</div>
+							<div class="col-md-6">
+								<mat-form-field appearance="outline">
+									<mat-label>Last name</mat-label>
+									<input type="text" formControlName="lastName" autocomplete="name" matInput placeholder="Enter here!" />
+									<mat-hint *ngIf="!userForm.get('lastName').valid && userForm.get('lastName').touched">Please enter a valid lastName!!</mat-hint>
+								</mat-form-field>
+							</div>
+						</div>
 
-            <hr class="my-4" />
+						<div class="row">
+							<div class="col-md-6">
+								<mat-form-field appearance="outline" matTooltip="Must be Unique!" matTooltipPosition="after">
+									<mat-label>Username</mat-label>
+									<input type="text" formControlName="username" autocomplete="username" matInput placeholder="Enter here!" />
+									<mat-hint
+										*ngIf="
+											userForm.get('username').touched &&
+											(userForm.get('username').errors?.required ||
+												userForm.get('username').errors?.whitespace ||
+												userForm.get('username').errors?.minlength)
+										"
+										>Please enter a valid username, min length is 5 letters!!</mat-hint
+									>
+									<mat-hint *ngIf="userForm.get('username').touched && userForm.get('username').errors?.usernameNotAvailable"
+										>Username is not available!!</mat-hint
+									>
+								</mat-form-field>
+							</div>
+							<div class="col-md-6">
+								<mat-form-field appearance="outline">
+									<mat-label>Email</mat-label>
+									<input type="email" formControlName="email" autocomplete="email" matInput placeholder="Enter here!" />
+									<mat-hint *ngIf="!userForm.get('email').valid && userForm.get('email').touched">Please enter a valid email!!</mat-hint>
+								</mat-form-field>
+							</div>
+						</div>
 
-            <div class="row">
-              <div class="col ps-4">
-                <div class="form-check form-switch">
-                  <input class="form-check-input bg-dark" style="font-size: large" type="checkbox" id="enabled" checked />
-                  <label class="form-check-label mt-1" for="enabled">Enabled</label>
-                </div>
-              </div>
-              <div class="col">
-                <div class="form-check form-switch">
-                  <input class="form-check-input bg-dark" style="font-size: large" type="checkbox" id="protected" />
-                  <label class="form-check-label mt-1" for="protected">Protected</label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-primary">Submit</button>
-      <button type="button" class="btn btn-primary" (click)="modal.close('Save click')">Cancel</button>
-    </div>
-  </div>
+						<div class="row">
+							<div class="col-md-6">
+								<mat-form-field appearance="outline">
+									<mat-label>Password</mat-label>
+									<input
+										[type]="showPassword ? 'text' : 'password'"
+										formControlName="password"
+										autocomplete="new-password"
+										matInput
+										placeholder="Enter here!"
+									/>
+									<mat-icon matSuffix style="cursor: pointer" (click)="password()">{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+									<mat-hint *ngIf="userForm.get('password').errors?.required && userForm.get('password').touched">Password is required</mat-hint>
+									<mat-hint *ngIf="userForm.get('password').errors?.invalidPassword && userForm.get('password').touched"
+										>Password should have min 8 characters, at least 1 uppercase letter, 1 lowercase letter & 1 number</mat-hint
+									>
+								</mat-form-field>
+							</div>
+							<div class="col-md-6">
+								<mat-form-field appearance="outline">
+									<mat-label>Confirm Password</mat-label>
+									<input
+										[type]="showConfirmPassword ? 'text' : 'password'"
+										formControlName="confirmPassword"
+										autocomplete="new-password"
+										matInput
+										placeholder="Enter here!"
+									/>
+									<mat-icon matSuffix style="cursor: pointer" (click)="confirmPassword()">{{
+										showConfirmPassword ? 'visibility_off' : 'visibility'
+									}}</mat-icon>
+									<mat-hint *ngIf="userForm.get('confirmPassword').errors?.required && userForm.get('confirmPassword').touched"
+										>Please enter a valid password!!</mat-hint
+									>
+									<mat-hint *ngIf="userForm.get('confirmPassword').errors?.passwordMismatch">Passwords does not match</mat-hint>
+								</mat-form-field>
+							</div>
+						</div>
+
+						<hr class="mt-0" />
+
+						<div class="row">
+							<div class="col ps-4">
+								<div class="form-check form-switch">
+									<input class="form-check-input bg-dark" formControlName="enabled" style="font-size: large" type="checkbox" id="enabled" checked />
+									<label class="form-check-label mt-1" for="enabled">Enabled</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-primary">Submit</button>
+			<button type="button" class="btn btn-primary" (click)="modal.close('Save click')">Cancel</button>
+		</div>
+	</div>
 </ng-template>

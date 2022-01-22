@@ -43,7 +43,7 @@
 								matInput
 								placeholder="Enter here!"
 							/>
-							<mat-icon matSuffix style="cursor: pointer" (click)="password()">remove_red_eye</mat-icon>
+							<mat-icon matSuffix style="cursor: pointer" (click)="password()">{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
 							<mat-hint *ngIf="signupForm.get('password').errors?.required && signupForm.get('password').touched">Password is required</mat-hint>
 							<mat-hint *ngIf="signupForm.get('password').errors?.invalidPassword && signupForm.get('password').touched"
 								>Password should have min 8 characters, at least 1 uppercase letter, 1 lowercase letter & 1 number</mat-hint
@@ -59,7 +59,9 @@
 								matInput
 								placeholder="Enter here!"
 							/>
-							<mat-icon matSuffix style="cursor: pointer" (click)="confirmPassword()">remove_red_eye</mat-icon>
+							<mat-icon matSuffix style="cursor: pointer" (click)="confirmPassword()">{{
+								showConfirmPassword ? 'visibility_off' : 'visibility'
+							}}</mat-icon>
 							<mat-hint *ngIf="signupForm.get('confirmPassword').errors?.required && signupForm.get('confirmPassword').touched"
 								>Please enter a valid password!!</mat-hint
 							>
