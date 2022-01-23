@@ -1,3 +1,4 @@
+import { GlobalCategory } from './../models/global-category';
 import { GlobalCategoryService } from './../services/global-category.service';
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -5,7 +6,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomValidationService } from 'src/app/authentication/services/custom-validation.service';
 import Swal from 'sweetalert2';
-import { MatTableDataSource } from '@angular/material/table';
 import { Project } from '../models/project';
 import { ProjectService } from '../services/project.service';
 import { PaginationCriteria } from 'src/app/base/models/pagination_criteria';
@@ -43,6 +43,10 @@ export class AddCategoryModalComponent implements OnInit {
 			name: new FormControl(null, [Validators.required, this.customValidationService.noWhitespace]),
 			assignedId: new FormControl(null, Validators.required),
 			deleteFlag: new FormControl(null),
+			createdAt: new FormControl(null),
+			createdBy: new FormControl(null),
+			updatedAt: new FormControl(null),
+			updatedBy: new FormControl(null),
 		});
 		this.getProjectList();
 	}
@@ -69,24 +73,53 @@ export class AddCategoryModalComponent implements OnInit {
 	addUpdateCategory() {
 		if (this.categoryForm.valid) {
 			this.categoryForm.get('name').setValue(this.categoryForm.get('name').value.trim());
-			this.globalCategoryService.add(this.categoryForm.value).subscribe(
-				response => {
-					console.log(response);
-					if (response.status === 200 && response.data && response.data.globalCategory) {
-						this.confirmationPopup('Global Category Saved.');
-					}
-				},
-				errorRes => {
-					console.error(errorRes);
-					this.snackBarPopup(errorRes.error.message);
-				},
-				() => {
-					this.categoryForm.reset();
-				}
-			);
+			if (!this.categoryForm.get('id').value) {
+				this.addCategoryApi();
+			} else {
+				this.updateCategoryApi();
+			}
 		} else {
 			this.snackBarPopup('Invalid Form');
 		}
+	}
+
+	addCategoryApi() {
+		this.globalCategoryService.add(this.categoryForm.value).subscribe(
+			response => {
+				console.log(response);
+				if (response.status === 200 && response.data && response.data.globalCategory) {
+					this.confirmationPopup('Global Category Saved.');
+				}
+			},
+			errorRes => {
+				console.error(errorRes);
+				this.snackBarPopup(errorRes.error.message);
+			},
+			() => {
+				this.categoryForm.reset();
+			}
+		);
+	}
+
+	updateCategoryApi() {
+		let category: GlobalCategory = this.categoryForm.value;
+		console.log(category);
+
+		this.globalCategoryService.update(this.categoryForm.value).subscribe(
+			response => {
+				console.log(response);
+				if (response.status === 200 && response.data && response.data.globalCategory) {
+					this.confirmationPopup('Global Category Updated.');
+				}
+			},
+			errorRes => {
+				console.error(errorRes);
+				this.snackBarPopup(errorRes.error.message);
+			},
+			() => {
+				this.categoryForm.reset();
+			}
+		);
 	}
 
 	getCategory(categoryId) {
@@ -98,6 +131,10 @@ export class AddCategoryModalComponent implements OnInit {
 					name: response.data.globalCategory.name,
 					assignedId: response.data.globalCategory.assignedId,
 					deleteFlag: response.data.globalCategory.deleteFlag,
+					createdAt: response.data.globalCategory.createdAt,
+					createdBy: response.data.globalCategory.createdBy,
+					updatedAt: response.data.globalCategory.updatedAt,
+					updatedBy: response.data.globalCategory.updatedBy,
 				});
 			}
 		});

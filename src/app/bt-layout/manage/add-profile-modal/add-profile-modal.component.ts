@@ -37,6 +37,10 @@ export class AddProfileModalComponent implements OnInit {
 			osVersion: new FormControl(null, [Validators.required, this.customValidationService.noWhitespace]),
 			description: new FormControl(null),
 			deleteFlag: new FormControl(null),
+			createdAt: new FormControl(null),
+			createdBy: new FormControl(null),
+			updatedAt: new FormControl(null),
+			updatedBy: new FormControl(null),
 		});
 	}
 
@@ -67,24 +71,50 @@ export class AddProfileModalComponent implements OnInit {
 			if (this.profileForm.get('description').value) {
 				this.profileForm.get('description').setValue(this.profileForm.get('description').value.trim());
 			}
-			this.systemProfileService.add(this.profileForm.value).subscribe(
-				response => {
-					console.log(response);
-					if (response.status === 200 && response.data && response.data.systemProfile) {
-						this.confirmationPopup('System Profile Saved.');
-					}
-				},
-				errorRes => {
-					console.error(errorRes);
-					this.snackBarPopup(errorRes.error.message);
-				},
-				() => {
-					this.profileForm.reset();
-				}
-			);
+			if (!this.profileForm.get('id').value) {
+				this.addProfileApi();
+			} else {
+				this.updateProfileApi();
+			}
 		} else {
 			this.snackBarPopup('Invalid Form');
 		}
+	}
+
+	addProfileApi() {
+		this.systemProfileService.add(this.profileForm.value).subscribe(
+			response => {
+				console.log(response);
+				if (response.status === 200 && response.data && response.data.systemProfile) {
+					this.confirmationPopup('System Profile Saved.');
+				}
+			},
+			errorRes => {
+				console.error(errorRes);
+				this.snackBarPopup(errorRes.error.message);
+			},
+			() => {
+				this.profileForm.reset();
+			}
+		);
+	}
+
+	updateProfileApi() {
+		this.systemProfileService.update(this.profileForm.value).subscribe(
+			response => {
+				console.log(response);
+				if (response.status === 200 && response.data && response.data.systemProfile) {
+					this.confirmationPopup('System Profile Updated.');
+				}
+			},
+			errorRes => {
+				console.error(errorRes);
+				this.snackBarPopup(errorRes.error.message);
+			},
+			() => {
+				this.profileForm.reset();
+			}
+		);
 	}
 
 	getProfile(profileId) {
@@ -98,6 +128,10 @@ export class AddProfileModalComponent implements OnInit {
 					osVersion: response.data.systemProfile.osVersion,
 					description: response.data.systemProfile.description,
 					deleteFlag: response.data.systemProfile.deleteFlag,
+					createdAt: response.data.systemProfile.createdAt,
+					createdBy: response.data.systemProfile.createdBy,
+					updatedAt: response.data.systemProfile.updatedAt,
+					updatedBy: response.data.systemProfile.updatedBy,
 				});
 			}
 		});

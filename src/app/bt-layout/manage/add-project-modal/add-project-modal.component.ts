@@ -40,6 +40,10 @@ export class AddProjectModalComponent implements OnInit {
 			viewStatus: new FormControl(null, Validators.required),
 			description: new FormControl(null),
 			deleteFlag: new FormControl(null),
+			createdAt: new FormControl(null),
+			createdBy: new FormControl(null),
+			updatedAt: new FormControl(null),
+			updatedBy: new FormControl(null),
 		});
 	}
 
@@ -68,24 +72,50 @@ export class AddProjectModalComponent implements OnInit {
 			if (this.projectForm.get('description').value) {
 				this.projectForm.get('description').setValue(this.projectForm.get('description').value.trim());
 			}
-			this.projectService.add(this.projectForm.value).subscribe(
-				response => {
-					console.log(response);
-					if (response.status === 200 && response.data && response.data.project) {
-						this.confirmationPopup('Project Saved.');
-					}
-				},
-				errorRes => {
-					console.error(errorRes);
-					this.snackBarPopup(errorRes.error.message);
-				},
-				() => {
-					this.projectForm.reset();
-				}
-			);
+			if (!this.projectForm.get('id').value) {
+				this.addProjectApi();
+			} else {
+				this.updateProjectApi();
+			}
 		} else {
 			this.snackBarPopup('Invalid Form');
 		}
+	}
+
+	addProjectApi() {
+		this.projectService.add(this.projectForm.value).subscribe(
+			response => {
+				console.log(response);
+				if (response.status === 200 && response.data && response.data.project) {
+					this.confirmationPopup('Project Saved.');
+				}
+			},
+			errorRes => {
+				console.error(errorRes);
+				this.snackBarPopup(errorRes.error.message);
+			},
+			() => {
+				this.projectForm.reset();
+			}
+		);
+	}
+
+	updateProjectApi() {
+		this.projectService.update(this.projectForm.value).subscribe(
+			response => {
+				console.log(response);
+				if (response.status === 200 && response.data && response.data.project) {
+					this.confirmationPopup('Project Updated.');
+				}
+			},
+			errorRes => {
+				console.error(errorRes);
+				this.snackBarPopup(errorRes.error.message);
+			},
+			() => {
+				this.projectForm.reset();
+			}
+		);
 	}
 
 	getProject(projectId) {
@@ -100,6 +130,10 @@ export class AddProjectModalComponent implements OnInit {
 					viewStatus: response.data.project.viewStatus,
 					description: response.data.project.description,
 					deleteFlag: response.data.project.deleteFlag,
+					createdAt: response.data.project.createdAt,
+					createdBy: response.data.project.createdBy,
+					updatedAt: response.data.project.updatedAt,
+					updatedBy: response.data.project.updatedBy,
 				});
 			}
 		});

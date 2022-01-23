@@ -58,6 +58,11 @@ export class AddUserModalComponent implements OnInit {
 				email: new FormControl(null, [Validators.required, Validators.email]),
 				enabled: new FormControl(true),
 				roles: new FormControl(),
+				deleteFlag: new FormControl(null),
+				createdAt: new FormControl(null),
+				createdBy: new FormControl(null),
+				updatedAt: new FormControl(null),
+				updatedBy: new FormControl(null),
 			},
 			{
 				validators: this.customValidationService.MatchPassword('password', 'confirmPassword'),
@@ -101,22 +106,46 @@ export class AddUserModalComponent implements OnInit {
 			this.userForm.get('email').setValue(this.userForm.get('email').value.trim());
 
 			// post user
-			this.userService.add(this.userForm.value).subscribe(
-				response => {
-					console.log(response);
-					this.confirmationPopup('User Registered');
-				},
-				errorRes => {
-					console.log(errorRes);
-					this.snackBarPopup(errorRes.error.message);
-				},
-				() => {
-					this.userForm.reset();
-				}
-			);
+			if (!this.userForm.get('id').value) {
+				this.addUserApi();
+			} else {
+				this.updateUserApi();
+			}
 		} else {
 			this.snackBarPopup('Invalid Form');
 		}
+	}
+
+	addUserApi() {
+		this.userService.add(this.userForm.value).subscribe(
+			response => {
+				console.log(response);
+				this.confirmationPopup('User Registered');
+			},
+			errorRes => {
+				console.log(errorRes);
+				this.snackBarPopup(errorRes.error.message);
+			},
+			() => {
+				this.userForm.reset();
+			}
+		);
+	}
+
+	updateUserApi() {
+		this.userService.update(this.userForm.value).subscribe(
+			response => {
+				console.log(response);
+				this.confirmationPopup('User Updated');
+			},
+			errorRes => {
+				console.log(errorRes);
+				this.snackBarPopup(errorRes.error.message);
+			},
+			() => {
+				this.userForm.reset();
+			}
+		);
 	}
 
 	getUser(userId) {
@@ -128,6 +157,10 @@ export class AddUserModalComponent implements OnInit {
 					name: response.data.user.name,
 					assignedId: response.data.user.assignedId,
 					deleteFlag: response.data.user.deleteFlag,
+					createdAt: response.data.user.createdAt,
+					createdBy: response.data.user.createdBy,
+					updatedAt: response.data.user.updatedAt,
+					updatedBy: response.data.user.updatedBy,
 				});
 			}
 		});
