@@ -1,3 +1,4 @@
+import { Company } from 'src/app/company-listing/models/company';
 import { GlobalCategoryService } from './services/global-category.service';
 import { UserService } from './../../authentication/services/user.service';
 import { GlobalCategory } from './models/global-category';
@@ -13,6 +14,7 @@ import Swal from 'sweetalert2';
 import { LoginService } from '../../authentication/services/login.service';
 import { SystemProfile } from './models/system-profile';
 import { SystemProfileService } from './services/system-profile.service';
+import { CompanyService } from 'src/app/company-listing/services/company.service';
 
 @Component({
 	selector: 'app-manage',
@@ -57,6 +59,7 @@ export class ManageComponent implements OnInit, AfterViewInit {
 		private userService: UserService,
 		private projectService: ProjectService,
 		private globalCategoryService: GlobalCategoryService,
+		private companyService: CompanyService,
 		private systemProfileService: SystemProfileService,
 		private _snackBar: MatSnackBar
 	) {}
@@ -95,20 +98,22 @@ export class ManageComponent implements OnInit, AfterViewInit {
 	}
 
 	getUserList() {
-		this.userService.getList(this.paginationCriteriaUser).subscribe(
-			response => {
-				console.log(response);
-				if (response.status == 200 && response.data && response.data.user && response.data.user.list) {
-					this.userList = response.data.user.list;
-					this.userDataSource = new MatTableDataSource<User>(this.userList);
-					this.userPaginator.length = response.data.user.totalRowCount;
-				}
-			},
-			errorRes => {
-				console.error(errorRes);
-				this.snackBarPopup(errorRes.error.message);
-			}
-		);
+		// let company: Company = JSON.parse(this.companyService.getCompany());
+		// this.paginationCriteriaUser.id = company.id;
+		// this.userService.getEmployeeListByCompany(this.paginationCriteriaUser).subscribe(
+		// 	response => {
+		// 		console.log(response);
+		// 		if (response.status == 200 && response.data && response.data.user && response.data.user.list) {
+		// 			this.userList = response.data.user.list;
+		// 			this.userDataSource = new MatTableDataSource<User>(this.userList);
+		// 			this.userPaginator.length = response.data.user.totalRowCount;
+		// 		}
+		// 	},
+		// 	errorRes => {
+		// 		console.error(errorRes);
+		// 		this.snackBarPopup(errorRes.error.message);
+		// 	}
+		// );
 	}
 
 	paginationUser(event) {
