@@ -1,3 +1,4 @@
+import { UserDetail } from './../../authentication/common/models/user-detail';
 import { User } from 'src/app/authentication/common/models/user';
 
 export class Company {
@@ -14,5 +15,5 @@ export class Company {
 	public state: string;
 	public city: string;
 	public deleteFlag: boolean;
-	public users: User[];
+	public userDetails: UserDetail[];
 }

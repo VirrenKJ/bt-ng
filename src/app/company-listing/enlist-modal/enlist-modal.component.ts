@@ -1,8 +1,8 @@
+import { UserDetail } from './../../authentication/common/models/user-detail';
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Role } from 'src/app/authentication/common/models/role';
-import { User } from 'src/app/authentication/common/models/user';
 import { LoginService } from 'src/app/authentication/services/login.service';
 import { RoleService } from 'src/app/authentication/services/role.service';
 import { UserService } from 'src/app/authentication/services/user.service';
@@ -10,6 +10,7 @@ import { PaginationCriteria } from 'src/app/base/models/pagination_criteria';
 import Swal from 'sweetalert2';
 import { Company } from '../models/company';
 import { CompanyService } from '../services/company.service';
+import { User } from 'src/app/authentication/common/models/user';
 
 @Component({
 	selector: 'app-enlist-modal',
@@ -18,13 +19,13 @@ import { CompanyService } from '../services/company.service';
 })
 export class EnlistModalComponent implements OnInit {
 	@ViewChild('enlistEmployee') enlistEmployee: TemplateRef<any>;
-	@Output() reloadCompanies = new EventEmitter();
+	@Output() employeeListing = new EventEmitter();
 
 	companies = new Array<Company>();
 	users = new Array<User>();
 	roles = new Array<Role>();
 	company = new Company();
-	user = new User();
+	userDetail = new UserDetail();
 	role = new Role();
 
 	searchFor: string;
@@ -59,7 +60,8 @@ export class EnlistModalComponent implements OnInit {
 		this.getRoles();
 		this.users = new Array<User>();
 		this.company = new Company();
-		this.user = new User();
+		this.userDetail = new UserDetail();
+		this.role = new Role();
 		this.searchFor = '';
 	}
 
@@ -113,28 +115,21 @@ export class EnlistModalComponent implements OnInit {
 		);
 	}
 
-	selectedUser(user) {
-		console.log(user);
-		this.user = user;
-	}
-
-	setRole() {
-		this.user.roles.push(this.role);
+	selectedUser(userDetail) {
+		console.log(userDetail);
+		this.userDetail = userDetail;
 	}
 
 	onSubmit() {
-		this.setRole();
-		if (!this.company.users) {
-			this.company.users = new Array<User>();
+		if (!this.company.userDetails) {
+			this.company.userDetails = new Array<UserDetail>();
 		}
-		let user = new User();
-		user.id = this.user.id;
-		this.company.users.push(user);
+		this.company.userDetails.push(this.setUserDetail());
 		console.log(this.company);
 		this.companyService.update(this.company).subscribe(
 			response => {
 				console.log(response);
-				this.userService.addUserDetailsToCompany(this.user, this.company.dbUuid);
+				this.userService.addUserDetailsToCompany(this.userDetail, this.company.dbUuid);
 				this.confirmationPopup();
 			},
 			errorRes => {
@@ -142,6 +137,13 @@ export class EnlistModalComponent implements OnInit {
 				this.snackBarPopup(errorRes.error.message);
 			}
 		);
+	}
+
+	setUserDetail() {
+		let userDetail = new UserDetail();
+		userDetail.id = this.userDetail.id;
+		userDetail.roles.push(this.role);
+		return userDetail;
 	}
 
 	snackBarPopup(message: string) {
@@ -159,7 +161,7 @@ export class EnlistModalComponent implements OnInit {
 			showConfirmButton: false,
 			timer: 2000,
 		}).then(() => {
-			this.reloadCompanies.emit();
+			this.employeeListing.emit();
 			this.modalService.dismissAll();
 		});
 	}
