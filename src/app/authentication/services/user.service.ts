@@ -15,7 +15,7 @@ export class UserService {
 	}
 
 	public addUserDetailsToCompany(user: User, dbUuid): Observable<any> {
-		return this.httpClient.post(`${baseUrl}/user/add`, user, { headers: { 'x-tenant': dbUuid } });
+		return this.httpClient.post(`${baseUrl}/user/copy-user`, user, { headers: { 'x-tenant': dbUuid } });
 	}
 
 	public update(user: User): Observable<any> {

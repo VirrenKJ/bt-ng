@@ -129,7 +129,7 @@ export class EnlistModalComponent implements OnInit {
 		this.companyService.update(this.company).subscribe(
 			response => {
 				console.log(response);
-				this.userService.addUserDetailsToCompany(this.userDetail, this.company.dbUuid);
+				this.userDetailsToCompany();
 				this.confirmationPopup();
 			},
 			errorRes => {
@@ -137,6 +137,15 @@ export class EnlistModalComponent implements OnInit {
 				this.snackBarPopup(errorRes.error.message);
 			}
 		);
+	}
+
+	userDetailsToCompany() {
+		if (this.userDetail['authorities']) {
+			this.userDetail['authorities'] = null;
+		}
+		this.userService.addUserDetailsToCompany(this.userDetail, this.company.dbUuid).subscribe(response => {
+			console.log(response);
+		});
 	}
 
 	setUserDetail() {
