@@ -1,3 +1,4 @@
+import { RoleService } from './../../../authentication/services/role.service';
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -30,6 +31,7 @@ export class AddUserModalComponent implements OnInit {
 		config: NgbModalConfig,
 		private _snackBar: MatSnackBar,
 		private userService: UserService,
+		private roleService: RoleService,
 		private customValidationService: CustomValidationService,
 		private modalService: NgbModal
 	) {
@@ -92,21 +94,19 @@ export class AddUserModalComponent implements OnInit {
 
 	addUpdateUser() {
 		if (this.userForm.valid) {
-			//add role
-			let roles = new Array<Role>();
-			let role = new Role();
-			role.roleId = 1;
-			roles.push(role);
-			this.userForm.get('roles').patchValue(roles);
-
-			//remove whitespace
-			this.userForm.get('username').setValue(this.userForm.get('username').value.trim());
-			this.userForm.get('firstName').setValue(this.userForm.get('firstName').value.trim());
-			this.userForm.get('lastName').setValue(this.userForm.get('lastName').value.trim());
-			this.userForm.get('email').setValue(this.userForm.get('email').value.trim());
-
-			// post user
 			if (!this.userForm.get('id').value) {
+				//add role
+				let roles = new Array<Role>();
+				let role = new Role();
+				role.roleId = 1;
+				roles.push(role);
+				this.userForm.get('roles').patchValue(roles);
+
+				//remove whitespace
+				this.userForm.get('username').setValue(this.userForm.get('username').value.trim());
+				this.userForm.get('firstName').setValue(this.userForm.get('firstName').value.trim());
+				this.userForm.get('lastName').setValue(this.userForm.get('lastName').value.trim());
+				this.userForm.get('email').setValue(this.userForm.get('email').value.trim());
 				this.addUserApi();
 			} else {
 				this.updateUserApi();

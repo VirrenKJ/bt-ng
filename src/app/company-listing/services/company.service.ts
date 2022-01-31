@@ -19,6 +19,24 @@ export class CompanyService {
 		return localStorage.getItem('x-tenant');
 	}
 
+	public tenantExist() {
+		const tenant = localStorage.getItem('x-tenant');
+		if (tenant === undefined || tenant === null || tenant === '') {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	public temporarilyRemoveTenant() {
+		let dbUuid: string = null;
+		if (this.tenantExist()) {
+			dbUuid = this.getTenant();
+			this.exitBugTracker();
+		}
+		return dbUuid;
+	}
+
 	public setCompany(company: Company) {
 		localStorage.setItem('x-company', JSON.stringify(company));
 		return true;
