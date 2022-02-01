@@ -30,6 +30,6 @@ export class MainNavComponent implements OnInit {
 	}
 
 	getCompany() {
-		this.company = JSON.parse(this.companyService.getCompany());
+		this.company = this.companyService.getCompany();
 	}
 }

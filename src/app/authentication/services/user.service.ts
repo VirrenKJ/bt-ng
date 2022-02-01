@@ -14,8 +14,12 @@ export class UserService {
 		return this.httpClient.post(`${baseUrl}/user/add`, user);
 	}
 
-	public addUserDetailsToCompany(user: User, dbUuid): Observable<any> {
-		return this.httpClient.post(`${baseUrl}/user/copy-user`, user, { headers: { 'x-tenant': dbUuid } });
+	public addUserDetailsToCompany(user: User, dbUuid = null): Observable<any> {
+		if (dbUuid) {
+			return this.httpClient.post(`${baseUrl}/user/copy-user`, user, { headers: { 'x-tenant': dbUuid } });
+		} else {
+			return this.httpClient.post(`${baseUrl}/user/copy-user`, user);
+		}
 	}
 
 	public update(user: User): Observable<any> {

@@ -91,6 +91,23 @@
 								</mat-form-field>
 							</div>
 						</div>
+						<div class="row">
+							<div class="col">
+								<mat-form-field appearance="outline">
+									<mat-label>Role</mat-label>
+									<mat-select
+										matTooltip="Required"
+										matTooltipPosition="right"
+										[(ngModel)]="role.roleId"
+										[ngModelOptions]="{ standalone: true }"
+										placeholder="Choose..."
+									>
+										<mat-option>None</mat-option>
+										<mat-option [value]="role.roleId" *ngFor="let role of roles; let i = index">{{ role.roleName }}</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
 
 						<hr class="mt-0" />
 
@@ -107,7 +124,7 @@
 			</div>
 		</div>
 		<div class="modal-footer">
-			<button type="button" class="btn btn-primary">Submit</button>
+			<button type="button" class="btn btn-primary" [disabled]="!role?.roleId">Submit</button>
 			<button type="button" class="btn btn-primary" (click)="modal.close('Save click')">Cancel</button>
 		</div>
 	</div>

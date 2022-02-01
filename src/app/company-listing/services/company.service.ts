@@ -43,7 +43,12 @@ export class CompanyService {
 	}
 
 	public getCompany() {
-		return localStorage.getItem('x-company');
+		let company = localStorage.getItem('x-company');
+		if (company) {
+			return JSON.parse(company);
+		} else {
+			return null;
+		}
 	}
 
 	public exitBugTracker() {

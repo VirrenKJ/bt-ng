@@ -1,3 +1,4 @@
+import { Company } from './../../../company-listing/models/company';
 import { RoleService } from './../../../authentication/services/role.service';
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -9,6 +10,8 @@ import { CustomValidationService } from 'src/app/authentication/services/custom-
 import { UserService } from 'src/app/authentication/services/user.service';
 import { PaginationCriteria } from 'src/app/base/models/pagination_criteria';
 import Swal from 'sweetalert2';
+import { CompanyService } from 'src/app/company-listing/services/company.service';
+import { UserDetail } from 'src/app/authentication/common/models/user-detail';
 
 @Component({
 	selector: 'app-add-user-modal',
@@ -20,7 +23,10 @@ export class AddUserModalComponent implements OnInit {
 	@ViewChild('addUser') addUser: TemplateRef<any>;
 	@Output() userListEvent = new EventEmitter();
 
-	projectList = new Array<User>();
+	userDetail = new UserDetail();
+	userList = new Array<User>();
+	roles = new Array<Role>();
+	role = new Role();
 	paginationCriteriaUser = new PaginationCriteria();
 	showPassword: boolean = false;
 	showConfirmPassword: boolean = false;
@@ -32,6 +38,7 @@ export class AddUserModalComponent implements OnInit {
 		private _snackBar: MatSnackBar,
 		private userService: UserService,
 		private roleService: RoleService,
+		private companyService: CompanyService,
 		private customValidationService: CustomValidationService,
 		private modalService: NgbModal
 	) {
@@ -42,6 +49,7 @@ export class AddUserModalComponent implements OnInit {
 	ngOnInit(): void {
 		this.formInIt();
 		this.getUserList();
+		this.getRoles();
 	}
 
 	formInIt() {
@@ -92,6 +100,20 @@ export class AddUserModalComponent implements OnInit {
 		});
 	}
 
+	getRoles() {
+		let paginationCriteria = new PaginationCriteria();
+		this.roleService.getList(paginationCriteria).subscribe(
+			response => {
+				if (response.data && response.data.role) {
+					this.roles = response.data.role;
+				}
+			},
+			errorRes => {
+				console.error(errorRes);
+			}
+		);
+	}
+
 	addUpdateUser() {
 		if (this.userForm.valid) {
 			if (!this.userForm.get('id').value) {
@@ -117,9 +139,34 @@ export class AddUserModalComponent implements OnInit {
 	}
 
 	addUserApi() {
+		let dbUuid = this.companyService.temporarilyRemoveTenant();
 		this.userService.add(this.userForm.value).subscribe(
 			response => {
 				console.log(response);
+				if (response.status == 200 && response.data && response.data.user) {
+					this.userDetail = response.data.user;
+
+					let company: Company = this.companyService.getCompany();
+					if (!company.userDetails) {
+						company.userDetails = new Array<UserDetail>();
+					}
+					company.userDetails.push(this.setUserDetail());
+					console.log(company);
+					this.companyService.update(company).subscribe(
+						response => {
+							console.log(response);
+							if (dbUuid) {
+								this.companyService.setTenant(dbUuid);
+							}
+							this.userDetailsToCompany();
+							this.confirmationPopup('Enlisted Successfully');
+						},
+						errorRes => {
+							console.error(errorRes);
+							this.snackBarPopup(errorRes.error.message);
+						}
+					);
+				}
 				this.confirmationPopup('User Registered');
 			},
 			errorRes => {
@@ -130,6 +177,22 @@ export class AddUserModalComponent implements OnInit {
 				this.userForm.reset();
 			}
 		);
+	}
+
+	userDetailsToCompany() {
+		if (this.userDetail['authorities']) {
+			this.userDetail['authorities'] = null;
+		}
+		this.userService.addUserDetailsToCompany(this.userDetail).subscribe(response => {
+			console.log(response);
+		});
+	}
+
+	setUserDetail() {
+		let userDetail = new UserDetail();
+		userDetail.id = this.userDetail.id;
+		userDetail.roles.push(this.role);
+		return userDetail;
 	}
 
 	updateUserApi() {
@@ -170,8 +233,8 @@ export class AddUserModalComponent implements OnInit {
 		this.userService.getList(this.paginationCriteriaUser).subscribe(
 			response => {
 				console.log(response);
-				if (response.status == 200 && response.data && response.data.project && response.data.project.list) {
-					this.projectList = response.data.project.list;
+				if (response.status == 200 && response.data && response.data.user && response.data.user.list) {
+					this.userList = response.data.user.list;
 				}
 			},
 			errorRes => {

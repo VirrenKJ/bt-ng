@@ -1,5 +1,4 @@
 import { UserDetail } from './../../authentication/common/models/user-detail';
-import { User } from 'src/app/authentication/common/models/user';
 
 export class Company {
 	public id: number;
