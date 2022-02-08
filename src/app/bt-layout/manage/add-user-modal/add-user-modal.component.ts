@@ -69,10 +69,6 @@ export class AddUserModalComponent implements OnInit {
 				enabled: new FormControl(true),
 				roles: new FormControl(),
 				deleteFlag: new FormControl(null),
-				createdAt: new FormControl(null),
-				createdBy: new FormControl(null),
-				updatedAt: new FormControl(null),
-				updatedBy: new FormControl(null),
 			},
 			{
 				validators: this.customValidationService.MatchPassword('password', 'confirmPassword'),
@@ -167,7 +163,6 @@ export class AddUserModalComponent implements OnInit {
 						}
 					);
 				}
-				this.confirmationPopup('User Registered');
 			},
 			errorRes => {
 				console.log(errorRes);
@@ -183,6 +178,8 @@ export class AddUserModalComponent implements OnInit {
 		if (this.userDetail['authorities']) {
 			this.userDetail['authorities'] = null;
 		}
+		this.userDetail.roles = new Array<Role>();
+		this.userDetail.roles.push(this.role);
 		this.userService.addUserDetailsToCompany(this.userDetail).subscribe(response => {
 			console.log(response);
 		});
@@ -191,7 +188,6 @@ export class AddUserModalComponent implements OnInit {
 	setUserDetail() {
 		let userDetail = new UserDetail();
 		userDetail.id = this.userDetail.id;
-		userDetail.roles.push(this.role);
 		return userDetail;
 	}
 
@@ -217,14 +213,17 @@ export class AddUserModalComponent implements OnInit {
 			if (response.status === 200 && response.data && response.data.user) {
 				this.userForm.setValue({
 					id: response.data.user.id,
-					name: response.data.user.name,
-					assignedId: response.data.user.assignedId,
+					username: response.data.user.username,
+					password: response.data.user.password,
+					confirmPassword: response.data.user.password,
+					firstName: response.data.user.firstName,
+					lastName: response.data.user.lastName,
+					email: response.data.user.email,
+					enabled: response.data.user.enabled,
+					roles: response.data.user.roles,
 					deleteFlag: response.data.user.deleteFlag,
-					createdAt: response.data.user.createdAt,
-					createdBy: response.data.user.createdBy,
-					updatedAt: response.data.user.updatedAt,
-					updatedBy: response.data.user.updatedBy,
 				});
+				this.role = response.data.user.roles[0];
 			}
 		});
 	}

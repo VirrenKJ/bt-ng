@@ -37,7 +37,7 @@ export class ManageComponent implements OnInit, AfterViewInit {
 	categoryList = new Array<GlobalCategory>();
 	systemProfileList = new Array<SystemProfile>();
 
-	userColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+	userColumns: string[] = ['sno', 'name', 'username', 'role', 'enabled', 'action'];
 	projectColumns: string[] = ['sno', 'name', 'status', 'viewStatus', 'categoryFlag', 'description', 'action'];
 	categoryColumns: string[] = ['sno', 'name', 'project', 'action'];
 	profileColumns: string[] = ['sno', 'platform', 'os', 'version', 'desc', 'action'];
@@ -98,22 +98,20 @@ export class ManageComponent implements OnInit, AfterViewInit {
 	}
 
 	getUserList() {
-		// let company: Company = JSON.parse(this.companyService.getCompany());
-		// this.paginationCriteriaUser.id = company.id;
-		// this.userService.getEmployeeListByCompany(this.paginationCriteriaUser).subscribe(
-		// 	response => {
-		// 		console.log(response);
-		// 		if (response.status == 200 && response.data && response.data.user && response.data.user.list) {
-		// 			this.userList = response.data.user.list;
-		// 			this.userDataSource = new MatTableDataSource<User>(this.userList);
-		// 			this.userPaginator.length = response.data.user.totalRowCount;
-		// 		}
-		// 	},
-		// 	errorRes => {
-		// 		console.error(errorRes);
-		// 		this.snackBarPopup(errorRes.error.message);
-		// 	}
-		// );
+		this.userService.getList(this.paginationCriteriaUser).subscribe(
+			response => {
+				console.log(response);
+				if (response.status == 200 && response.data && response.data.user && response.data.user.list) {
+					this.userList = response.data.user.list;
+					this.userDataSource = new MatTableDataSource<User>(this.userList);
+					this.userPaginator.length = response.data.user.totalRowCount;
+				}
+			},
+			errorRes => {
+				console.error(errorRes);
+				this.snackBarPopup(errorRes.error.message);
+			}
+		);
 	}
 
 	paginationUser(event) {
