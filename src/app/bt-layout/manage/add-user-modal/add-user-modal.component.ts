@@ -32,6 +32,7 @@ export class AddUserModalComponent implements OnInit {
 	showConfirmPassword: boolean = false;
 
 	userForm: FormGroup;
+	userId: number;
 
 	constructor(
 		config: NgbModalConfig,
@@ -88,8 +89,10 @@ export class AddUserModalComponent implements OnInit {
 	}
 
 	openModal(template: TemplateRef<any>, userId = null) {
+		this.userId = null;
 		if (userId) {
 			this.getUser(userId);
+			this.userId = userId;
 		}
 		setTimeout(() => {
 			this.modalService.open(template, { size: 'lg' });

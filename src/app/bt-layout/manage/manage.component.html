@@ -69,6 +69,12 @@
 							</td>
 						</ng-container>
 
+						<ng-container matColumnDef="reset">
+							<th mat-header-cell *matHeaderCellDef>Reset Password</th>
+							<td mat-cell *matCellDef="let element">
+								<span class="material-icons" style="cursor: pointer"> change_circle </span>
+							</td>
+						</ng-container>
 						<tr mat-header-row *matHeaderRowDef="userColumns"></tr>
 						<tr mat-row *matRowDef="let row; columns: userColumns"></tr>
 					</table>
