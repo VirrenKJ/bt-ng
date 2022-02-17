@@ -59,7 +59,11 @@ export class CustomValidationService {
 						console.log(response);
 						let user: User = response.data.user;
 						if (user) {
-							resolve({ usernameNotAvailable: true });
+							if (this.editUsername()) {
+								resolve(null);
+							} else {
+								resolve({ usernameNotAvailable: true });
+							}
 						} else {
 							resolve(null);
 						}
@@ -73,5 +77,14 @@ export class CustomValidationService {
 				}
 			});
 		});
+	}
+
+	editUsername() {
+		const username = localStorage.getItem('edit-username');
+		if (username === undefined || username === null || username === '') {
+			return false;
+		} else {
+			return true;
+		}
 	}
 }

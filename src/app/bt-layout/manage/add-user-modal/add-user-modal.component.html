@@ -39,9 +39,7 @@
 										"
 										>Please enter a valid username, min length is 5 letters!!</mat-hint
 									>
-									<mat-hint *ngIf="userForm.get('username').touched && userForm.get('username').errors?.usernameNotAvailable"
-										>Username is not available!!</mat-hint
-									>
+									<mat-hint *ngIf="userForm.get('username').errors?.usernameNotAvailable">Username is not available!!</mat-hint>
 								</mat-form-field>
 							</div>
 							<div class="col-md-6">

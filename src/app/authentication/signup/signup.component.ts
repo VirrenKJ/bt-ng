@@ -28,6 +28,7 @@ export class SignupComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
+		localStorage.removeItem('edit-username');
 		this.init();
 	}
 

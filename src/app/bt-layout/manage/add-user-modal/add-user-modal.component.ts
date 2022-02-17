@@ -12,6 +12,7 @@ import { PaginationCriteria } from 'src/app/base/models/pagination_criteria';
 import Swal from 'sweetalert2';
 import { CompanyService } from 'src/app/company-listing/services/company.service';
 import { UserDetail } from 'src/app/authentication/common/models/user-detail';
+import { log } from 'console';
 
 @Component({
 	selector: 'app-add-user-modal',
@@ -23,11 +24,12 @@ export class AddUserModalComponent implements OnInit {
 	@ViewChild('addUser') addUser: TemplateRef<any>;
 	@Output() userListEvent = new EventEmitter();
 
+	paginationCriteriaUser = new PaginationCriteria();
 	userDetail = new UserDetail();
 	userList = new Array<User>();
 	roles = new Array<Role>();
 	role = new Role();
-	paginationCriteriaUser = new PaginationCriteria();
+	user = new User();
 	showPassword: boolean = false;
 	showConfirmPassword: boolean = false;
 
@@ -75,12 +77,33 @@ export class AddUserModalComponent implements OnInit {
 				validators: this.customValidationService.MatchPassword('password', 'confirmPassword'),
 			}
 		);
+		// this.userForm.get('username').valueChanges.subscribe(() => {
+		// 	if (this.user.username == this.userForm.get('username').value) {
+		// 		console.log('clear', this.user.username, this.userForm.get('username').value);
+		//     this.userForm.controls['username'].clearAsyncValidators();
+
+		// 	} else {
+		// 		console.log('set');
+		// 		this.userForm.controls['username'].setAsyncValidators(this.customValidationService.usernameValidator.bind(this.customValidationService));
+		// 	}
+		// });
+		// this.userForm.controls['username'].updateValueAndValidity();
+	}
+
+	userNameValidation() {
+		// if (this.user.username == this.userForm.get('username').value) {
+		// 	console.log('clear', this.user.username, this.userForm.get('username').value);
+		// 	this.userForm.controls['username'].clearAsyncValidators();
+		// } else {
+		// 	console.log('set');
+		// 	this.userForm.controls['username'].setAsyncValidators(this.customValidationService.usernameValidator.bind(this.customValidationService));
+		// }
+		// this.userForm.controls['username'].updateValueAndValidity();
 	}
 
 	@Input()
 	set openUserModal(data: any) {
 		if (data && !data.userId) {
-			this.formInIt();
 			this.openModal(this.addUser);
 		}
 		if (data && data.userId) {
@@ -89,10 +112,14 @@ export class AddUserModalComponent implements OnInit {
 	}
 
 	openModal(template: TemplateRef<any>, userId = null) {
+		this.formInIt();
 		this.userId = null;
+		this.role = new Role();
 		if (userId) {
 			this.getUser(userId);
 			this.userId = userId;
+		} else {
+			localStorage.removeItem('edit-username');
 		}
 		setTimeout(() => {
 			this.modalService.open(template, { size: 'lg' });
@@ -114,24 +141,28 @@ export class AddUserModalComponent implements OnInit {
 	}
 
 	addUpdateUser() {
-		if (this.userForm.valid) {
-			if (!this.userForm.get('id').value) {
-				//add role
-				let roles = new Array<Role>();
-				let role = new Role();
-				role.roleId = 1;
-				roles.push(role);
-				this.userForm.get('roles').patchValue(roles);
+		console.log(this.userForm.value);
 
-				//remove whitespace
-				this.userForm.get('username').setValue(this.userForm.get('username').value.trim());
-				this.userForm.get('firstName').setValue(this.userForm.get('firstName').value.trim());
-				this.userForm.get('lastName').setValue(this.userForm.get('lastName').value.trim());
-				this.userForm.get('email').setValue(this.userForm.get('email').value.trim());
-				this.addUserApi();
-			} else {
-				this.updateUserApi();
-			}
+		if (this.userForm.valid) {
+			console.log(this.userForm.valid);
+
+			//add role
+			// let roles = new Array<Role>();
+			// let role = new Role();
+			// role.roleId = 1;
+			// roles.push(role);
+			// this.userForm.get('roles').patchValue(roles);
+
+			// //remove whitespace
+			// this.userForm.get('username').setValue(this.userForm.get('username').value.trim());
+			// this.userForm.get('firstName').setValue(this.userForm.get('firstName').value.trim());
+			// this.userForm.get('lastName').setValue(this.userForm.get('lastName').value.trim());
+			// this.userForm.get('email').setValue(this.userForm.get('email').value.trim());
+			// if (!this.userForm.get('id').value) {
+			// 	this.addUserApi();
+			// } else {
+			// 	this.updateUserApi();
+			// }
 		} else {
 			this.snackBarPopup('Invalid Form');
 		}
@@ -177,15 +208,22 @@ export class AddUserModalComponent implements OnInit {
 		);
 	}
 
-	userDetailsToCompany() {
+	userDetailsToCompany(update: boolean = false) {
 		if (this.userDetail['authorities']) {
 			this.userDetail['authorities'] = null;
 		}
 		this.userDetail.roles = new Array<Role>();
 		this.userDetail.roles.push(this.role);
-		this.userService.addUserDetailsToCompany(this.userDetail).subscribe(response => {
-			console.log(response);
-		});
+
+		if (update) {
+			this.userService.updateUserDetailsToCompany(this.userDetail).subscribe(response => {
+				console.log(response);
+			});
+		} else {
+			this.userService.addUserDetailsToCompany(this.userDetail).subscribe(response => {
+				console.log(response);
+			});
+		}
 	}
 
 	setUserDetail() {
@@ -195,10 +233,18 @@ export class AddUserModalComponent implements OnInit {
 	}
 
 	updateUserApi() {
+		let dbUuid = this.companyService.temporarilyRemoveTenant();
 		this.userService.update(this.userForm.value).subscribe(
 			response => {
 				console.log(response);
-				this.confirmationPopup('User Updated');
+				if (response.status == 200 && response.data && response.data.user) {
+					this.userDetail = response.data.user;
+					if (dbUuid) {
+						this.companyService.setTenant(dbUuid);
+					}
+					this.userDetailsToCompany(true);
+					this.confirmationPopup('Enlisted Successfully');
+				}
 			},
 			errorRes => {
 				console.log(errorRes);
@@ -214,6 +260,7 @@ export class AddUserModalComponent implements OnInit {
 		this.userService.getById(userId).subscribe(response => {
 			console.log(response);
 			if (response.status === 200 && response.data && response.data.user) {
+				this.user = response.data.user;
 				this.userForm.setValue({
 					id: response.data.user.id,
 					username: response.data.user.username,
@@ -227,6 +274,7 @@ export class AddUserModalComponent implements OnInit {
 					deleteFlag: response.data.user.deleteFlag,
 				});
 				this.role = response.data.user.roles[0];
+				localStorage.setItem('edit-username', this.user.username);
 			}
 		});
 	}

@@ -22,6 +22,10 @@ export class UserService {
 		}
 	}
 
+	public updateUserDetailsToCompany(user: User): Observable<any> {
+		return this.httpClient.post(`${baseUrl}/user/update-user`, user);
+	}
+
 	public update(user: User): Observable<any> {
 		return this.httpClient.post(`${baseUrl}/user/update`, user);
 	}
