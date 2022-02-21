@@ -77,28 +77,6 @@ export class AddUserModalComponent implements OnInit {
 				validators: this.customValidationService.MatchPassword('password', 'confirmPassword'),
 			}
 		);
-		// this.userForm.get('username').valueChanges.subscribe(() => {
-		// 	if (this.user.username == this.userForm.get('username').value) {
-		// 		console.log('clear', this.user.username, this.userForm.get('username').value);
-		//     this.userForm.controls['username'].clearAsyncValidators();
-
-		// 	} else {
-		// 		console.log('set');
-		// 		this.userForm.controls['username'].setAsyncValidators(this.customValidationService.usernameValidator.bind(this.customValidationService));
-		// 	}
-		// });
-		// this.userForm.controls['username'].updateValueAndValidity();
-	}
-
-	userNameValidation() {
-		// if (this.user.username == this.userForm.get('username').value) {
-		// 	console.log('clear', this.user.username, this.userForm.get('username').value);
-		// 	this.userForm.controls['username'].clearAsyncValidators();
-		// } else {
-		// 	console.log('set');
-		// 	this.userForm.controls['username'].setAsyncValidators(this.customValidationService.usernameValidator.bind(this.customValidationService));
-		// }
-		// this.userForm.controls['username'].updateValueAndValidity();
 	}
 
 	@Input()
@@ -146,23 +124,23 @@ export class AddUserModalComponent implements OnInit {
 		if (this.userForm.valid) {
 			console.log(this.userForm.valid);
 
-			//add role
-			// let roles = new Array<Role>();
-			// let role = new Role();
-			// role.roleId = 1;
-			// roles.push(role);
-			// this.userForm.get('roles').patchValue(roles);
+			// add role
+			let roles = new Array<Role>();
+			let role = new Role();
+			role.roleId = 1;
+			roles.push(role);
+			this.userForm.get('roles').patchValue(roles);
 
-			// //remove whitespace
-			// this.userForm.get('username').setValue(this.userForm.get('username').value.trim());
-			// this.userForm.get('firstName').setValue(this.userForm.get('firstName').value.trim());
-			// this.userForm.get('lastName').setValue(this.userForm.get('lastName').value.trim());
-			// this.userForm.get('email').setValue(this.userForm.get('email').value.trim());
-			// if (!this.userForm.get('id').value) {
-			// 	this.addUserApi();
-			// } else {
-			// 	this.updateUserApi();
-			// }
+			//remove whitespace
+			this.userForm.get('username').setValue(this.userForm.get('username').value.trim());
+			this.userForm.get('firstName').setValue(this.userForm.get('firstName').value.trim());
+			this.userForm.get('lastName').setValue(this.userForm.get('lastName').value.trim());
+			this.userForm.get('email').setValue(this.userForm.get('email').value.trim());
+			if (!this.userForm.get('id').value) {
+				this.addUserApi();
+			} else {
+				this.updateUserApi();
+			}
 		} else {
 			this.snackBarPopup('Invalid Form');
 		}
