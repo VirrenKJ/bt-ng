@@ -12,7 +12,6 @@ import { PaginationCriteria } from 'src/app/base/models/pagination_criteria';
 import Swal from 'sweetalert2';
 import { CompanyService } from 'src/app/company-listing/services/company.service';
 import { UserDetail } from 'src/app/authentication/common/models/user-detail';
-import { log } from 'console';
 
 @Component({
 	selector: 'app-add-user-modal',
