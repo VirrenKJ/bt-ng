@@ -12,106 +12,140 @@
 					<div class="col-md-4">
 						<mat-form-field appearance="outline">
 							<mat-label>Projects</mat-label>
-							<mat-select formControlName="assignedId" required>
+							<mat-select formControlName="projectId" required>
 								<mat-option [value]="project?.id" *ngFor="let project of projectList; let i = index">{{ project?.name }}</mat-option>
+							</mat-select>
+							<mat-hint *ngIf="!issueForm.get('projectId').valid && issueForm.get('projectId').touched">Please select a Project!!</mat-hint>
+						</mat-form-field>
+					</div>
+					<div class="col-md-4">
+						<mat-form-field appearance="outline">
+							<mat-label>Category</mat-label>
+							<mat-select formControlName="categoryId" required>
+								<mat-option value="">Choose...</mat-option>
+								<mat-option value="australia">Project 1</mat-option>
+								<mat-option value="usa">Project 2</mat-option>
+							</mat-select>
+							<mat-hint *ngIf="!issueForm.get('categoryId').valid && issueForm.get('categoryId').touched">Please select a Project!!</mat-hint>
+						</mat-form-field>
+					</div>
+					<div class="col-md-4">
+						<mat-form-field appearance="outline">
+							<mat-label>Reproducibility</mat-label>
+							<mat-select formControlName="reproducibilityId" required>
+								<mat-option value="">Choose...</mat-option>
+								<mat-option value="australia">Project 1</mat-option>
+								<mat-option value="usa">Project 2</mat-option>
+							</mat-select>
+							<mat-hint *ngIf="!issueForm.get('reproducibilityId').valid && issueForm.get('reproducibilityId').touched"
+								>Please select a Project!!</mat-hint
+							>
+						</mat-form-field>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-4">
+						<mat-form-field appearance="outline">
+							<mat-label>Severity</mat-label>
+							<mat-select formControlName="severityId" required>
+								<mat-option value="">Choose...</mat-option>
+								<mat-option value="australia">Project 1</mat-option>
+								<mat-option value="usa">Project 2</mat-option>
+							</mat-select>
+							<mat-hint *ngIf="!issueForm.get('severityId').valid && issueForm.get('severityId').touched">Please select a Project!!</mat-hint>
+						</mat-form-field>
+					</div>
+					<div class="col-md-4">
+						<mat-form-field appearance="outline">
+							<mat-label>Priority</mat-label>
+							<mat-select formControlName="priorityId" required>
+								<mat-option value="">Choose...</mat-option>
+								<mat-option value="australia">Project 1</mat-option>
+								<mat-option value="usa">Project 2</mat-option>
+							</mat-select>
+							<mat-hint *ngIf="!issueForm.get('priorityId').valid && issueForm.get('priorityId').touched">Please select a Project!!</mat-hint>
+						</mat-form-field>
+					</div>
+					<div class="col-md-4">
+						<mat-form-field appearance="outline">
+							<mat-label>Select Profile</mat-label>
+							<mat-select formControlName="profileId" required>
+								<mat-option value="">Choose...</mat-option>
+								<mat-option value="australia">Project 1</mat-option>
+								<mat-option value="usa">Project 2</mat-option>
+							</mat-select>
+							<mat-hint *ngIf="!issueForm.get('profileId').valid && issueForm.get('profileId').touched">Please select a Project!!</mat-hint>
+						</mat-form-field>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-4">
+						<mat-form-field appearance="outline">
+							<mat-label>Assign To</mat-label>
+							<mat-select formControlName="assignedId" required>
+								<mat-option value="">Choose...</mat-option>
+								<mat-option value="australia">Project 1</mat-option>
+								<mat-option value="usa">Project 2</mat-option>
 							</mat-select>
 							<mat-hint *ngIf="!issueForm.get('assignedId').valid && issueForm.get('assignedId').touched">Please select a Project!!</mat-hint>
 						</mat-form-field>
 					</div>
-					<div class="col-md-4">
-						<label class="form-label" for="country">Category</label>
-						<select class="form-control bg-dark text-white" id="country">
-							<option value="">Choose...</option>
-							<option value="australia">Project 1</option>
-							<option value="usa">Project 2</option>
-						</select>
-						<div class="invalid-feedback">Valid Username is required.</div>
-					</div>
-					<div class="col-md-4">
-						<label class="form-label" for="country">Reproducibility</label>
-						<select class="form-control bg-dark text-white" id="country">
-							<option value="">Choose...</option>
-							<option value="australia">Project 1</option>
-							<option value="usa">Project 2</option>
-						</select>
-						<div class="invalid-feedback">Valid Username is required.</div>
-					</div>
-				</div>
-				<div class="row mt-3">
-					<div class="col-md-4">
-						<label class="form-label" for="country">Severity</label>
-						<select class="form-control bg-dark text-white" id="country">
-							<option value="">Choose...</option>
-							<option value="australia">Project 1</option>
-							<option value="usa">Project 2</option>
-						</select>
-						<div class="invalid-feedback">Valid Username is required.</div>
-					</div>
-					<div class="col-md-4">
-						<label class="form-label" for="country">Priority</label>
-						<select class="form-control bg-dark text-white" id="country">
-							<option value="">Choose...</option>
-							<option value="australia">Project 1</option>
-							<option value="usa">Project 2</option>
-						</select>
-						<div class="invalid-feedback">Valid Username is required.</div>
-					</div>
-					<div class="col-md-4">
-						<label class="form-label" for="country">Select Profile</label>
-						<select class="form-control bg-dark text-white" id="country">
-							<option value="">Choose...</option>
-							<option value="australia">Project 1</option>
-							<option value="usa">Project 2</option>
-						</select>
-						<div class="invalid-feedback">Valid Username is required.</div>
-					</div>
-				</div>
-				<div class="row mt-3">
-					<div class="col-md-4">
-						<label class="form-label" for="country">Assign To</label>
-						<div class="input-group">
-							<span class="input-group-text bg-dark text-white">@</span>
-							<select class="form-control bg-dark text-white" id="country">
-								<option value="">Choose...</option>
-								<option value="australia">Project 1</option>
-								<option value="usa">Project 2</option>
-							</select>
-						</div>
-						<div class="invalid-feedback">Valid Username is required.</div>
-					</div>
 					<div class="col-md-8">
-						<label class="form-label" for="summary">Summary</label>
-						<input type="text" class="form-control bg-dark text-white" id="summary" placeholder="Summary" />
+						<mat-form-field appearance="outline">
+							<mat-label>Summary</mat-label>
+							<input type="text" formControlName="summary" autocomplete="summary" matInput placeholder="Enter here!" required />
+							<mat-hint *ngIf="!issueForm.get('summary').valid && issueForm.get('summary').touched">Please enter a valid Name!!</mat-hint>
+						</mat-form-field>
 					</div>
 				</div>
 
-				<hr class="my-4" />
+				<div class="row">
+					<div class="col">
+						<mat-form-field appearance="outline">
+							<mat-label>Description</mat-label>
+							<textarea formControlName="description" autocomplete="description" matInput rows="3" placeholder="Enter here!" required></textarea>
+							<mat-hint *ngIf="!issueForm.get('description').valid && issueForm.get('description').touched">Please enter a valid Name!!</mat-hint>
+						</mat-form-field>
 
-				<div class="row mt-3">
-					<div class="col">
-						<label class="form-label" for="description">Description</label>
-						<textarea class="form-control bg-dark text-white" id="description" rows="3"></textarea>
+						<!-- <label class="form-label" for="description">Description</label>
+						<textarea class="form-control bg-dark text-white" id="description" rows="3"></textarea> -->
 					</div>
 					<div class="col">
-						<label class="form-label" for="reproduce">Steps To Reproduce</label>
-						<textarea class="form-control bg-dark text-white" id="reproduce" rows="3"></textarea>
+						<mat-form-field appearance="outline">
+							<mat-label>Steps To Reproduce</mat-label>
+							<textarea
+								formControlName="stepsToReproduce"
+								autocomplete="stepsToReproduce"
+								matInput
+								rows="3"
+								placeholder="Enter here!"
+								required
+							></textarea>
+							<mat-hint *ngIf="!issueForm.get('stepsToReproduce').valid && issueForm.get('stepsToReproduce').touched"
+								>Please enter a valid Name!!</mat-hint
+							>
+						</mat-form-field>
 					</div>
 					<div class="col">
-						<label class="form-label" for="information">Additional Information</label>
-						<textarea class="form-control bg-dark text-white" id="information" rows="3"></textarea>
+						<mat-form-field appearance="outline">
+							<mat-label>Additional Information</mat-label>
+							<textarea formControlName="addInfo" autocomplete="addInfo" matInput rows="3" placeholder="Enter here!" required></textarea>
+							<mat-hint *ngIf="!issueForm.get('addInfo').valid && issueForm.get('addInfo').touched">Please enter a valid Name!!</mat-hint>
+						</mat-form-field>
 					</div>
 				</div>
 
-				<hr class="my-4" />
-
-				<div class="row mt-2">
+				<div class="row">
 					<div class="col">
-						<label class="form-label" for="upload">Upload Document</label>
-						<input type="text" class="form-control bg-dark text-white" id="upload" placeholder="Upload..." />
+						<mat-form-field appearance="outline">
+							<mat-label>Upload Document</mat-label>
+							<input type="text" formControlName="documentId" autocomplete="documentId" matInput placeholder="Enter here!" required />
+							<!-- <mat-hint *ngIf="!issueForm.get('documentId').valid && issueForm.get('documentId').touched">Please enter a valid Name!!</mat-hint> -->
+						</mat-form-field>
 					</div>
 				</div>
-
-				<hr class="my-4" />
 
 				<div class="row">
 					<div class="col">
@@ -133,7 +167,6 @@
 					<div class="col"></div>
 				</div>
 			</div>
-
 			<button type="submit" class="btn btn-primary">Submit Issue</button>
 		</form>
 	</div>
