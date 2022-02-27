@@ -2,9 +2,9 @@ export class Company {
 	public id: number;
 	public projectId: number;
 	public categoryId: number;
-	public reproducibilityId: number;
-	public severityId: number;
-	public priorityId: number;
+	public reproducibility: number;
+	public severity: number;
+	public priority: number;
 	public profileId: number;
 	public assignedId: number;
 	public summary: string;
