@@ -1,4 +1,4 @@
-export class Company {
+export class Issue {
 	public id: number;
 	public projectId: number;
 	public categoryId: number;

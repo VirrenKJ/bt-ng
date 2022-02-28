@@ -83,7 +83,8 @@
 					<div class="col-md-8">
 						<mat-form-field appearance="outline">
 							<mat-label>Summary</mat-label>
-							<input type="text" formControlName="summary" autocomplete="summary" matInput placeholder="Enter here!" />
+							<input type="text" formControlName="summary" autocomplete="summary" matInput placeholder="Enter here!" required />
+							<mat-hint *ngIf="!issueForm.get('summary').valid && issueForm.get('summary').touched">Please select a Summary!!</mat-hint>
 						</mat-form-field>
 					</div>
 				</div>
@@ -135,8 +136,6 @@
 							<label class="form-check-label" for="private"> Private</label>
 						</div>
 					</div>
-					<div class="col"></div>
-					<div class="col"></div>
 				</div>
 			</div>
 			<button type="submit" class="btn btn-primary">Submit Issue</button>

@@ -102,9 +102,6 @@ export class AddCategoryModalComponent implements OnInit {
 	}
 
 	updateCategoryApi() {
-		let category: GlobalCategory = this.categoryForm.value;
-		console.log(category);
-
 		this.globalCategoryService.update(this.categoryForm.value).subscribe(
 			response => {
 				console.log(response);

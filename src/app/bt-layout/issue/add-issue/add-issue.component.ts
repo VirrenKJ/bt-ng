@@ -1,3 +1,4 @@
+import { IssueService } from './../services/issue.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -10,6 +11,9 @@ import { SystemProfile } from '../../manage/models/system-profile';
 import { GlobalCategoryService } from '../../manage/services/global-category.service';
 import { ProjectService } from '../../manage/services/project.service';
 import { SystemProfileService } from '../../manage/services/system-profile.service';
+import Swal from 'sweetalert2';
+import { Issue } from '../models/issue';
+import { CustomValidationService } from 'src/app/authentication/services/custom-validation.service';
 
 @Component({
 	selector: 'app-add-issue',
@@ -33,10 +37,12 @@ export class AddIssueComponent implements OnInit {
 
 	constructor(
 		private _snackBar: MatSnackBar,
+		private issueService: IssueService,
 		private projectService: ProjectService,
 		private systemProfileService: SystemProfileService,
 		private userService: UserService,
-		private globalCategoryService: GlobalCategoryService
+		private globalCategoryService: GlobalCategoryService,
+		private customValidationService: CustomValidationService
 	) {}
 
 	ngOnInit(): void {
@@ -55,7 +61,7 @@ export class AddIssueComponent implements OnInit {
 		priority: new FormControl(null, Validators.required),
 		profileId: new FormControl(null, Validators.required),
 		assignedId: new FormControl(null, Validators.required),
-		summary: new FormControl(),
+		summary: new FormControl(null, [Validators.required, this.customValidationService.noWhitespace]),
 		description: new FormControl(),
 		stepsToReproduce: new FormControl(),
 		addInfo: new FormControl(),
@@ -129,7 +135,60 @@ export class AddIssueComponent implements OnInit {
 	}
 
 	onSubmit() {
-		console.log('Submitted!');
+		if (this.issueForm.valid) {
+			if (!this.issueForm.get('id').value) {
+				this.addIssueApi();
+			} else {
+				this.updateIssueApi();
+			}
+		} else {
+			this.snackBarPopup('Invalid Form');
+		}
+	}
+
+	addIssueApi() {
+		this.issueService.add(this.issueForm.value).subscribe(
+			response => {
+				console.log(response);
+				if (response.status === 200 && response.data && response.data.globalIssue) {
+					this.confirmationPopup('Issue Saved.');
+				}
+			},
+			errorRes => {
+				console.error(errorRes);
+				this.snackBarPopup(errorRes.error.message);
+			},
+			() => {
+				this.issueForm.reset();
+			}
+		);
+	}
+
+	updateIssueApi() {
+		this.issueService.update(this.issueForm.value).subscribe(
+			response => {
+				console.log(response);
+				if (response.status === 200 && response.data && response.data.globalIssue) {
+					this.confirmationPopup('Issue Updated.');
+				}
+			},
+			errorRes => {
+				console.error(errorRes);
+				this.snackBarPopup(errorRes.error.message);
+			},
+			() => {
+				this.issueForm.reset();
+			}
+		);
+	}
+
+	confirmationPopup(title: string) {
+		Swal.fire({
+			icon: 'success',
+			title: title,
+			showConfirmButton: false,
+			timer: 2000,
+		}).then(() => {});
 	}
 
 	snackBarPopup(message: string) {
