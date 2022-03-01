@@ -1,6 +1,6 @@
 import { IssueService } from './../services/issue.service';
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, FormControl, Validators, FormGroupDirective } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from 'src/app/authentication/common/models/user';
 import { UserService } from 'src/app/authentication/services/user.service';
@@ -12,7 +12,6 @@ import { GlobalCategoryService } from '../../manage/services/global-category.ser
 import { ProjectService } from '../../manage/services/project.service';
 import { SystemProfileService } from '../../manage/services/system-profile.service';
 import Swal from 'sweetalert2';
-import { Issue } from '../models/issue';
 import { CustomValidationService } from 'src/app/authentication/services/custom-validation.service';
 
 @Component({
@@ -21,6 +20,8 @@ import { CustomValidationService } from 'src/app/authentication/services/custom-
 	styleUrls: ['./add-issue.component.css'],
 })
 export class AddIssueComponent implements OnInit {
+	@ViewChild(FormGroupDirective) issueFormDirective: FormGroupDirective;
+
 	userList = new Array<User>();
 	projectList = new Array<Project>();
 	categoryList = new Array<GlobalCategory>();
@@ -66,7 +67,7 @@ export class AddIssueComponent implements OnInit {
 		stepsToReproduce: new FormControl(),
 		addInfo: new FormControl(),
 		documentId: new FormControl(),
-		viewStatus: new FormControl(),
+		viewStatus: new FormControl('public', Validators.required),
 		deleteFlag: new FormControl(),
 		createdAt: new FormControl(null),
 		createdBy: new FormControl(null),
@@ -150,7 +151,7 @@ export class AddIssueComponent implements OnInit {
 		this.issueService.add(this.issueForm.value).subscribe(
 			response => {
 				console.log(response);
-				if (response.status === 200 && response.data && response.data.globalIssue) {
+				if (response.status === 200 && response.data && response.data.issue) {
 					this.confirmationPopup('Issue Saved.');
 				}
 			},
@@ -159,7 +160,7 @@ export class AddIssueComponent implements OnInit {
 				this.snackBarPopup(errorRes.error.message);
 			},
 			() => {
-				this.issueForm.reset();
+				this.issueFormDirective.resetForm();
 			}
 		);
 	}
@@ -168,7 +169,7 @@ export class AddIssueComponent implements OnInit {
 		this.issueService.update(this.issueForm.value).subscribe(
 			response => {
 				console.log(response);
-				if (response.status === 200 && response.data && response.data.globalIssue) {
+				if (response.status === 200 && response.data && response.data.issue) {
 					this.confirmationPopup('Issue Updated.');
 				}
 			},
@@ -177,7 +178,7 @@ export class AddIssueComponent implements OnInit {
 				this.snackBarPopup(errorRes.error.message);
 			},
 			() => {
-				this.issueForm.reset();
+				this.issueFormDirective.resetForm();
 			}
 		);
 	}

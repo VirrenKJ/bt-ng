@@ -1,4 +1,3 @@
-import { Company } from 'src/app/company-listing/models/company';
 import { GlobalCategoryService } from './services/global-category.service';
 import { UserService } from './../../authentication/services/user.service';
 import { GlobalCategory } from './models/global-category';
@@ -293,7 +292,7 @@ export class ManageComponent implements OnInit, AfterViewInit {
 			allowEscapeKey: false,
 		}).then(result => {
 			if (result.value) {
-				this.getSystemProfileList();
+				this.apiInIt();
 			}
 		});
 	}

@@ -15,6 +15,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { MatRadioModule } from '@angular/material/radio';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -115,6 +116,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 		ReactiveFormsModule,
 		FontAwesomeModule,
 		MatButtonModule,
+		MatRadioModule,
 		MatAutocompleteModule,
 		MatToolbarModule,
 		MatSidenavModule,
@@ -143,6 +145,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 		}),
 	],
 	exports: [
+		MatRadioModule,
 		MatButtonModule,
 		MatToolbarModule,
 		MatSidenavModule,

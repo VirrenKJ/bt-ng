@@ -121,20 +121,14 @@
 				</div> -->
 
 				<div class="row">
-					<div class="col">
+					<div class="col-2">
 						<h3>View Status</h3>
 					</div>
-					<div class="col mt-1">
-						<div class="form-check form-check-inline">
-							<input id="public" name="view" type="radio" class="form-check-input bg-dark text-white" checked required />
-							<label class="form-check-label" for="public"> Public</label>
-						</div>
-					</div>
-					<div class="col mt-1">
-						<div class="form-check form-check-inline">
-							<input id="private" name="view" type="radio" class="form-check-input bg-dark text-white" required />
-							<label class="form-check-label" for="private"> Private</label>
-						</div>
+					<div class="col">
+						<mat-radio-group aria-label="Select an option" formControlName="viewStatus">
+							<mat-radio-button value="public">Public</mat-radio-button>
+							<mat-radio-button value="private">Private</mat-radio-button>
+						</mat-radio-group>
 					</div>
 				</div>
 			</div>
