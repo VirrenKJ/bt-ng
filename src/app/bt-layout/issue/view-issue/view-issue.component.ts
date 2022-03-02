@@ -16,7 +16,7 @@ export class ViewIssueComponent implements OnInit, AfterViewInit {
 	@ViewChild('paginator') paginator: MatPaginator;
 	paginationCriteria = new PaginationCriteria();
 	issueList = new Array<Issue>();
-	displayedColumns: string[] = ['sno', 'project_name', 'category_name', 'assigned', 'summary', 'action'];
+	displayedColumns: string[] = ['sno', 'project_name', 'category_name', 'assigned', 'reported_by', 'summary', 'action'];
 	dataSource = new MatTableDataSource<Issue>(this.issueList);
 
 	constructor(private _snackBar: MatSnackBar, private issueService: IssueService) {}

@@ -8,8 +8,13 @@ export class Issue {
 	public severity: string;
 	public priority: string;
 	public profileId: number;
+	public profileName: string;
 	public assignedId: number;
-	public assignedName: string;
+	public assignedFirstName: string;
+	public assignedUsername: string;
+	public reportedById: number;
+	public reportedByFirstName: string;
+	public reportedByUsername: string;
 	public summary: string;
 	public description: string;
 	public stepsToReproduce: string;

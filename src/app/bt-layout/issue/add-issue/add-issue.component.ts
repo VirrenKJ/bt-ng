@@ -62,6 +62,7 @@ export class AddIssueComponent implements OnInit {
 		priority: new FormControl(null, Validators.required),
 		profileId: new FormControl(null, Validators.required),
 		assignedId: new FormControl(null, Validators.required),
+		reportedById: new FormControl(null),
 		summary: new FormControl(null, [Validators.required, this.customValidationService.noWhitespace]),
 		description: new FormControl(),
 		stepsToReproduce: new FormControl(),
