@@ -38,8 +38,18 @@
 		<ng-container matColumnDef="action">
 			<th mat-header-cell *matHeaderCellDef>Action</th>
 			<td mat-cell *matCellDef="let element">
-				<span class="material-icons" (click)="openUserModal(element.id)" style="cursor: pointer"> edit </span>
-				<span class="material-icons" (click)="deleteUser(element.id)" style="cursor: pointer"> delete </span>
+				<!-- <span
+					class="material-icons"
+					style="cursor: pointer"
+					[routerLinkActive]="['/bug-tracker/edit-issue', element.id]"
+					*ngIf="userRole != 'Viewer'"
+				>
+					edit
+				</span> -->
+				<a [routerLink]="['/bug-tracker/edit-issue', element.id]" style="color: #ffffff" *ngIf="userRole != 'Viewer'">
+					<span class="material-icons" style="cursor: pointer"> edit </span>
+				</a>
+				<span class="material-icons" (click)="deleteIssue(element.id)" style="cursor: pointer"> delete </span>
 			</td>
 		</ng-container>
 

@@ -6,6 +6,7 @@ import { PaginationCriteria } from 'src/app/base/models/pagination_criteria';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import Swal from 'sweetalert2';
 import { IssueService } from '../services/issue.service';
+import { LoginService } from 'src/app/authentication/services/login.service';
 
 @Component({
 	selector: 'app-view-issue',
@@ -14,17 +15,21 @@ import { IssueService } from '../services/issue.service';
 })
 export class ViewIssueComponent implements OnInit, AfterViewInit {
 	@ViewChild('paginator') paginator: MatPaginator;
-	paginationCriteria = new PaginationCriteria();
+	userRole: string = 'Viewer';
 	issueList = new Array<Issue>();
-	displayedColumns: string[] = ['sno', 'project_name', 'category_name', 'assigned', 'reported_by', 'summary', 'action'];
+	paginationCriteria = new PaginationCriteria();
 	dataSource = new MatTableDataSource<Issue>(this.issueList);
+	displayedColumns: string[] = ['sno', 'project_name', 'category_name', 'assigned', 'reported_by', 'summary', 'action'];
 
-	constructor(private _snackBar: MatSnackBar, private issueService: IssueService) {}
+	constructor(private _snackBar: MatSnackBar, private issueService: IssueService, private loginService: LoginService) {}
 
 	ngOnInit(): void {
 		this.paginationCriteria.page = 1;
 		this.paginationCriteria.limit = 5;
 		this.getIssueList();
+    setTimeout(() => {
+			this.userRole = this.loginService.getUserRole();
+		});
 	}
 
 	ngAfterViewInit() {

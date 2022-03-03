@@ -57,6 +57,7 @@ const routes: Routes = [
 			{ path: 'home', component: HomeComponent, canActivate: [ViewerGuard] },
 			{ path: 'view-issue', component: ViewIssueComponent },
 			{ path: 'add-issue', component: AddIssueComponent, canActivate: [ViewerGuard] },
+			{ path: 'edit-issue/:id', component: AddIssueComponent, canActivate: [ViewerGuard] },
 			{ path: 'summary', component: SummaryComponent },
 			{ path: 'manage', component: ManageComponent, pathMatch: 'full', canActivate: [AdminGuard] },
 		],
