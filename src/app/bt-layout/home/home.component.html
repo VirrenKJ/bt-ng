@@ -1,80 +1,130 @@
 <div class="row mx-4">
-	<div class="col-lg-7">
+	<div class="col-lg-6">
 		<div class="mat-elevation-z8">
 			<mat-card>
 				<div class="row">
-					<mat-card-title class="lg-col-6" style="margin-bottom: 0px"> Assigned to me </mat-card-title>
+					<mat-card-title class="col" style="margin-bottom: 0px"> Assigned To Me </mat-card-title>
 				</div>
 			</mat-card>
-			<table mat-table [dataSource]="dataSource">
-				<!-- Position Column -->
-				<ng-container matColumnDef="position">
+			<table mat-table [dataSource]="dataSourceIssueAssigned" *ngIf="issueAssignedList?.length > 0">
+				<ng-container matColumnDef="sno">
 					<th mat-header-cell *matHeaderCellDef>No.</th>
-					<td mat-cell *matCellDef="let element">{{ element.position }}</td>
+					<td mat-cell *matCellDef="let element; index as i">{{ paginatorIssueAssigned.pageIndex * paginatorIssueAssigned.pageSize + (i + 1) }}.</td>
 				</ng-container>
 
-				<!-- Name Column -->
-				<ng-container matColumnDef="name">
-					<th mat-header-cell *matHeaderCellDef>Name</th>
-					<td mat-cell *matCellDef="let element">{{ element.name }}</td>
+				<ng-container matColumnDef="project_name">
+					<th mat-header-cell *matHeaderCellDef>Project Name</th>
+					<td mat-cell *matCellDef="let element">{{ element?.projectName }}</td>
 				</ng-container>
 
-				<!-- Weight Column -->
-				<ng-container matColumnDef="weight">
-					<th mat-header-cell *matHeaderCellDef>Weight</th>
-					<td mat-cell *matCellDef="let element">{{ element.weight }}</td>
+				<ng-container matColumnDef="category_name">
+					<th mat-header-cell *matHeaderCellDef>Category Name</th>
+					<td mat-cell *matCellDef="let element">{{ element?.categoryName }}</td>
 				</ng-container>
 
-				<!-- Symbol Column -->
-				<ng-container matColumnDef="symbol">
-					<th mat-header-cell *matHeaderCellDef>Symbol</th>
-					<td mat-cell *matCellDef="let element">{{ element.symbol }}</td>
+				<ng-container matColumnDef="assigned">
+					<th mat-header-cell *matHeaderCellDef>Assigned User</th>
+					<td mat-cell *matCellDef="let element">{{ element?.assignedFirstName }} ({{ element?.assignedUsername }})</td>
+				</ng-container>
+
+				<ng-container matColumnDef="reported_by">
+					<th mat-header-cell *matHeaderCellDef>Reported By</th>
+					<td mat-cell *matCellDef="let element">{{ element?.reportedByFirstName }} ({{ element?.reportedByUsername }})</td>
+				</ng-container>
+
+				<ng-container matColumnDef="summary">
+					<th mat-header-cell *matHeaderCellDef>Summary</th>
+					<td mat-cell *matCellDef="let element">{{ element?.summary }}</td>
+				</ng-container>
+
+				<ng-container matColumnDef="action">
+					<th mat-header-cell *matHeaderCellDef>Action</th>
+					<td mat-cell *matCellDef="let element">
+						<a [routerLink]="['/bug-tracker/edit-issue', element.id]" style="color: #ffffff">
+							<span class="material-icons" style="cursor: pointer"> edit </span>
+						</a>
+						<span class="material-icons" (click)="deleteIssue(element.id, 'assigned')" style="cursor: pointer"> delete </span>
+					</td>
 				</ng-container>
 
 				<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 				<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 			</table>
-
-			<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements"> </mat-paginator>
+			<mat-paginator
+				[hidden]="issueAssignedList?.length < 1"
+				[pageSizeOptions]="[5, 10, 20]"
+				showFirstLastButtons
+				aria-label="Select page of periodic elements"
+				#paginatorIssueAssigned
+			>
+			</mat-paginator>
+			<div class="card text-white bg-dark mt-3" *ngIf="issueAssignedList?.length < 1">
+				<div class="card-header">No Data</div>
+			</div>
 		</div>
 	</div>
-	<div class="col-lg-5">
+	<div class="col-lg-6">
 		<div class="mat-elevation-z8">
 			<mat-card>
 				<div class="row">
-					<mat-card-title class="lg-col-6" style="margin-bottom: 0px"> Reported By Me </mat-card-title>
+					<mat-card-title class="col" style="margin-bottom: 0px"> Reported By Me </mat-card-title>
 				</div>
 			</mat-card>
-			<table mat-table [dataSource]="dataSource">
-				<!-- Position Column -->
-				<ng-container matColumnDef="position">
+			<table mat-table [dataSource]="dataSourceIssueReported" *ngIf="issueReportedList?.length > 0">
+				<ng-container matColumnDef="sno">
 					<th mat-header-cell *matHeaderCellDef>No.</th>
-					<td mat-cell *matCellDef="let element">{{ element.position }}</td>
+					<td mat-cell *matCellDef="let element; index as i">{{ paginatorIssueReported.pageIndex * paginatorIssueReported.pageSize + (i + 1) }}.</td>
 				</ng-container>
 
-				<!-- Name Column -->
-				<ng-container matColumnDef="name">
-					<th mat-header-cell *matHeaderCellDef>Name</th>
-					<td mat-cell *matCellDef="let element">{{ element.name }}</td>
+				<ng-container matColumnDef="project_name">
+					<th mat-header-cell *matHeaderCellDef>Project Name</th>
+					<td mat-cell *matCellDef="let element">{{ element?.projectName }}</td>
 				</ng-container>
 
-				<!-- Weight Column -->
-				<ng-container matColumnDef="weight">
-					<th mat-header-cell *matHeaderCellDef>Weight</th>
-					<td mat-cell *matCellDef="let element">{{ element.weight }}</td>
+				<ng-container matColumnDef="category_name">
+					<th mat-header-cell *matHeaderCellDef>Category Name</th>
+					<td mat-cell *matCellDef="let element">{{ element?.categoryName }}</td>
 				</ng-container>
 
-				<!-- Symbol Column -->
-				<ng-container matColumnDef="symbol">
-					<th mat-header-cell *matHeaderCellDef>Symbol</th>
-					<td mat-cell *matCellDef="let element">{{ element.symbol }}</td>
+				<ng-container matColumnDef="assigned">
+					<th mat-header-cell *matHeaderCellDef>Assigned User</th>
+					<td mat-cell *matCellDef="let element">{{ element?.assignedFirstName }} ({{ element?.assignedUsername }})</td>
+				</ng-container>
+
+				<ng-container matColumnDef="reported_by">
+					<th mat-header-cell *matHeaderCellDef>Reported By</th>
+					<td mat-cell *matCellDef="let element">{{ element?.reportedByFirstName }} ({{ element?.reportedByUsername }})</td>
+				</ng-container>
+
+				<ng-container matColumnDef="summary">
+					<th mat-header-cell *matHeaderCellDef>Summary</th>
+					<td mat-cell *matCellDef="let element">{{ element?.summary }}</td>
+				</ng-container>
+
+				<ng-container matColumnDef="action">
+					<th mat-header-cell *matHeaderCellDef>Action</th>
+					<td mat-cell *matCellDef="let element">
+						<a [routerLink]="['/bug-tracker/edit-issue', element.id]" style="color: #ffffff">
+							<span class="material-icons" style="cursor: pointer"> edit </span>
+						</a>
+						<span class="material-icons" (click)="deleteIssue(element.id, 'reported')" style="cursor: pointer"> delete </span>
+					</td>
 				</ng-container>
 
 				<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 				<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 			</table>
-
-			<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements"> </mat-paginator>
+			<mat-paginator
+				[hidden]="issueReportedList?.length < 1"
+				[pageSizeOptions]="[5, 10, 20]"
+				showFirstLastButtons
+				aria-label="Select page of periodic elements"
+				#paginatorIssueReported
+			>
+			</mat-paginator>
+			<div class="card text-white bg-dark mt-3" *ngIf="issueReportedList?.length < 1">
+				<div class="card-header">No Data</div>
+			</div>
 		</div>
 	</div>
 </div>

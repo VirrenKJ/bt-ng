@@ -19,16 +19,17 @@ export class ViewIssueComponent implements OnInit, AfterViewInit {
 	issueList = new Array<Issue>();
 	paginationCriteria = new PaginationCriteria();
 	dataSource = new MatTableDataSource<Issue>(this.issueList);
-	displayedColumns: string[] = ['sno', 'project_name', 'category_name', 'assigned', 'reported_by', 'summary', 'action'];
+	displayedColumns: string[];
 
 	constructor(private _snackBar: MatSnackBar, private issueService: IssueService, private loginService: LoginService) {}
 
 	ngOnInit(): void {
-		this.paginationCriteria.page = 1;
+    this.paginationCriteria.page = 1;
 		this.paginationCriteria.limit = 5;
 		this.getIssueList();
-    setTimeout(() => {
-			this.userRole = this.loginService.getUserRole();
+		setTimeout(() => {
+      this.userRole = this.loginService.getUserRole();
+      this.setDisplayedColumns();
 		});
 	}
 
@@ -36,11 +37,23 @@ export class ViewIssueComponent implements OnInit, AfterViewInit {
 		this.dataSource.paginator = this.paginator;
 	}
 
+	setDisplayedColumns() {
+		switch (this.userRole) {
+			case 'Viewer':
+				this.displayedColumns = ['sno', 'project_name', 'category_name', 'assigned', 'reported_by', 'summary'];
+				break;
+
+			default:
+				this.displayedColumns = ['sno', 'project_name', 'category_name', 'assigned', 'reported_by', 'summary', 'action'];
+				break;
+		}
+	}
+
 	getIssueList() {
 		this.issueService.getList(this.paginationCriteria).subscribe(
 			response => {
 				console.log(response);
-				if (response.status == 200 && response.data && response.data.issue && response.data.issue.list) {
+				if (response.status == 200 && response.data && response.data.issue) {
 					this.issueList = response.data.issue.list;
 					this.dataSource = new MatTableDataSource<Issue>(this.issueList);
 					this.paginator.length = response.data.issue.totalRowCount;

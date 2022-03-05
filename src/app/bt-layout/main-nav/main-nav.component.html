@@ -38,11 +38,11 @@
 				<mat-icon mat-list-icon>bug_report</mat-icon>
 				<span>Report Issue</span>
 			</mat-list-item>
-			<mat-list-item routerLink="/bug-tracker/summary" [routerLinkActive]="['is-active']">
+			<!-- <mat-list-item routerLink="/bug-tracker/summary" [routerLinkActive]="['is-active']">
 				<mat-icon mat-list-icon>list_alt</mat-icon>
 				<span>Summary</span>
-			</mat-list-item>
-			<mat-list-item routerLink="/bug-tracker/manage" [routerLinkActive]="['is-active']" *ngIf="userRole === 'Admin' || userRole === 'Manager'">
+			</mat-list-item> -->
+			<mat-list-item routerLink="/bug-tracker/manage" [routerLinkActive]="['is-active']" *ngIf="userRole == 'Admin'">
 				<mat-icon mat-list-icon>admin_panel_settings</mat-icon>
 				<span>Manage</span>
 			</mat-list-item>

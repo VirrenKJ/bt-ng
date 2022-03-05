@@ -6,6 +6,8 @@ export class PaginationCriteria {
 	public sortField: string;
 	public searchFor: string;
 	public id: number;
+	public reportedById: number;
+	public assignedId: number;
 
 	constructor() {}
 }
