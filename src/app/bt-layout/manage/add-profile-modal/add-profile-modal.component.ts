@@ -10,7 +10,6 @@ import { SystemProfileService } from '../services/system-profile.service';
 	selector: 'app-add-profile-modal',
 	templateUrl: './add-profile-modal.component.html',
 	styleUrls: ['./add-profile-modal.component.css'],
-	providers: [NgbModalConfig, NgbModal],
 })
 export class AddProfileModalComponent implements OnInit {
 	@ViewChild('addProfile') addProfile: TemplateRef<any>;
@@ -19,14 +18,14 @@ export class AddProfileModalComponent implements OnInit {
 	profileForm: FormGroup;
 
 	constructor(
-		config: NgbModalConfig,
+		private config: NgbModalConfig,
 		private _snackBar: MatSnackBar,
 		private modalService: NgbModal,
 		private customValidationService: CustomValidationService,
 		private systemProfileService: SystemProfileService
 	) {
-		config.backdrop = 'static';
-		config.keyboard = false;
+		this.config.backdrop = 'static';
+		this.config.keyboard = false;
 	}
 
 	ngOnInit(): void {

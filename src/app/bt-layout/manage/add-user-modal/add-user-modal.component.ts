@@ -17,7 +17,6 @@ import { UserDetail } from 'src/app/authentication/common/models/user-detail';
 	selector: 'app-add-user-modal',
 	templateUrl: './add-user-modal.component.html',
 	styleUrls: ['./add-user-modal.component.css'],
-	providers: [NgbModalConfig, NgbModal],
 })
 export class AddUserModalComponent implements OnInit {
 	@ViewChild('addUser') addUser: TemplateRef<any>;
@@ -36,7 +35,7 @@ export class AddUserModalComponent implements OnInit {
 	userId: number;
 
 	constructor(
-		config: NgbModalConfig,
+		private config: NgbModalConfig,
 		private _snackBar: MatSnackBar,
 		private userService: UserService,
 		private roleService: RoleService,
@@ -44,8 +43,9 @@ export class AddUserModalComponent implements OnInit {
 		private customValidationService: CustomValidationService,
 		private modalService: NgbModal
 	) {
-		config.backdrop = 'static';
-		config.keyboard = false;
+    //Stops modal close when clicking on backdrop
+		this.config.backdrop = 'static';
+		this.config.keyboard = false;
 	}
 
 	ngOnInit(): void {

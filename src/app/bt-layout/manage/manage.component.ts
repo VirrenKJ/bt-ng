@@ -50,6 +50,7 @@ export class ManageComponent implements OnInit, AfterViewInit {
 	setOpenProjectModal: any;
 	setOpenCategoryModal: any;
 	setOpenProfileModal: any;
+	setOpenResetPasswordModal: any;
 
 	adminRole: boolean = false;
 
@@ -188,6 +189,8 @@ export class ManageComponent implements OnInit, AfterViewInit {
 		this.getSystemProfileList();
 	}
 
+	passwordReset() {}
+
 	openUserModal(userId) {
 		this.setOpenUserModal = {
 			userId: userId,
@@ -210,6 +213,10 @@ export class ManageComponent implements OnInit, AfterViewInit {
 		this.setOpenProfileModal = {
 			profileId: profileId,
 		};
+	}
+
+	openResetPasswordModal() {
+		this.setOpenResetPasswordModal = {};
 	}
 
 	deleteUser(userId) {

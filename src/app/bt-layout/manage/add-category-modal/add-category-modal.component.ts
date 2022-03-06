@@ -1,4 +1,3 @@
-import { GlobalCategory } from './../models/global-category';
 import { GlobalCategoryService } from './../services/global-category.service';
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -14,7 +13,6 @@ import { PaginationCriteria } from 'src/app/base/models/pagination_criteria';
 	selector: 'app-add-category-modal',
 	templateUrl: './add-category-modal.component.html',
 	styleUrls: ['./add-category-modal.component.css'],
-	providers: [NgbModalConfig, NgbModal],
 })
 export class AddCategoryModalComponent implements OnInit {
 	@ViewChild('addCategory') addCategory: TemplateRef<any>;
@@ -26,15 +24,15 @@ export class AddCategoryModalComponent implements OnInit {
 	categoryForm: FormGroup;
 
 	constructor(
-		config: NgbModalConfig,
+		private config: NgbModalConfig,
 		private _snackBar: MatSnackBar,
 		private globalCategoryService: GlobalCategoryService,
 		private customValidationService: CustomValidationService,
 		private projectService: ProjectService,
 		private modalService: NgbModal
 	) {
-		config.backdrop = 'static';
-		config.keyboard = false;
+		this.config.backdrop = 'static';
+		this.config.keyboard = false;
 	}
 
 	ngOnInit(): void {

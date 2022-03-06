@@ -23,6 +23,10 @@ mat-sidenav-container {
 	border-radius: 0rem !important;
 }
 
+.modal-title{
+  margin: 0% !important;
+}
+
 mat-card {
 	background: #1f2327 !important;
 }

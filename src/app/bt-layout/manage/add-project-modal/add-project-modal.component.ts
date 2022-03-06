@@ -1,6 +1,6 @@
 import { ProjectService } from './../services/project.service';
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormGroupDirective } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomValidationService } from 'src/app/authentication/services/custom-validation.service';
 import Swal from 'sweetalert2';
@@ -10,7 +10,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 	selector: 'app-add-project-modal',
 	templateUrl: './add-project-modal.component.html',
 	styleUrls: ['./add-project-modal.component.css'],
-	providers: [NgbModalConfig, NgbModal],
 })
 export class AddProjectModalComponent implements OnInit {
 	@ViewChild('addProject') addProject: TemplateRef<any>;
@@ -21,14 +20,14 @@ export class AddProjectModalComponent implements OnInit {
 	viewStatusList: string[] = ['Public', 'Private'];
 
 	constructor(
-		config: NgbModalConfig,
+		private config: NgbModalConfig,
 		private _snackBar: MatSnackBar,
 		private modalService: NgbModal,
 		private customValidationService: CustomValidationService,
 		private projectService: ProjectService
 	) {
-		config.backdrop = 'static';
-		config.keyboard = false;
+		this.config.backdrop = 'static';
+		this.config.keyboard = false;
 	}
 
 	ngOnInit(): void {
