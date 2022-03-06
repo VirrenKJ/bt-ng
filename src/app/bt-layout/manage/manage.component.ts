@@ -59,7 +59,6 @@ export class ManageComponent implements OnInit, AfterViewInit {
 		private userService: UserService,
 		private projectService: ProjectService,
 		private globalCategoryService: GlobalCategoryService,
-		private companyService: CompanyService,
 		private systemProfileService: SystemProfileService,
 		private _snackBar: MatSnackBar
 	) {}
@@ -215,8 +214,10 @@ export class ManageComponent implements OnInit, AfterViewInit {
 		};
 	}
 
-	openResetPasswordModal() {
-		this.setOpenResetPasswordModal = {};
+	openResetPasswordModal(userId) {
+		this.setOpenResetPasswordModal = {
+			userId: userId,
+		};
 	}
 
 	deleteUser(userId) {

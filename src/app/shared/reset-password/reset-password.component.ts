@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomValidationService } from 'src/app/authentication/services/custom-validation.service';
+import { UserService } from 'src/app/authentication/services/user.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -19,8 +20,14 @@ export class ResetPasswordComponent implements OnInit {
 	showNewConfirmPassword: boolean = false;
 
 	resetPasswordForm: FormGroup;
+	userId: number;
 
-	constructor(private _snackBar: MatSnackBar, private customValidationService: CustomValidationService, private modalService: NgbModal) {}
+	constructor(
+		private _snackBar: MatSnackBar,
+		private customValidationService: CustomValidationService,
+		private modalService: NgbModal,
+		private userService: UserService
+	) {}
 
 	ngOnInit(): void {
 		this.formInIt();
@@ -28,7 +35,8 @@ export class ResetPasswordComponent implements OnInit {
 
 	@Input()
 	set openResetPasswordModal(data: any) {
-		if (data) {
+		if (data && data.userId) {
+			this.userId = data.userId;
 			this.openModal(this.resetPasswordTemplate);
 		}
 	}
@@ -36,6 +44,7 @@ export class ResetPasswordComponent implements OnInit {
 	formInIt() {
 		this.resetPasswordForm = new FormGroup(
 			{
+				userId: new FormControl(),
 				oldPassword: new FormControl(null, [Validators.required, this.customValidationService.patternValidator]),
 				newPassword: new FormControl(null, [Validators.required, this.customValidationService.patternValidator]),
 				confirmNewPassword: new FormControl(null, Validators.required),
@@ -47,7 +56,7 @@ export class ResetPasswordComponent implements OnInit {
 	}
 
 	openModal(template: TemplateRef<any>) {
-    this.formInIt()
+		this.formInIt();
 		setTimeout(() => {
 			this.modalService.open(template, { size: 'lg' });
 		});
@@ -55,6 +64,13 @@ export class ResetPasswordComponent implements OnInit {
 
 	resetPassword() {
 		if (this.resetPasswordForm.valid) {
+			this.userService.resetPassword(this.resetPasswordForm.value).subscribe(response => {
+				if (response.status == 200 && response.data && response.data.passwordReset) {
+					console.log(response.data.passwordReset);
+				} else if (response.status == 400 && response.data && !response.data.passwordReset) {
+					console.log(response.data.passwordReset);
+				}
+			});
 		} else {
 			this.snackBarPopup('Invalid Form');
 		}
