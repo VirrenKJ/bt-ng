@@ -15,7 +15,7 @@ export class ResetPasswordComponent implements OnInit {
 	@ViewChild('resetPasswordTemplate') resetPasswordTemplate: TemplateRef<any>;
 	@Output() resetPasswordEvent = new EventEmitter();
 
-	showOldPassword: boolean = false;
+	showCurrentPassword: boolean = false;
 	showNewPassword: boolean = false;
 	showNewConfirmPassword: boolean = false;
 
@@ -37,6 +37,11 @@ export class ResetPasswordComponent implements OnInit {
 	set openResetPasswordModal(data: any) {
 		if (data && data.userId) {
 			this.userId = data.userId;
+			console.log(this.userId);
+
+			this.showCurrentPassword = false;
+			this.showNewPassword = false;
+			this.showNewConfirmPassword = false;
 			this.openModal(this.resetPasswordTemplate);
 		}
 	}
@@ -45,7 +50,7 @@ export class ResetPasswordComponent implements OnInit {
 		this.resetPasswordForm = new FormGroup(
 			{
 				userId: new FormControl(),
-				oldPassword: new FormControl(null, [Validators.required, this.customValidationService.patternValidator]),
+				currentPassword: new FormControl(null, [Validators.required, this.customValidationService.patternValidator]),
 				newPassword: new FormControl(null, [Validators.required, this.customValidationService.patternValidator]),
 				confirmNewPassword: new FormControl(null, Validators.required),
 			},
@@ -58,17 +63,18 @@ export class ResetPasswordComponent implements OnInit {
 	openModal(template: TemplateRef<any>) {
 		this.formInIt();
 		setTimeout(() => {
-			this.modalService.open(template, { size: 'lg' });
+			this.modalService.open(template, { size: 'xl' });
 		});
 	}
 
 	resetPassword() {
 		if (this.resetPasswordForm.valid) {
+			this.resetPasswordForm.get('userId').patchValue(this.userId);
 			this.userService.resetPassword(this.resetPasswordForm.value).subscribe(response => {
 				if (response.status == 200 && response.data && response.data.passwordReset) {
-					console.log(response.data.passwordReset);
+					this.confirmationPopup('Password Changed');
 				} else if (response.status == 400 && response.data && !response.data.passwordReset) {
-					console.log(response.data.passwordReset);
+					this.snackBarPopup(response.message);
 				}
 			});
 		} else {
@@ -96,8 +102,8 @@ export class ResetPasswordComponent implements OnInit {
 		});
 	}
 
-	oldPassword() {
-		this.showOldPassword = !this.showOldPassword;
+	currentPassword() {
+		this.showCurrentPassword = !this.showCurrentPassword;
 	}
 
 	newPassword() {
