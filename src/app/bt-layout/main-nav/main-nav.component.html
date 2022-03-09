@@ -4,18 +4,8 @@
 	</button>
 	<span class="ml2">{{ company?.name }}</span>
 	<span class="spacer"> </span>
-	<mat-form-field class="assign-task-list mt-1 me-3" [floatLabel]="'never'">
-		<mat-label class="clr-blue">Dropdown</mat-label>
-		<mat-select placeholder="" value="all">
-			<mat-option value="all">All Projects</mat-option>
-			<mat-option value="open">Open</mat-option>
-			<mat-option value="copy">Copy</mat-option>
-		</mat-select>
-	</mat-form-field>
-	<form class="d-flex">
-		<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-		<button class="btn btn-outline-light" type="submit">Search</button>
-	</form>
+	<span class="me-3">{{ user?.firstName }} {{ user?.lastName }}</span>
+	<span class="me-3"> {{ userRole }}</span>
 </mat-toolbar>
 <mat-sidenav-container class="sidenav-container">
 	<mat-sidenav

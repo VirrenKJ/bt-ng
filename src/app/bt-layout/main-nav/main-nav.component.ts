@@ -1,3 +1,4 @@
+import { User } from './../../authentication/common/models/user';
 import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
@@ -13,6 +14,7 @@ import { Company } from 'src/app/company-listing/models/company';
 })
 export class MainNavComponent implements OnInit {
 	userRole: string = 'Viewer';
+	user = new User();
 	company: Company;
 
 	isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
@@ -23,13 +25,18 @@ export class MainNavComponent implements OnInit {
 	constructor(private breakpointObserver: BreakpointObserver, private loginService: LoginService, private companyService: CompanyService) {}
 
 	ngOnInit() {
-		setTimeout(() => {
-			this.userRole = this.loginService.getUserRole();
-		});
+		this.getUser();
 		this.getCompany();
 	}
 
 	getCompany() {
 		this.company = this.companyService.getCompany();
+	}
+
+	getUser() {
+		setTimeout(() => {
+			this.user = this.loginService.getUser();
+			this.userRole = this.user?.roles[0]?.roleName;
+		});
 	}
 }
