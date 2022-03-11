@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomValidationService } from 'src/app/authentication/services/custom-validation.service';
 import { UserService } from 'src/app/authentication/services/user.service';
+import { CompanyService } from 'src/app/company-listing/services/company.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -26,6 +27,7 @@ export class ResetPasswordComponent implements OnInit {
 		private _snackBar: MatSnackBar,
 		private customValidationService: CustomValidationService,
 		private modalService: NgbModal,
+		private companyService: CompanyService,
 		private userService: UserService
 	) {}
 
@@ -70,16 +72,40 @@ export class ResetPasswordComponent implements OnInit {
 	resetPassword() {
 		if (this.resetPasswordForm.valid) {
 			this.resetPasswordForm.get('userId').patchValue(this.userId);
-			this.userService.resetPassword(this.resetPasswordForm.value).subscribe(response => {
+			this.userService.resetPassword(this.resetPasswordForm.value).subscribe(
+				response => {
+					if (response.status == 200 && response.data && response.data.passwordReset) {
+						this.resetPasswordInMaster();
+					} else if (response.status == 400 && response.data && !response.data.passwordReset) {
+						this.snackBarPopup(response.message);
+					}
+				},
+				errorRes => {
+					console.error(errorRes);
+				}
+			);
+		} else {
+			this.snackBarPopup('Invalid Form');
+		}
+	}
+
+	resetPasswordInMaster() {
+		let dbUuid = this.companyService.temporarilyRemoveTenant();
+		this.userService.resetPassword(this.resetPasswordForm.value).subscribe(
+			response => {
 				if (response.status == 200 && response.data && response.data.passwordReset) {
 					this.confirmationPopup('Password Changed');
 				} else if (response.status == 400 && response.data && !response.data.passwordReset) {
 					this.snackBarPopup(response.message);
 				}
-			});
-		} else {
-			this.snackBarPopup('Invalid Form');
-		}
+			},
+			errorRes => {
+				console.error(errorRes);
+			}
+		);
+    if (dbUuid) {
+      this.companyService.setTenant(dbUuid);
+    }
 	}
 
 	confirmationPopup(title: string) {
