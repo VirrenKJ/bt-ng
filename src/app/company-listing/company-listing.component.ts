@@ -64,7 +64,7 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 		this.companyService.getList(this.paginationCriteriaBusiness).subscribe(
 			response => {
 				console.log(response);
-				if (response.status == 200 && response.data && response.data.company && response.data.company.list && response.data.company.list.length > 0) {
+				if (response.status == 200 && response.data && response.data.company && response.data.company.list) {
 					this.businessList = response.data.company.list;
 					this.businessPaginator.length = response.data.company.totalRowCount;
 				}
@@ -101,7 +101,7 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 		this.userService.getEmployeeList(this.paginationCriteriaEmployees).subscribe(
 			response => {
 				console.log(response);
-				if (response.status == 200 && response.data && response.data.user && response.data.user.list && response.data.user.list.length > 0) {
+				if (response.status == 200 && response.data && response.data.user && response.data.user.list) {
 					this.employeeList = response.data.user.list;
 					this.employeeDataSource = new MatTableDataSource<UserDetail>(this.employeeList);
 					this.employeePaginator.length = response.data.user.totalRowCount;

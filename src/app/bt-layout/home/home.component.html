@@ -3,7 +3,26 @@
 		<div class="mat-elevation-z8">
 			<mat-card>
 				<div class="row">
-					<mat-card-title class="col" style="margin-bottom: 0px"> Assigned To Me </mat-card-title>
+					<div class="col-8 mt-2">
+						<mat-card-title> Assigned To Me </mat-card-title>
+					</div>
+					<div class="col-4 d-flex">
+						<div class="col">
+							<div class="input-group">
+								<input
+									type="search"
+									class="form-control bg-dark text-white"
+									placeholder="Search by Summary"
+									aria-label="Search"
+									aria-describedby="search-addon"
+									(input)="getIssueAssignedList()"
+									(click)="getIssueAssignedList()"
+									[(ngModel)]="paginationCriteriaIssueAssigned.searchFor"
+								/>
+								<span class="input-group-text border-0" id="search-addon" style="cursor: pointer"><i class="material-icons">search</i> </span>
+							</div>
+						</div>
+					</div>
 				</div>
 			</mat-card>
 			<table mat-table [dataSource]="dataSourceIssueAssigned" *ngIf="issueAssignedList?.length > 0">
@@ -67,7 +86,26 @@
 		<div class="mat-elevation-z8">
 			<mat-card>
 				<div class="row">
-					<mat-card-title class="col" style="margin-bottom: 0px"> Reported By Me </mat-card-title>
+					<div class="col-8 mt-2">
+						<mat-card-title> Reported By Me </mat-card-title>
+					</div>
+					<div class="col-4 d-flex">
+						<div class="col">
+							<div class="input-group">
+								<input
+									type="search"
+									class="form-control bg-dark text-white"
+									placeholder="Search by Summary"
+									aria-label="Search"
+									aria-describedby="search-addon"
+									(input)="getIssueReportedList()"
+									(click)="getIssueReportedList()"
+									[(ngModel)]="paginationCriteriaIssueReported.searchFor"
+								/>
+								<span class="input-group-text border-0" id="search-addon" style="cursor: pointer"><i class="material-icons">search</i> </span>
+							</div>
+						</div>
+					</div>
 				</div>
 			</mat-card>
 			<table mat-table [dataSource]="dataSourceIssueReported" *ngIf="issueReportedList?.length > 0">

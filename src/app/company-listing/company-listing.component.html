@@ -42,9 +42,12 @@
 										<input
 											type="search"
 											class="form-control bg-dark text-white"
-											placeholder="Search"
+											placeholder="Search by Name"
 											aria-label="Search"
 											aria-describedby="search-addon"
+                      (input)="getCompanyBusinessList()"
+                      (click)="getCompanyBusinessList()"
+                      [(ngModel)]="paginationCriteriaBusiness.searchFor"    
 										/>
 										<span class="input-group-text border-0" id="search-addon" style="cursor: pointer"><i class="material-icons">search</i> </span>
 									</div>
@@ -69,13 +72,16 @@
 						</div>
 					</div>
 					<mat-paginator
-						[hidden]="businessList.length <= 0"
+						[hidden]="businessPaginator?.length < 1"
 						(page)="paginationBusiness($event)"
 						[pageSizeOptions]="[5, 10, 20]"
 						showFirstLastButtons
 						#businessPaginator
 					>
 					</mat-paginator>
+          <div class="card text-white bg-dark mt-3" *ngIf="businessPaginator?.length < 1">
+            <div class="card-header">No Data</div>
+          </div>
 				</div>
 			</mat-tab>
 			<mat-tab label="Companies(Employer)">
@@ -142,9 +148,12 @@
 										<input
 											type="search"
 											class="form-control bg-dark text-white"
-											placeholder="Search"
+											placeholder="Search by Username/Email"
 											aria-label="Search"
 											aria-describedby="search-addon"
+                      (input)="getAllEmployeeList()"
+                      (click)="getAllEmployeeList()"
+                      [(ngModel)]="paginationCriteriaEmployees.searchFor"    
 										/>
 										<span class="input-group-text border-0" id="search-addon" style="cursor: pointer"><i class="material-icons">search</i> </span>
 									</div>
