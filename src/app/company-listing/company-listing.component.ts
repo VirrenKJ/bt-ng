@@ -4,6 +4,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+import Swal from 'sweetalert2';
+import { User } from '../authentication/common/models/user';
 import { UserDetail } from '../authentication/common/models/user-detail';
 import { LoginService } from '../authentication/services/login.service';
 import { UserService } from '../authentication/services/user.service';
@@ -19,32 +22,31 @@ import { CompanyService } from './services/company.service';
 export class CompanyListingComponent implements OnInit, AfterViewInit {
 	@ViewChild('employeePaginator') employeePaginator: MatPaginator;
 	@ViewChild('businessPaginator') businessPaginator: MatPaginator;
+
+	user = new User();
 	businessList = new Array<Company>();
 	companyList = new Array<Company>();
 	employeeList = new Array<UserDetail>();
 	paginationCriteriaBusiness = new PaginationCriteria();
 	paginationCriteriaEmployees = new PaginationCriteria();
-
-	employeeColumns: string[] = ['sno', 'name', 'companies', 'username', 'email'];
 	employeeDataSource = new MatTableDataSource<UserDetail>(this.employeeList);
+	employeeColumns: string[] = ['sno', 'name', 'companies', 'username', 'email'];
 
 	setOpenUserModal: any;
+	setOpenResetPasswordModal: any;
 	setOpenCompanyModal: any;
 	setOpenEnlistModal: any;
-	faUser = faUser;
-
-	// perPageBusiness: number;
 
 	constructor(
 		private loginService: LoginService,
 		private companyService: CompanyService,
 		private userService: UserService,
 		private _snackBar: MatSnackBar,
+		private ngxService: NgxUiLoaderService,
 		private router: Router
 	) {}
 
 	ngOnInit(): void {
-		// this.perPageBusiness = 5;
 		this.paginationCriteriaBusiness.page = 1;
 		this.paginationCriteriaBusiness.limit = 5;
 		this.getCompanyBusinessList();
@@ -52,11 +54,17 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 		this.paginationCriteriaEmployees.page = 1;
 		this.paginationCriteriaEmployees.limit = 5;
 		this.getAllEmployeeList();
+		this.getUser();
 	}
 
 	ngAfterViewInit() {
 		this.employeeDataSource.paginator = this.employeePaginator;
-		// this.businessPaginator.pageSize = this.perPageBusiness;
+	}
+
+	getUser() {
+		setTimeout(() => {
+			this.user = this.loginService.getUser();
+		});
 	}
 
 	getCompanyBusinessList() {
@@ -126,9 +134,15 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 		this.router.navigateByUrl('bug-tracker');
 	}
 
-	openUserModal(userId) {
+	openUserModal() {
 		this.setOpenUserModal = {
-			userId: userId,
+			userId: this.user.id,
+		};
+	}
+
+	openChangePasswordModal() {
+		this.setOpenResetPasswordModal = {
+			userId: this.user.id,
 		};
 	}
 
@@ -142,8 +156,41 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 		this.setOpenEnlistModal = {};
 	}
 
+	getUserDetails() {
+		this.userService.getById(this.user.id).subscribe(response => {
+			if (response.status === 200 && response.data && response.data.user) {
+				this.loginService.setUser(response.data.user);
+				window.location.reload();
+			}
+		});
+	}
+
+	passwordReset() {
+		this.logout();
+	}
+
+	logoutConfirmation() {
+		Swal.fire({
+			title: 'Are you sure?',
+			text: 'You will be logged out!',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Log out',
+		}).then(result => {
+			if (result.isConfirmed) {
+				this.logout();
+			}
+		});
+	}
+
 	logout() {
+		this.ngxService.startLoader('master');
 		this.loginService.logout();
+		this.companyService.exitBugTracker();
+		this.router.navigate(['user/login']);
+		this.ngxService.stopLoader('master');
 	}
 
 	snackBarPopup(message: string) {
