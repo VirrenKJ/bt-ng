@@ -1,3 +1,4 @@
+import { Project } from './../models/project';
 import { ProjectService } from './../services/project.service';
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -15,9 +16,11 @@ export class AddProjectModalComponent implements OnInit {
 	@ViewChild('addProject') addProject: TemplateRef<any>;
 	@Output() projectListEvent = new EventEmitter();
 
-	projectForm: FormGroup;
 	statusList: string[] = ['Development', 'Release', 'Stable', 'Obsolete'];
 	viewStatusList: string[] = ['Public', 'Private'];
+	project = new Project();
+
+	projectForm: FormGroup;
 
 	constructor(
 		private config: NgbModalConfig,
@@ -121,6 +124,7 @@ export class AddProjectModalComponent implements OnInit {
 		this.projectService.getById(projectId).subscribe(response => {
 			console.log(response);
 			if (response.status === 200 && response.data && response.data.project) {
+				this.project = response.data.project;
 				this.projectForm.setValue({
 					id: response.data.project.id,
 					name: response.data.project.name,

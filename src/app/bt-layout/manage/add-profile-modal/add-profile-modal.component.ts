@@ -1,3 +1,4 @@
+import { SystemProfile } from './../models/system-profile';
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -15,6 +16,7 @@ export class AddProfileModalComponent implements OnInit {
 	@ViewChild('addProfile') addProfile: TemplateRef<any>;
 	@Output() profileListEvent = new EventEmitter();
 
+	profile = new SystemProfile();
 	profileForm: FormGroup;
 
 	constructor(
@@ -120,6 +122,7 @@ export class AddProfileModalComponent implements OnInit {
 		this.systemProfileService.getById(profileId).subscribe(response => {
 			console.log(response);
 			if (response.status === 200 && response.data && response.data.systemProfile) {
+				this.profile = response.data.systemProfile;
 				this.profileForm.setValue({
 					id: response.data.systemProfile.id,
 					platform: response.data.systemProfile.platform,

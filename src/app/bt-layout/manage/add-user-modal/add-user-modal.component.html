@@ -1,7 +1,7 @@
 <ng-template #addUser let-modal>
 	<div class="modal-content">
 		<div class="modal-header">
-			<h1 class="modal-title">Add User</h1>
+			<h1 class="modal-title">{{ user.id ? 'Edit' : 'Add' }} User</h1>
 			<button type="button" class="btn-close btn-close-white" (click)="modal.dismiss('Cross click')"></button>
 		</div>
 		<div class="modal-body">

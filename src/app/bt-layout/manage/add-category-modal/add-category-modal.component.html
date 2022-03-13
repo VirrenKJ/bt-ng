@@ -1,7 +1,7 @@
 <ng-template #addCategory let-modal>
 	<div class="modal-content">
 		<div class="modal-header">
-			<h1 class="modal-title">Add Global Category</h1>
+			<h1 class="modal-title">{{ category.id ? 'Edit' : 'Add' }} Global Category</h1>
 			<button type="button" class="btn-close btn-close-white" (click)="modal.dismiss('Cross click')"></button>
 		</div>
 		<div class="modal-body mb-2">

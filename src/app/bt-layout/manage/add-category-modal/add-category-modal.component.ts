@@ -1,3 +1,4 @@
+import { GlobalCategory } from './../models/global-category';
 import { GlobalCategoryService } from './../services/global-category.service';
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -18,6 +19,7 @@ export class AddCategoryModalComponent implements OnInit {
 	@ViewChild('addCategory') addCategory: TemplateRef<any>;
 	@Output() categoryListEvent = new EventEmitter();
 
+	category = new GlobalCategory();
 	projectList = new Array<Project>();
 	paginationCriteriaProject = new PaginationCriteria();
 
@@ -121,6 +123,7 @@ export class AddCategoryModalComponent implements OnInit {
 		this.globalCategoryService.getById(categoryId).subscribe(response => {
 			console.log(response);
 			if (response.status === 200 && response.data && response.data.globalCategory) {
+				this.category = response.data.globalCategory;
 				this.categoryForm.setValue({
 					id: response.data.globalCategory.id,
 					name: response.data.globalCategory.name,
