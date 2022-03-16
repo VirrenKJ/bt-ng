@@ -1,12 +1,15 @@
+import { User } from './../common/models/user';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import baseUrl from '../common/models/base-url';
-import { User } from '../common/models/user';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class LoginService {
+	user = new User();
+	userRole: string = 'Viewer';
+
 	constructor(private httpClient: HttpClient) {}
 
 	public authenticate(data) {
@@ -20,6 +23,7 @@ export class LoginService {
 	public setTokenAndUser(response) {
 		localStorage.setItem('token', response.token);
 		this.setUser(response.user);
+		this.user = response.user;
 		return true;
 	}
 
@@ -59,7 +63,6 @@ export class LoginService {
 	}
 
 	public getUserRole() {
-		let user: User = this.getUser();
-		return user?.roles[0]?.roleName;
+		return this.user.roles[0].roleName;
 	}
 }
