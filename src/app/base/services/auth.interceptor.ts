@@ -16,12 +16,20 @@ export class AuthInterceptor implements HttpInterceptor {
 			authReq = authReq.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
 		}
 		return next.handle(authReq).pipe(
+			tap(evt => {
+				if (evt instanceof HttpResponse) {
+					console.log(evt);
+					if (evt.body && evt.body.success) {
+						console.log(evt);
+					}
+				}
+			}),
 			catchError((err: any) => {
 				if (err instanceof HttpErrorResponse) {
 					if (err.error.status == 401) {
 						this.loginService.logout();
 						this.companyService.exitBugTracker();
-            window.location.reload()
+						window.location.reload();
 					}
 				}
 				return of(err);
