@@ -12,20 +12,22 @@ export class AuthInterceptor implements HttpInterceptor {
 	intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 		let authReq = req;
 		const token = this.loginService.getToken();
-		if (token != null) {
-			authReq = authReq.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
+		const userId = this.loginService.getUser()?.id;
+		const role = this.loginService.getUserRole();
+		if (token != null && userId != null && role != null) {
+			authReq = authReq.clone({ setHeaders: { Authorization: `Bearer ${token}`, 'user-id': `${userId}`, role: `${role}` } });
 		}
 		return next.handle(authReq).pipe(
 			tap(evt => {
 				if (evt instanceof HttpResponse) {
-					console.log(evt);
-					if (evt.body && evt.body.success) {
-						console.log(evt);
+					if (evt.body && evt.body.status == 200) {
+						console.log(evt.body);
 					}
 				}
 			}),
 			catchError((err: any) => {
 				if (err instanceof HttpErrorResponse) {
+					console.log(err);
 					if (err.error.status == 401) {
 						this.loginService.logout();
 						this.companyService.exitBugTracker();

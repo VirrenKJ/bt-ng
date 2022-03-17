@@ -37,6 +37,8 @@ export class LoginService {
 	public logout() {
 		localStorage.removeItem('token');
 		localStorage.removeItem('user');
+		localStorage.removeItem('edit-username');
+		localStorage.removeItem('x-company');
 		return true;
 	}
 
@@ -49,9 +51,10 @@ export class LoginService {
 	}
 
 	public getUser() {
-		let user = localStorage.getItem('user');
-		if (user != null) {
-			return JSON.parse(user);
+		let userString = localStorage.getItem('user');
+		if (userString != null) {
+			let user: User = JSON.parse(userString);
+			return user;
 		} else {
 			this.logout();
 			return null;
