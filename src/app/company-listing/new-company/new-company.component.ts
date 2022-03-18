@@ -77,7 +77,7 @@ export class NewCompanyComponent implements OnInit {
 				},
 				errorRes => {
 					console.error(errorRes);
-					this.snackBarPopup(errorRes.error.message);
+					this.snackBarPopup(errorRes?.error?.message);
 				},
 				() => {
 					this.confirmationPopup();

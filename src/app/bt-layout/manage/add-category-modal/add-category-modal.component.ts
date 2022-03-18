@@ -93,7 +93,7 @@ export class AddCategoryModalComponent implements OnInit {
 			},
 			errorRes => {
 				console.error(errorRes);
-				this.snackBarPopup(errorRes.error.message);
+				this.snackBarPopup(errorRes?.error?.message);
 			},
 			() => {
 				this.categoryForm.reset();
@@ -111,7 +111,7 @@ export class AddCategoryModalComponent implements OnInit {
 			},
 			errorRes => {
 				console.error(errorRes);
-				this.snackBarPopup(errorRes.error.message);
+				this.snackBarPopup(errorRes?.error?.message);
 			},
 			() => {
 				this.categoryForm.reset();
@@ -148,7 +148,7 @@ export class AddCategoryModalComponent implements OnInit {
 			},
 			errorRes => {
 				console.error(errorRes);
-				this.snackBarPopup(errorRes.error.message);
+				this.snackBarPopup(errorRes?.error?.message);
 			}
 		);
 	}

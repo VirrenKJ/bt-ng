@@ -32,7 +32,7 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 	employeeColumns: string[] = ['sno', 'name', 'companies', 'username', 'email'];
 
 	setOpenUserModal: any;
-	setOpenResetPasswordModal: any;
+	setOpenChangePasswordModal: any;
 	setOpenCompanyModal: any;
 	setOpenEnlistModal: any;
 
@@ -78,7 +78,7 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 			},
 			errorRes => {
 				console.error(errorRes);
-				this.snackBarPopup(errorRes.error.message);
+				this.snackBarPopup(errorRes?.error?.message);
 			}
 		);
 	}
@@ -140,7 +140,7 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 	}
 
 	openChangePasswordModal() {
-		this.setOpenResetPasswordModal = {
+		this.setOpenChangePasswordModal = {
 			userId: this.user.id,
 		};
 	}
@@ -164,7 +164,7 @@ export class CompanyListingComponent implements OnInit, AfterViewInit {
 		});
 	}
 
-	passwordReset() {
+	passwordChange() {
 		this.logout();
 	}
 

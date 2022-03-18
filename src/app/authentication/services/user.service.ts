@@ -34,8 +34,8 @@ export class UserService {
 		return this.httpClient.post(`${baseUrl}/user/list`, data);
 	}
 
-	public resetPassword(data: any): Observable<any> {
-		return this.httpClient.post(`${baseUrl}/user/reset-password`, data);
+	public changePassword(data: any): Observable<any> {
+		return this.httpClient.post(`${baseUrl}/user/change-password`, data);
 	}
 
 	public getEmployeeList(data: any): Observable<any> {

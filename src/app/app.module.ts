@@ -50,7 +50,7 @@ import { NewCompanyComponent } from './company-listing/new-company/new-company.c
 import { tenantInterceptorProvider } from './base/services/tenant.interceptor';
 import { EnlistModalComponent } from './company-listing/enlist-modal/enlist-modal.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { ResetPasswordComponent } from './shared/reset-password/reset-password.component';
+import { ChangePasswordComponent } from './shared/change-password/change-password.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 	bgsColor: '#c33c5b',
@@ -104,7 +104,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 		CompanyListingComponent,
 		NewCompanyComponent,
 		EnlistModalComponent,
-		ResetPasswordComponent,
+		ChangePasswordComponent,
 	],
 
 	imports: [

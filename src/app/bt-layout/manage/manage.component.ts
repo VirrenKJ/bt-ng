@@ -13,7 +13,6 @@ import Swal from 'sweetalert2';
 import { LoginService } from '../../authentication/services/login.service';
 import { SystemProfile } from './models/system-profile';
 import { SystemProfileService } from './services/system-profile.service';
-import { CompanyService } from 'src/app/company-listing/services/company.service';
 
 @Component({
 	selector: 'app-manage',
@@ -36,7 +35,7 @@ export class ManageComponent implements OnInit, AfterViewInit {
 	categoryList = new Array<GlobalCategory>();
 	systemProfileList = new Array<SystemProfile>();
 
-	userColumns: string[] = ['sno', 'name', 'username', 'email', 'role', 'enabled', 'action', 'reset'];
+	userColumns: string[] = ['sno', 'name', 'username', 'email', 'role', 'enabled', 'action', 'change'];
 	projectColumns: string[] = ['sno', 'name', 'status', 'viewStatus', 'categoryFlag', 'description', 'action'];
 	categoryColumns: string[] = ['sno', 'name', 'project', 'action'];
 	profileColumns: string[] = ['sno', 'platform', 'os', 'version', 'desc', 'action'];
@@ -50,7 +49,7 @@ export class ManageComponent implements OnInit, AfterViewInit {
 	setOpenProjectModal: any;
 	setOpenCategoryModal: any;
 	setOpenProfileModal: any;
-	setOpenResetPasswordModal: any;
+	setOpenChangePasswordModal: any;
 
 	adminRole: boolean = false;
 
@@ -108,7 +107,7 @@ export class ManageComponent implements OnInit, AfterViewInit {
 			},
 			errorRes => {
 				console.error(errorRes);
-				this.snackBarPopup(errorRes.error.message);
+				this.snackBarPopup(errorRes?.error?.message);
 			}
 		);
 	}
@@ -131,7 +130,7 @@ export class ManageComponent implements OnInit, AfterViewInit {
 			},
 			errorRes => {
 				console.error(errorRes);
-				this.snackBarPopup(errorRes.error.message);
+				this.snackBarPopup(errorRes?.error?.message);
 			}
 		);
 	}
@@ -154,7 +153,7 @@ export class ManageComponent implements OnInit, AfterViewInit {
 			},
 			errorRes => {
 				console.error(errorRes);
-				this.snackBarPopup(errorRes.error.message);
+				this.snackBarPopup(errorRes?.error?.message);
 			}
 		);
 	}
@@ -177,7 +176,7 @@ export class ManageComponent implements OnInit, AfterViewInit {
 			},
 			errorRes => {
 				console.error(errorRes);
-				this.snackBarPopup(errorRes.error.message);
+				this.snackBarPopup(errorRes?.error?.message);
 			}
 		);
 	}
@@ -188,7 +187,9 @@ export class ManageComponent implements OnInit, AfterViewInit {
 		this.getSystemProfileList();
 	}
 
-	passwordReset() {}
+	passwordChange() {
+		this.getUserList();
+	}
 
 	openUserModal(userId) {
 		this.setOpenUserModal = {
@@ -214,8 +215,8 @@ export class ManageComponent implements OnInit, AfterViewInit {
 		};
 	}
 
-	openResetPasswordModal(userId) {
-		this.setOpenResetPasswordModal = {
+	openChangePasswordModal(userId) {
+		this.setOpenChangePasswordModal = {
 			userId: userId,
 		};
 	}

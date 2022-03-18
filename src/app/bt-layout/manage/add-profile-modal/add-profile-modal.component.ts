@@ -92,7 +92,7 @@ export class AddProfileModalComponent implements OnInit {
 			},
 			errorRes => {
 				console.error(errorRes);
-				this.snackBarPopup(errorRes.error.message);
+				this.snackBarPopup(errorRes?.error?.message);
 			},
 			() => {
 				this.profileForm.reset();
@@ -110,7 +110,7 @@ export class AddProfileModalComponent implements OnInit {
 			},
 			errorRes => {
 				console.error(errorRes);
-				this.snackBarPopup(errorRes.error.message);
+				this.snackBarPopup(errorRes?.error?.message);
 			},
 			() => {
 				this.profileForm.reset();

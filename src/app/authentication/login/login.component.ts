@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
 				},
 				errorRes => {
 					console.error(errorRes);
-					this.snackBarPopup(errorRes.error.message);
+					this.snackBarPopup(errorRes?.error?.message);
 				},
 				() => {
 					this.router.navigate(['companies']);

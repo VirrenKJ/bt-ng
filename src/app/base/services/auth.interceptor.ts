@@ -1,9 +1,9 @@
 import { CompanyService } from './../../company-listing/services/company.service';
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpEvent, HttpRequest, HttpHandler, HTTP_INTERCEPTORS, HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { LoginService } from 'src/app/authentication/services/login.service';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, tap, map } from 'rxjs/operators';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -28,13 +28,14 @@ export class AuthInterceptor implements HttpInterceptor {
 			catchError((err: any) => {
 				if (err instanceof HttpErrorResponse) {
 					console.log(err);
-					if (err.error.status == 401) {
+					if (err.error && err.error.status == 403) {
 						this.loginService.logout();
 						this.companyService.exitBugTracker();
 						window.location.reload();
+						return of(null);
 					}
 				}
-				return of(err);
+				return throwError(err);
 			})
 		);
 	}

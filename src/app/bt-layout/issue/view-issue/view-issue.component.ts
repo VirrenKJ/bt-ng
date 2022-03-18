@@ -61,7 +61,7 @@ export class ViewIssueComponent implements OnInit, AfterViewInit {
 			},
 			errorRes => {
 				console.error(errorRes);
-				this.snackBarPopup(errorRes.error.message);
+				this.snackBarPopup(errorRes?.error?.message);
 			}
 		);
 	}

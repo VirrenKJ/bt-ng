@@ -103,7 +103,7 @@ export class AddIssueComponent implements OnInit {
 			},
 			errorRes => {
 				console.error(errorRes);
-				this.snackBarPopup(errorRes.error.message);
+				this.snackBarPopup(errorRes?.error?.message);
 			}
 		);
 	}
@@ -118,7 +118,7 @@ export class AddIssueComponent implements OnInit {
 			},
 			errorRes => {
 				console.error(errorRes);
-				this.snackBarPopup(errorRes.error.message);
+				this.snackBarPopup(errorRes?.error?.message);
 			}
 		);
 	}
@@ -133,7 +133,7 @@ export class AddIssueComponent implements OnInit {
 			},
 			errorRes => {
 				console.error(errorRes);
-				this.snackBarPopup(errorRes.error.message);
+				this.snackBarPopup(errorRes?.error?.message);
 			}
 		);
 	}
@@ -148,7 +148,7 @@ export class AddIssueComponent implements OnInit {
 			},
 			errorRes => {
 				console.error(errorRes);
-				this.snackBarPopup(errorRes.error.message);
+				this.snackBarPopup(errorRes?.error?.message);
 			}
 		);
 	}
@@ -175,7 +175,7 @@ export class AddIssueComponent implements OnInit {
 			},
 			errorRes => {
 				console.error(errorRes);
-				this.snackBarPopup(errorRes.error.message);
+				this.snackBarPopup(errorRes?.error?.message);
 			},
 			() => {
 				this.issueFormDirective.resetForm();
@@ -193,7 +193,7 @@ export class AddIssueComponent implements OnInit {
 			},
 			errorRes => {
 				console.error(errorRes);
-				this.snackBarPopup(errorRes.error.message);
+				this.snackBarPopup(errorRes?.error?.message);
 			},
 			() => {
 				this.issueFormDirective.resetForm();

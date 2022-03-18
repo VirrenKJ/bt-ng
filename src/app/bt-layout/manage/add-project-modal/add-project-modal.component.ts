@@ -94,7 +94,7 @@ export class AddProjectModalComponent implements OnInit {
 			},
 			errorRes => {
 				console.error(errorRes);
-				this.snackBarPopup(errorRes.error.message);
+				this.snackBarPopup(errorRes?.error?.message);
 			},
 			() => {
 				this.projectForm.reset();
@@ -112,7 +112,7 @@ export class AddProjectModalComponent implements OnInit {
 			},
 			errorRes => {
 				console.error(errorRes);
-				this.snackBarPopup(errorRes.error.message);
+				this.snackBarPopup(errorRes?.error?.message);
 			},
 			() => {
 				this.projectForm.reset();

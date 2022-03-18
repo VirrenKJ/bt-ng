@@ -8,19 +8,19 @@ import { CompanyService } from 'src/app/company-listing/services/company.service
 import Swal from 'sweetalert2';
 
 @Component({
-	selector: 'app-reset-password',
-	templateUrl: './reset-password.component.html',
-	styleUrls: ['./reset-password.component.css'],
+	selector: 'app-change-password',
+	templateUrl: './change-password.component.html',
+	styleUrls: ['./change-password.component.css'],
 })
-export class ResetPasswordComponent implements OnInit {
-	@ViewChild('resetPasswordTemplate') resetPasswordTemplate: TemplateRef<any>;
-	@Output() resetPasswordEvent = new EventEmitter();
+export class ChangePasswordComponent implements OnInit {
+	@ViewChild('changePasswordTemplate') changePasswordTemplate: TemplateRef<any>;
+	@Output() changePasswordEvent = new EventEmitter();
 
 	showCurrentPassword: boolean = false;
 	showNewPassword: boolean = false;
 	showNewConfirmPassword: boolean = false;
 
-	resetPasswordForm: FormGroup;
+	changePasswordForm: FormGroup;
 	userId: number;
 
 	constructor(
@@ -36,7 +36,7 @@ export class ResetPasswordComponent implements OnInit {
 	}
 
 	@Input()
-	set openResetPasswordModal(data: any) {
+	set openChangePasswordModal(data: any) {
 		if (data && data.userId) {
 			this.userId = data.userId;
 			console.log(this.userId);
@@ -44,12 +44,12 @@ export class ResetPasswordComponent implements OnInit {
 			this.showCurrentPassword = false;
 			this.showNewPassword = false;
 			this.showNewConfirmPassword = false;
-			this.openModal(this.resetPasswordTemplate);
+			this.openModal(this.changePasswordTemplate);
 		}
 	}
 
 	formInIt() {
-		this.resetPasswordForm = new FormGroup(
+		this.changePasswordForm = new FormGroup(
 			{
 				userId: new FormControl(),
 				currentPassword: new FormControl(null, [Validators.required, this.customValidationService.patternValidator]),
@@ -69,14 +69,15 @@ export class ResetPasswordComponent implements OnInit {
 		});
 	}
 
-	resetPassword() {
-		if (this.resetPasswordForm.valid) {
-			this.resetPasswordForm.get('userId').patchValue(this.userId);
-			this.userService.resetPassword(this.resetPasswordForm.value).subscribe(
+	changePassword() {
+		if (this.changePasswordForm.valid) {
+			this.changePasswordForm.get('userId').patchValue(this.userId);
+			let dbUuid = this.companyService.temporarilyRemoveTenant();
+			this.userService.changePassword(this.changePasswordForm.value).subscribe(
 				response => {
-					if (response.status == 200 && response.data && response.data.passwordReset) {
-						this.resetPasswordInMaster();
-					} else if (response.status == 400 && response.data && !response.data.passwordReset) {
+					if (response.status == 200 && response.data && response.data.passwordChange) {
+						this.confirmationPopup('Password Changed');
+					} else if (response.status == 400 && response.data && !response.data.passwordChange) {
 						this.snackBarPopup(response.message);
 					}
 				},
@@ -84,28 +85,12 @@ export class ResetPasswordComponent implements OnInit {
 					console.error(errorRes);
 				}
 			);
+			if (dbUuid) {
+				this.companyService.setTenant(dbUuid);
+			}
 		} else {
 			this.snackBarPopup('Invalid Form');
 		}
-	}
-
-	resetPasswordInMaster() {
-		let dbUuid = this.companyService.temporarilyRemoveTenant();
-		this.userService.resetPassword(this.resetPasswordForm.value).subscribe(
-			response => {
-				if (response.status == 200 && response.data && response.data.passwordReset) {
-					this.confirmationPopup('Password Changed');
-				} else if (response.status == 400 && response.data && !response.data.passwordReset) {
-					this.snackBarPopup(response.message);
-				}
-			},
-			errorRes => {
-				console.error(errorRes);
-			}
-		);
-    if (dbUuid) {
-      this.companyService.setTenant(dbUuid);
-    }
 	}
 
 	confirmationPopup(title: string) {
@@ -115,7 +100,7 @@ export class ResetPasswordComponent implements OnInit {
 			showConfirmButton: false,
 			timer: 2000,
 		}).then(() => {
-			this.resetPasswordEvent.emit();
+			this.changePasswordEvent.emit();
 			this.modalService.dismissAll();
 		});
 	}

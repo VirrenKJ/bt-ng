@@ -17,7 +17,7 @@ export class ToolbarComponent implements OnInit {
 	user = new User();
 
 	setOpenUserModal: any;
-	setOpenResetPasswordModal: any;
+	setOpenChangePasswordModal: any;
 
 	constructor(
 		private loginService: LoginService,
@@ -45,7 +45,7 @@ export class ToolbarComponent implements OnInit {
 	}
 
 	openChangePasswordModal() {
-		this.setOpenResetPasswordModal = {
+		this.setOpenChangePasswordModal = {
 			userId: this.user.id,
 		};
 	}
@@ -59,7 +59,7 @@ export class ToolbarComponent implements OnInit {
 		});
 	}
 
-	passwordReset() {
+	passwordChange() {
 		this.logout();
 	}
 

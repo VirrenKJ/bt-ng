@@ -170,14 +170,14 @@ export class AddUserModalComponent implements OnInit {
 						},
 						errorRes => {
 							console.error(errorRes);
-							this.snackBarPopup(errorRes.error.message);
+							this.snackBarPopup(errorRes?.error?.message);
 						}
 					);
 				}
 			},
 			errorRes => {
 				console.log(errorRes);
-				this.snackBarPopup(errorRes.error.message);
+				this.snackBarPopup(errorRes?.error?.message);
 			},
 			() => {
 				this.userForm.reset();
@@ -225,7 +225,7 @@ export class AddUserModalComponent implements OnInit {
 			},
 			errorRes => {
 				console.log(errorRes);
-				this.snackBarPopup(errorRes.error.message);
+				this.snackBarPopup(errorRes?.error?.message);
 			},
 			() => {
 				this.userForm.reset();
@@ -266,7 +266,7 @@ export class AddUserModalComponent implements OnInit {
 			},
 			errorRes => {
 				console.error(errorRes);
-				this.snackBarPopup(errorRes.error.message);
+				this.snackBarPopup(errorRes?.error?.message);
 			}
 		);
 	}

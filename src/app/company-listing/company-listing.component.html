@@ -18,7 +18,7 @@
 </mat-toolbar>
 
 <app-add-user-modal [openUserModal]="setOpenUserModal" (userListEvent)="getUserDetails()"></app-add-user-modal>
-<app-reset-password [openResetPasswordModal]="setOpenResetPasswordModal" (resetPasswordEvent)="passwordReset()"></app-reset-password>
+<app-change-password [openChangePasswordModal]="setOpenChangePasswordModal" (changePasswordEvent)="passwordChange()"></app-change-password>
 <app-enlist-modal [openEnlistingModal]="setOpenEnlistModal" (employeeListing)="getAllEmployeeList()"></app-enlist-modal>
 <app-new-company [openCompanyModal]="setOpenCompanyModal" (reloadBusinesses)="getCompanyBusinessList()"></app-new-company>
 

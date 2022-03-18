@@ -80,7 +80,7 @@ export class SignupComponent implements OnInit {
 				},
 				errorRes => {
 					console.log(errorRes);
-					this.snackBarPopup(errorRes.error.message);
+					this.snackBarPopup(errorRes?.error?.message);
 				},
 				() => {
 					// this.signupFormDirective.resetForm();
