@@ -54,6 +54,10 @@ export class UserService {
 		return this.httpClient.get(`${baseUrl}/user/username`, { params: new HttpParams().set('username', username) });
 	}
 
+	public getByEmail(email: string): Observable<any> {
+		return this.httpClient.get(`${baseUrl}/user/email`, { params: new HttpParams().set('email', email) });
+	}
+
 	public delete(id): Observable<any> {
 		return this.httpClient.delete(`${baseUrl}/user/delete`, { params: new HttpParams().set('id', id) });
 	}

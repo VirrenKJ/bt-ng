@@ -44,7 +44,11 @@ export class SignupComponent implements OnInit {
 				confirmPassword: new FormControl(null, Validators.required),
 				firstName: new FormControl(null, [Validators.required, this.customValidationService.noWhitespace]),
 				lastName: new FormControl(null, [Validators.required, this.customValidationService.noWhitespace]),
-				email: new FormControl(null, [Validators.required, Validators.email]),
+				email: new FormControl(
+					null,
+					[Validators.required, Validators.email],
+					this.customValidationService.emailValidator.bind(this.customValidationService)
+				),
 				enabled: new FormControl(true),
 				roles: new FormControl(),
 			},

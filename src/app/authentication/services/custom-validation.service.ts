@@ -8,8 +8,7 @@ import { UserService } from './user.service';
 	providedIn: 'root',
 })
 export class CustomValidationService {
-	usernameList = new Array<string>();
-
+  
 	constructor(private userService: UserService, private companyService: CompanyService) {}
 
 	patternValidator(control: AbstractControl) {
@@ -84,6 +83,46 @@ export class CustomValidationService {
 		if (editUsername === undefined || editUsername === null || editUsername === '') {
 			return false;
 		} else if (username != editUsername) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	emailValidator(userControl: AbstractControl) {
+		return new Promise(resolve => {
+			setTimeout(() => {
+				let dbUuid = this.companyService.temporarilyRemoveTenant();
+				this.userService.getByEmail(userControl.value.trim()).subscribe(
+					response => {
+						console.log(response);
+						let user: User = response.data.user;
+						if (user) {
+							if (this.editEmail(user.email)) {
+								resolve(null);
+							} else {
+								resolve({ emailNotAvailable: true });
+							}
+						} else {
+							resolve(null);
+						}
+					},
+					errorRes => {
+						console.error(errorRes.error);
+					}
+				);
+				if (dbUuid) {
+					this.companyService.setTenant(dbUuid);
+				}
+			});
+		});
+	}
+
+	editEmail(email: string) {
+		const editEmail = localStorage.getItem('edit-email');
+		if (editEmail === undefined || editEmail === null || editEmail === '') {
+			return false;
+		} else if (email != editEmail) {
 			return false;
 		} else {
 			return true;
