@@ -52,6 +52,7 @@ import { EnlistModalComponent } from './company-listing/enlist-modal/enlist-moda
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ChangePasswordComponent } from './shared/change-password/change-password.component';
 import { ForgotPasswordComponent } from './authentication/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 	bgsColor: '#c33c5b',
@@ -107,6 +108,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 		EnlistModalComponent,
 		ChangePasswordComponent,
 		ForgotPasswordComponent,
+		ResetPasswordComponent,
 	],
 
 	imports: [

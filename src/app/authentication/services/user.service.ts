@@ -39,7 +39,7 @@ export class UserService {
 	}
 
 	public validatePasswordResetToken(token: any): Observable<any> {
-		return this.httpClient.post(`${baseUrl}/user/validate-token`, { params: new HttpParams().set('token', token) });
+		return this.httpClient.get(`${baseUrl}/user/validate-token`, { params: new HttpParams().set('token', token) });
 	}
 
 	public resetPassword(data: any): Observable<any> {

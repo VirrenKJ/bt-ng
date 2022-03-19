@@ -1,3 +1,4 @@
+import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
 import { ForgotPasswordComponent } from './authentication/forgot-password/forgot-password.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -41,6 +42,10 @@ const routes: Routes = [
       {
 				path: 'forgot-password',
 				component: ForgotPasswordComponent,
+			},
+      {
+				path: 'reset-password/:token',
+				component: ResetPasswordComponent,
 			},
 		],
 		canActivate: [LoggedInGuard, BugTrackerExitGuard],

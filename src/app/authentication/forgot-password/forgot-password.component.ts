@@ -22,23 +22,26 @@ export class ForgotPasswordComponent implements OnInit {
 
 	onSubmit() {
 		console.log(this.emailForm.get('email').value);
-
-		this.userService.sendToken(this.emailForm.get('email').value).subscribe(
-			response => {
-				console.log(response);
-				if (response.status == 200 && response.data && response.data.tokenSend) {
-					this.snackBarPopup('Token sent, check your mail.');
-					this.emailFormDirective.resetForm();
-				} else if (response.status == 404 && response.code == 'GEX002') {
-					this.snackBarPopup(response?.message);
-					this.emailFormDirective.resetForm();
+		if (this.emailForm.valid) {
+			this.userService.sendToken(this.emailForm.get('email').value).subscribe(
+				response => {
+					console.log(response);
+					if (response.status == 200 && response.data && response.data.tokenSend) {
+						this.snackBarPopup('Token sent, check your mail.');
+						this.emailFormDirective.resetForm();
+					} else if (response.status == 404 && response.code == 'GEX002') {
+						this.snackBarPopup(response?.message);
+						this.emailFormDirective.resetForm();
+					}
+				},
+				errorRes => {
+					console.log(errorRes);
+					this.snackBarPopup(errorRes?.error?.message);
 				}
-			},
-			errorRes => {
-				console.log(errorRes);
-				this.snackBarPopup(errorRes?.error?.message);
-			}
-		);
+			);
+		} else {
+			this.snackBarPopup('Invalid Form');
+		}
 	}
 
 	snackBarPopup(message: string) {
