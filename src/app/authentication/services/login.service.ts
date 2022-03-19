@@ -38,6 +38,7 @@ export class LoginService {
 		localStorage.removeItem('token');
 		localStorage.removeItem('user');
 		localStorage.removeItem('edit-username');
+		localStorage.removeItem('edit-email');
 		localStorage.removeItem('x-company');
 		return true;
 	}

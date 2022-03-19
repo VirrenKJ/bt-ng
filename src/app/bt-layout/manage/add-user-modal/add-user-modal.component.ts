@@ -43,7 +43,7 @@ export class AddUserModalComponent implements OnInit {
 		private customValidationService: CustomValidationService,
 		private modalService: NgbModal
 	) {
-    //Stops modal close when clicking on backdrop
+		//Stops modal close when clicking on backdrop
 		this.config.backdrop = 'static';
 		this.config.keyboard = false;
 	}
@@ -67,7 +67,11 @@ export class AddUserModalComponent implements OnInit {
 				confirmPassword: new FormControl(null, Validators.required),
 				firstName: new FormControl(null, [Validators.required, this.customValidationService.noWhitespace]),
 				lastName: new FormControl(null, [Validators.required, this.customValidationService.noWhitespace]),
-				email: new FormControl(null, [Validators.required, Validators.email]),
+				email: new FormControl(
+					null,
+					[Validators.required, Validators.email],
+					this.customValidationService.emailValidator.bind(this.customValidationService)
+				),
 				enabled: new FormControl(true),
 				roles: new FormControl(),
 				deleteFlag: new FormControl(null),
@@ -97,6 +101,7 @@ export class AddUserModalComponent implements OnInit {
 			this.userId = userId;
 		} else {
 			localStorage.removeItem('edit-username');
+			localStorage.removeItem('edit-email');
 		}
 		setTimeout(() => {
 			this.modalService.open(template, { size: 'lg' });
@@ -252,6 +257,7 @@ export class AddUserModalComponent implements OnInit {
 				});
 				this.role = response.data.user.roles[0];
 				localStorage.setItem('edit-username', this.user.username);
+				localStorage.setItem('edit-email', this.user.email);
 			}
 		});
 	}
@@ -297,5 +303,11 @@ export class AddUserModalComponent implements OnInit {
 			horizontalPosition: 'center',
 			verticalPosition: 'top',
 		});
+	}
+
+	close() {
+		this.modalService.dismissAll();
+		localStorage.removeItem('edit-username');
+		localStorage.removeItem('edit-email');
 	}
 }

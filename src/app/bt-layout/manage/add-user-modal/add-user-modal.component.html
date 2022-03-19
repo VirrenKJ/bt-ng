@@ -2,7 +2,7 @@
 	<div class="modal-content">
 		<div class="modal-header">
 			<h1 class="modal-title">{{ user.id ? 'Edit' : 'Add' }} User</h1>
-			<button type="button" class="btn-close btn-close-white" (click)="modal.dismiss('Cross click')"></button>
+			<button type="button" class="btn-close btn-close-white" (click)="close()"></button>
 		</div>
 		<div class="modal-body">
 			<div class="container">
@@ -43,11 +43,16 @@
 								</mat-form-field>
 							</div>
 							<div class="col-md-6">
-								<mat-form-field appearance="outline">
-									<mat-label>Email</mat-label>
-									<input type="email" formControlName="email" autocomplete="email" matInput placeholder="Enter here!" />
-									<mat-hint *ngIf="!userForm.get('email').valid && userForm.get('email').touched">Please enter a valid email!!</mat-hint>
-								</mat-form-field>
+                <mat-form-field appearance="outline" matTooltip="Must be Unique!" matTooltipPosition="after">
+                  <mat-label>Email</mat-label>
+                  <input type="email" formControlName="email" autocomplete="email" matInput placeholder="Enter here!" />
+                  <mat-hint *ngIf="userForm.get('email').touched && (userForm.get('email').errors?.required || userForm.get('email').errors?.email)"
+                    >Please enter a valid email!!</mat-hint
+                  >
+                  <mat-hint *ngIf="userForm.get('email').touched && userForm.get('email').errors?.emailNotAvailable"
+                    >Email is not available!!</mat-hint
+                  >
+                </mat-form-field>
 							</div>
 						</div>
 
@@ -123,7 +128,7 @@
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-primary" (click)="addUpdateUser()" [disabled]="!role?.roleId">Submit</button>
-			<button type="button" class="btn btn-primary" (click)="modal.close('Save click')">Cancel</button>
+			<button type="button" class="btn btn-primary" (click)="close()">Cancel</button>
 		</div>
 	</div>
 </ng-template>

@@ -3,7 +3,7 @@
 		<div class="row justify-content-center mt-4">
 			<div class="col-lg-5">
 				<mat-card>
-					<h1 class="text-center h3">Sign up</h1>  
+					<h1 class="text-center h3">Sign up</h1>
 					<!-- <span class="text-center h3" style="margin-bottom: 0%">Bug Tracker</span> -->
 
 					<form action="" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
@@ -70,10 +70,15 @@
 							<mat-hint *ngIf="signupForm.get('confirmPassword').errors?.passwordMismatch">Passwords does not match</mat-hint>
 						</mat-form-field>
 
-						<mat-form-field appearance="outline">
+						<mat-form-field appearance="outline" matTooltip="Must be Unique!" matTooltipPosition="after">
 							<mat-label>Email</mat-label>
 							<input type="email" formControlName="email" autocomplete="email" matInput placeholder="Enter here!" />
-							<mat-hint *ngIf="!signupForm.get('email').valid && signupForm.get('email').touched">Please enter a valid email!!</mat-hint>
+							<mat-hint *ngIf="signupForm.get('email').touched && (signupForm.get('email').errors?.required || signupForm.get('email').errors?.email)"
+								>Please enter a valid email!!</mat-hint
+							>
+							<mat-hint *ngIf="signupForm.get('email').touched && signupForm.get('email').errors?.emailNotAvailable"
+								>Email is not available!!</mat-hint
+							>
 						</mat-form-field>
 
 						<div class="container text-center">
