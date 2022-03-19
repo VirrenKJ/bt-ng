@@ -30,12 +30,24 @@ export class UserService {
 		return this.httpClient.post(`${baseUrl}/user/update`, user);
 	}
 
-	public getList(data: any): Observable<any> {
-		return this.httpClient.post(`${baseUrl}/user/list`, data);
-	}
-
 	public changePassword(data: any): Observable<any> {
 		return this.httpClient.post(`${baseUrl}/user/change-password`, data);
+	}
+
+	public sendToken(email: any): Observable<any> {
+		return this.httpClient.get(`${baseUrl}/user/send-token`, { params: new HttpParams().set('email', email) });
+	}
+
+	public validatePasswordResetToken(token: any): Observable<any> {
+		return this.httpClient.post(`${baseUrl}/user/validate-token`, { params: new HttpParams().set('token', token) });
+	}
+
+	public resetPassword(data: any): Observable<any> {
+		return this.httpClient.post(`${baseUrl}/user/reset-password`, data);
+	}
+
+	public getList(data: any): Observable<any> {
+		return this.httpClient.post(`${baseUrl}/user/list`, data);
 	}
 
 	public getEmployeeList(data: any): Observable<any> {

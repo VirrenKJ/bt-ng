@@ -51,6 +51,7 @@ import { tenantInterceptorProvider } from './base/services/tenant.interceptor';
 import { EnlistModalComponent } from './company-listing/enlist-modal/enlist-modal.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ChangePasswordComponent } from './shared/change-password/change-password.component';
+import { ForgotPasswordComponent } from './authentication/forgot-password/forgot-password.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 	bgsColor: '#c33c5b',
@@ -105,6 +106,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 		NewCompanyComponent,
 		EnlistModalComponent,
 		ChangePasswordComponent,
+		ForgotPasswordComponent,
 	],
 
 	imports: [

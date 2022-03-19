@@ -1,3 +1,4 @@
+import { ForgotPasswordComponent } from './authentication/forgot-password/forgot-password.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginLayoutComponent } from './authentication/login-layout/login-layout.component';
@@ -25,17 +26,21 @@ const routes: Routes = [
 		children: [
 			{
 				path: '',
-				redirectTo: 'signup',
+				redirectTo: 'login',
 				pathMatch: 'full',
 			},
+      {
+        path: 'login',
+        component: LoginComponent,
+        pathMatch: 'full',
+      },
 			{
 				path: 'signup',
 				component: SignupComponent,
 			},
-			{
-				path: 'login',
-				component: LoginComponent,
-				pathMatch: 'full',
+      {
+				path: 'forgot-password',
+				component: ForgotPasswordComponent,
 			},
 		],
 		canActivate: [LoggedInGuard, BugTrackerExitGuard],
