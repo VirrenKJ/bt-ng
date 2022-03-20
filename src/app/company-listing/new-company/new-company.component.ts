@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild 
 import { FormGroup, FormControl, Validators, FormGroupDirective } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { map } from 'rxjs/operators';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { CustomValidationService } from 'src/app/authentication/services/custom-validation.service';
 import Swal from 'sweetalert2';
 import { Company } from '../models/company';
@@ -14,25 +14,16 @@ import { CompanyService } from '../services/company.service';
 	styleUrls: ['./new-company.component.css'],
 })
 export class NewCompanyComponent implements OnInit {
-	@ViewChild(FormGroupDirective) companyFormDirective: FormGroupDirective;
 	@ViewChild('addCompany') addCompany: TemplateRef<any>;
 	@Output() reloadBusinesses = new EventEmitter();
 
-	companyForm = new FormGroup({
-		userId: new FormControl(),
-		name: new FormControl(null, [Validators.required, this.customValidationService.noWhitespace]),
-		email: new FormControl(null, [Validators.required, Validators.email]),
-		contactNumber: new FormControl(null, Validators.required),
-		industryType: new FormControl(null, Validators.required),
-		pinCode: new FormControl(null, Validators.required),
-		state: new FormControl(null, Validators.required),
-		city: new FormControl(null, [Validators.required, this.customValidationService.noWhitespace]),
-	});
+	companyForm: FormGroup;
 
 	constructor(
 		private companyService: CompanyService,
 		private config: NgbModalConfig,
 		private modalService: NgbModal,
+		private ngxService: NgxUiLoaderService,
 		private customValidationService: CustomValidationService,
 		private _snackBar: MatSnackBar
 	) {
@@ -41,7 +32,21 @@ export class NewCompanyComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.removeWhitespace();
+		// this.removeWhitespace();
+		this.initForm();
+	}
+
+	initForm() {
+		this.companyForm = new FormGroup({
+			userId: new FormControl(),
+			name: new FormControl(null, [Validators.required, this.customValidationService.noWhitespace]),
+			email: new FormControl(null, [Validators.required, Validators.email]),
+			contactNumber: new FormControl(null, Validators.required),
+			industryType: new FormControl(null, Validators.required),
+			pinCode: new FormControl(null, Validators.required),
+			state: new FormControl(null, Validators.required),
+			city: new FormControl(null, [Validators.required, this.customValidationService.noWhitespace]),
+		});
 	}
 
 	@Input()
@@ -56,13 +61,13 @@ export class NewCompanyComponent implements OnInit {
 
 	openModal(companyId = null) {
 		setTimeout(() => {
-			// this.companyFormDirective.resetForm();
 			this.modalService.open(this.addCompany, { size: 'lg' });
 		});
 	}
 
 	onSubmit() {
 		if (this.companyForm.valid) {
+			this.ngxService.startLoader('master');
 			this.companyService.add(this.companyForm.value).subscribe(
 				responseCompany => {
 					if (responseCompany.data && responseCompany.data.company) {
@@ -71,15 +76,18 @@ export class NewCompanyComponent implements OnInit {
 						this.companyService.copyCompanyToTenant(company, company.dbUuid).subscribe(responseCopy => {
 							if (responseCopy.data && responseCopy.data.company) {
 								console.log('Copied Company: ' + responseCopy.data.company);
+								this.ngxService.stopLoader('master');
 							}
 						});
 					}
 				},
 				errorRes => {
 					console.error(errorRes);
+					this.ngxService.stopLoader('master');
 					this.snackBarPopup(errorRes?.error?.message);
 				},
 				() => {
+					this.companyForm.reset();
 					this.confirmationPopup();
 				}
 			);
@@ -89,21 +97,21 @@ export class NewCompanyComponent implements OnInit {
 	}
 
 	removeWhitespace() {
-		this.companyForm
-			.get('name')
-			.valueChanges.pipe(
-				map(value => {
-					if (value != value.trimStart()) {
-						return this.companyForm.get('name').setValue(value.trimStart());
-					}
-				})
-			)
-			.subscribe();
-		this.companyForm.get('city').valueChanges.subscribe(value => {
-			if (value != value.trimStart()) {
-				this.companyForm.get('city').setValue(value.trimStart());
-			}
-		});
+		// this.companyForm
+		// 	.get('name')
+		// 	.valueChanges.pipe(
+		// 		map(value => {
+		// 			if (value != value.trimStart()) {
+		// 				return this.companyForm.get('name').setValue(value.trimStart());
+		// 			}
+		// 		})
+		// 	)
+		// 	.subscribe();
+		// this.companyForm.get('city').valueChanges.subscribe(value => {
+		// 	if (value != value.trimStart()) {
+		// 		this.companyForm.get('city').setValue(value.trimStart());
+		// 	}
+		// });
 		// this.companyForm.get('email').valueChanges.subscribe(value => {
 		// 	if (value != value.trimStart()) {
 		// 		this.companyForm.get('email').setValue(value.trimStart());

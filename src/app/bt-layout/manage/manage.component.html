@@ -4,353 +4,355 @@
 <app-add-profile-modal [openProfileModal]="setOpenProfileModal" (profileListEvent)="getSystemProfileList()"></app-add-profile-modal>
 <app-change-password [openChangePasswordModal]="setOpenChangePasswordModal" (changePasswordEvent)="passwordChange()"></app-change-password>
 
-<div>
-	<mat-tab-group class="mat-tab-group" mat-align-tabs="center">
-		<mat-tab label="Users">
-			<ng-container>
-				<div class="mat-elevation-z8">
-					<mat-card>
-						<div class="row">
-							<div class="col-8 mt-2">
-								<mat-card-title> Users </mat-card-title>
-							</div>
-							<div class="col-4 d-flex">
-								<div class="col-4">
-									<button type="button" class="btn btn-outline-light float-end me-3" (click)="openUserModal(null)" [disabled]="!adminRole">
-										Add User
-									</button>
+<div class="body">
+	<div class="container p-3">
+		<mat-tab-group mat-stretch-tabs dynamicHeight class="mat-tab-group" mat-align-tabs="center">
+			<mat-tab label="Users">
+				<ng-container>
+					<div class="mat-elevation-z8">
+						<mat-card>
+							<div class="row">
+								<div class="col-8 mt-2">
+									<mat-card-title> Users </mat-card-title>
 								</div>
-								<div class="col">
-									<div class="input-group">
-										<input
-											type="search"
-											class="form-control bg-dark text-white"
-											placeholder="Search by Username/Email"
-											aria-label="Search"
-											aria-describedby="search-addon"
-                      (input)="getUserList()"
-											(click)="getUserList()"
-                      [(ngModel)]="paginationCriteriaUser.searchFor"
-										/>
-										<span class="input-group-text border-0" id="search-addon" style="cursor: pointer"><i class="material-icons">search</i> </span>
+								<div class="col-4 d-flex">
+									<div class="col-4">
+										<button type="button" class="btn btn-outline-light float-end me-3" (click)="openUserModal(null)" [disabled]="!adminRole">
+											Add User
+										</button>
+									</div>
+									<div class="col">
+										<div class="input-group">
+											<input
+												type="search"
+												class="form-control bg-dark text-white"
+												placeholder="Search by Username/Email"
+												aria-label="Search"
+												aria-describedby="search-addon"
+												(input)="getUserList()"
+												(click)="getUserList()"
+												[(ngModel)]="paginationCriteriaUser.searchFor"
+											/>
+											<span class="input-group-text border-0" id="search-addon" style="cursor: pointer"><i class="material-icons">search</i> </span>
+										</div>
 									</div>
 								</div>
 							</div>
+						</mat-card>
+						<!-- table -->
+						<table mat-table [dataSource]="userDataSource" *ngIf="userPaginator.length > 0">
+							<ng-container matColumnDef="sno">
+								<th mat-header-cell *matHeaderCellDef>No.</th>
+								<td mat-cell *matCellDef="let element; index as i">{{ userPaginator.pageIndex * userPaginator.pageSize + (i + 1) }}.</td>
+							</ng-container>
+
+							<ng-container matColumnDef="name">
+								<th mat-header-cell *matHeaderCellDef>Name</th>
+								<td mat-cell *matCellDef="let element">{{ element.firstName }} {{ element.lastName }}</td>
+							</ng-container>
+
+							<ng-container matColumnDef="username">
+								<th mat-header-cell *matHeaderCellDef>Username</th>
+								<td mat-cell *matCellDef="let element">{{ element.username }}</td>
+							</ng-container>
+
+							<ng-container matColumnDef="email">
+								<th mat-header-cell *matHeaderCellDef>Email</th>
+								<td mat-cell *matCellDef="let element">{{ element.email }}</td>
+							</ng-container>
+
+							<ng-container matColumnDef="role">
+								<th mat-header-cell *matHeaderCellDef>Role</th>
+								<td mat-cell *matCellDef="let element">{{ element?.roles[0]?.roleName }}</td>
+							</ng-container>
+
+							<ng-container matColumnDef="enabled">
+								<th mat-header-cell *matHeaderCellDef>Enabled</th>
+								<td mat-cell *matCellDef="let element">{{ element.enabled }}</td>
+							</ng-container>
+
+							<ng-container matColumnDef="action">
+								<th mat-header-cell *matHeaderCellDef>Action</th>
+								<td mat-cell *matCellDef="let element">
+									<span class="material-icons" (click)="openUserModal(element.id)" style="cursor: pointer"> edit </span>
+									<span class="material-icons" (click)="deleteUser(element.id)" style="cursor: pointer"> delete </span>
+								</td>
+							</ng-container>
+
+							<ng-container matColumnDef="change">
+								<th mat-header-cell *matHeaderCellDef style="max-width: 50px">Change Password</th>
+								<td mat-cell *matCellDef="let element">
+									<span class="material-icons" style="cursor: pointer" (click)="openChangePasswordModal(element.id)"> change_circle </span>
+								</td>
+							</ng-container>
+							<tr mat-header-row *matHeaderRowDef="userColumns"></tr>
+							<tr mat-row *matRowDef="let row; columns: userColumns"></tr>
+						</table>
+
+						<mat-paginator
+							[hidden]="userPaginator.length < 1"
+							[pageSizeOptions]="[5, 10, 20]"
+							showFirstLastButtons
+							aria-label="Select page of periodic elements"
+							#userPaginator
+						>
+						</mat-paginator>
+						<div class="card text-white bg-dark mt-3" *ngIf="userPaginator?.length < 1">
+							<div class="card-header">No Data</div>
 						</div>
-					</mat-card>
-					<!-- table -->
-					<table mat-table [dataSource]="userDataSource" *ngIf="userPaginator.length > 0">
-						<ng-container matColumnDef="sno">
-							<th mat-header-cell *matHeaderCellDef>No.</th>
-							<td mat-cell *matCellDef="let element; index as i">{{ userPaginator.pageIndex * userPaginator.pageSize + (i + 1) }}.</td>
-						</ng-container>
-
-						<ng-container matColumnDef="name">
-							<th mat-header-cell *matHeaderCellDef>Name</th>
-							<td mat-cell *matCellDef="let element">{{ element.firstName }} {{ element.lastName }}</td>
-						</ng-container>
-
-						<ng-container matColumnDef="username">
-							<th mat-header-cell *matHeaderCellDef>Username</th>
-							<td mat-cell *matCellDef="let element">{{ element.username }}</td>
-						</ng-container>
-
-						<ng-container matColumnDef="email">
-							<th mat-header-cell *matHeaderCellDef>Email</th>
-							<td mat-cell *matCellDef="let element">{{ element.email }}</td>
-						</ng-container>
-
-						<ng-container matColumnDef="role">
-							<th mat-header-cell *matHeaderCellDef>Role</th>
-							<td mat-cell *matCellDef="let element">{{ element?.roles[0]?.roleName }}</td>
-						</ng-container>
-
-						<ng-container matColumnDef="enabled">
-							<th mat-header-cell *matHeaderCellDef>Enabled</th>
-							<td mat-cell *matCellDef="let element">{{ element.enabled }}</td>
-						</ng-container>
-
-						<ng-container matColumnDef="action">
-							<th mat-header-cell *matHeaderCellDef>Action</th>
-							<td mat-cell *matCellDef="let element">
-								<span class="material-icons" (click)="openUserModal(element.id)" style="cursor: pointer"> edit </span>
-								<span class="material-icons" (click)="deleteUser(element.id)" style="cursor: pointer"> delete </span>
-							</td>
-						</ng-container>
-
-						<ng-container matColumnDef="change">
-							<th mat-header-cell *matHeaderCellDef style="max-width: 50px;">Change Password</th>
-							<td mat-cell *matCellDef="let element">
-								<span class="material-icons" style="cursor: pointer" (click)="openChangePasswordModal(element.id)"> change_circle </span>
-							</td>
-						</ng-container>
-						<tr mat-header-row *matHeaderRowDef="userColumns"></tr>
-						<tr mat-row *matRowDef="let row; columns: userColumns"></tr>
-					</table>
-
-					<mat-paginator
-						[hidden]="userPaginator.length < 1"
-						[pageSizeOptions]="[5, 10, 20]"
-						showFirstLastButtons
-						aria-label="Select page of periodic elements"
-						#userPaginator
-					>
-					</mat-paginator>
-					<div class="card text-white bg-dark mt-3" *ngIf="userPaginator?.length < 1">
-						<div class="card-header">No Data</div>
 					</div>
-				</div>
-			</ng-container>
-		</mat-tab>
+				</ng-container>
+			</mat-tab>
 
-		<mat-tab label="Projects">
-			<ng-container>
-				<div class="mat-elevation-z8">
-					<mat-card>
-						<div class="row">
-							<div class="col-8 mt-2">
-								<mat-card-title> Projects </mat-card-title>
-							</div>
-							<div class="col-4 d-flex">
-								<div class="col-4">
-									<button type="button" class="btn btn-outline-light float-end me-3" (click)="openProjectModal(null)" [disabled]="!adminRole">
-										Add Project
-									</button>
+			<mat-tab label="Projects">
+				<ng-container>
+					<div class="mat-elevation-z8">
+						<mat-card>
+							<div class="row">
+								<div class="col-8 mt-2">
+									<mat-card-title> Projects </mat-card-title>
 								</div>
-								<div class="col">
-									<div class="input-group">
-										<input
-											type="search"
-											class="form-control bg-dark text-white"
-											placeholder="Search by Name"
-											aria-label="Search"
-											aria-describedby="search-addon"
-                      (input)="getProjectList()"
-											(click)="getProjectList()"
-                      [(ngModel)]="paginationCriteriaProject.searchFor"
-										/>
-										<span class="input-group-text border-0" id="search-addon" style="cursor: pointer"><i class="material-icons">search</i> </span>
+								<div class="col-4 d-flex">
+									<div class="col-4">
+										<button type="button" class="btn btn-outline-light float-end me-3" (click)="openProjectModal(null)" [disabled]="!adminRole">
+											Add Project
+										</button>
+									</div>
+									<div class="col">
+										<div class="input-group">
+											<input
+												type="search"
+												class="form-control bg-dark text-white"
+												placeholder="Search by Name"
+												aria-label="Search"
+												aria-describedby="search-addon"
+												(input)="getProjectList()"
+												(click)="getProjectList()"
+												[(ngModel)]="paginationCriteriaProject.searchFor"
+											/>
+											<span class="input-group-text border-0" id="search-addon" style="cursor: pointer"><i class="material-icons">search</i> </span>
+										</div>
 									</div>
 								</div>
 							</div>
+						</mat-card>
+						<table mat-table [dataSource]="projectDataSource" *ngIf="projectPaginator.length > 0">
+							<ng-container matColumnDef="sno">
+								<th mat-header-cell *matHeaderCellDef>No.</th>
+								<td mat-cell *matCellDef="let element; index as i">{{ projectPaginator.pageIndex * projectPaginator.pageSize + (i + 1) }}.</td>
+							</ng-container>
+
+							<ng-container matColumnDef="name">
+								<th mat-header-cell *matHeaderCellDef>Name</th>
+								<td mat-cell *matCellDef="let element">{{ element.name }}</td>
+							</ng-container>
+
+							<ng-container matColumnDef="status">
+								<th mat-header-cell *matHeaderCellDef>Status</th>
+								<td mat-cell *matCellDef="let element">{{ element.status }}</td>
+							</ng-container>
+
+							<ng-container matColumnDef="viewStatus">
+								<th mat-header-cell *matHeaderCellDef>View Status</th>
+								<td mat-cell *matCellDef="let element">{{ element.viewStatus }}</td>
+							</ng-container>
+
+							<ng-container matColumnDef="categoryFlag">
+								<th mat-header-cell *matHeaderCellDef>Inherit Category</th>
+								<td mat-cell *matCellDef="let element">{{ element.inheritCategoryFlag }}</td>
+							</ng-container>
+
+							<ng-container matColumnDef="description">
+								<th mat-header-cell *matHeaderCellDef>Description</th>
+								<td mat-cell *matCellDef="let element">{{ element.description }}</td>
+							</ng-container>
+
+							<ng-container matColumnDef="action">
+								<th mat-header-cell *matHeaderCellDef>Action</th>
+								<td mat-cell *matCellDef="let element">
+									<span class="material-icons" (click)="openProjectModal(element.id)" style="cursor: pointer"> edit </span>
+									<span class="material-icons" (click)="deleteProject(element.id)" style="cursor: pointer"> delete </span>
+								</td>
+							</ng-container>
+
+							<tr mat-header-row *matHeaderRowDef="projectColumns"></tr>
+							<tr mat-row *matRowDef="let row; columns: projectColumns"></tr>
+						</table>
+
+						<mat-paginator
+							[hidden]="projectPaginator.length < 1"
+							(page)="paginationProject($event)"
+							[pageSizeOptions]="[5, 10, 20]"
+							showFirstLastButtons
+							#projectPaginator
+						>
+						</mat-paginator>
+						<div class="card text-white bg-dark mt-3" *ngIf="projectPaginator?.length < 1">
+							<div class="card-header">No Data</div>
 						</div>
-					</mat-card>
-					<table mat-table [dataSource]="projectDataSource" *ngIf="projectPaginator.length > 0">
-						<ng-container matColumnDef="sno">
-							<th mat-header-cell *matHeaderCellDef>No.</th>
-							<td mat-cell *matCellDef="let element; index as i">{{ projectPaginator.pageIndex * projectPaginator.pageSize + (i + 1) }}.</td>
-						</ng-container>
-
-						<ng-container matColumnDef="name">
-							<th mat-header-cell *matHeaderCellDef>Name</th>
-							<td mat-cell *matCellDef="let element">{{ element.name }}</td>
-						</ng-container>
-
-						<ng-container matColumnDef="status">
-							<th mat-header-cell *matHeaderCellDef>Status</th>
-							<td mat-cell *matCellDef="let element">{{ element.status }}</td>
-						</ng-container>
-
-						<ng-container matColumnDef="viewStatus">
-							<th mat-header-cell *matHeaderCellDef>View Status</th>
-							<td mat-cell *matCellDef="let element">{{ element.viewStatus }}</td>
-						</ng-container>
-
-						<ng-container matColumnDef="categoryFlag">
-							<th mat-header-cell *matHeaderCellDef>Inherit Category</th>
-							<td mat-cell *matCellDef="let element">{{ element.inheritCategoryFlag }}</td>
-						</ng-container>
-
-						<ng-container matColumnDef="description">
-							<th mat-header-cell *matHeaderCellDef>Description</th>
-							<td mat-cell *matCellDef="let element">{{ element.description }}</td>
-						</ng-container>
-
-						<ng-container matColumnDef="action">
-							<th mat-header-cell *matHeaderCellDef>Action</th>
-							<td mat-cell *matCellDef="let element">
-								<span class="material-icons" (click)="openProjectModal(element.id)" style="cursor: pointer"> edit </span>
-								<span class="material-icons" (click)="deleteProject(element.id)" style="cursor: pointer"> delete </span>
-							</td>
-						</ng-container>
-
-						<tr mat-header-row *matHeaderRowDef="projectColumns"></tr>
-						<tr mat-row *matRowDef="let row; columns: projectColumns"></tr>
-					</table>
-
-					<mat-paginator
-						[hidden]="projectPaginator.length < 1"
-						(page)="paginationProject($event)"
-						[pageSizeOptions]="[5, 10, 20]"
-						showFirstLastButtons
-						#projectPaginator
-					>
-					</mat-paginator>
-					<div class="card text-white bg-dark mt-3" *ngIf="projectPaginator?.length < 1">
-						<div class="card-header">No Data</div>
 					</div>
-				</div>
-			</ng-container>
-		</mat-tab>
+				</ng-container>
+			</mat-tab>
 
-		<mat-tab label="Global Categories">
-			<ng-container>
-				<div class="mat-elevation-z8">
-					<mat-card>
-						<div class="row">
-							<div class="col-8 mt-2">
-								<mat-card-title> Global Categories </mat-card-title>
-							</div>
-							<div class="col-4 d-flex">
-								<div class="col-4">
-									<button type="button" class="btn btn-outline-light float-end me-3" (click)="openCategoryModal(null)" [disabled]="!adminRole">
-										Add Category
-									</button>
+			<mat-tab label="Global Categories">
+				<ng-container>
+					<div class="mat-elevation-z8">
+						<mat-card>
+							<div class="row">
+								<div class="col-7 mt-2">
+									<mat-card-title> Global Categories </mat-card-title>
 								</div>
-								<div class="col">
-									<div class="input-group">
-										<input
-											type="search"
-											class="form-control bg-dark text-white"
-											placeholder="Search by Name"
-											aria-label="Search"
-											aria-describedby="search-addon"
-                      (input)="getGlobalCategoryList()"
-											(click)="getGlobalCategoryList()"
-                      [(ngModel)]="paginationCriteriaCategory.searchFor"
-										/>
-										<span class="input-group-text border-0" id="search-addon" style="cursor: pointer"><i class="material-icons">search</i> </span>
+								<div class="col-5 d-flex">
+									<div class="col-5">
+										<button type="button" class="btn btn-outline-light float-end me-3" (click)="openCategoryModal(null)" [disabled]="!adminRole">
+											Add Category
+										</button>
+									</div>
+									<div class="col">
+										<div class="input-group">
+											<input
+												type="search"
+												class="form-control bg-dark text-white"
+												placeholder="Search by Name"
+												aria-label="Search"
+												aria-describedby="search-addon"
+												(input)="getGlobalCategoryList()"
+												(click)="getGlobalCategoryList()"
+												[(ngModel)]="paginationCriteriaCategory.searchFor"
+											/>
+											<span class="input-group-text border-0" id="search-addon" style="cursor: pointer"><i class="material-icons">search</i> </span>
+										</div>
 									</div>
 								</div>
 							</div>
+						</mat-card>
+						<table mat-table [dataSource]="categoryDataSource" *ngIf="categoryPaginator.length > 0">
+							<ng-container matColumnDef="sno">
+								<th mat-header-cell *matHeaderCellDef>No.</th>
+								<td mat-cell *matCellDef="let element; index as i">{{ categoryPaginator.pageIndex * categoryPaginator.pageSize + (i + 1) }}.</td>
+							</ng-container>
+
+							<ng-container matColumnDef="name">
+								<th mat-header-cell *matHeaderCellDef>Name</th>
+								<td mat-cell *matCellDef="let element">{{ element.name }}</td>
+							</ng-container>
+
+							<ng-container matColumnDef="project">
+								<th mat-header-cell *matHeaderCellDef>Assigned Project</th>
+								<td mat-cell *matCellDef="let element">{{ element.assignedName }}</td>
+							</ng-container>
+
+							<ng-container matColumnDef="action">
+								<th mat-header-cell *matHeaderCellDef>Action</th>
+								<td mat-cell *matCellDef="let element">
+									<span class="material-icons" (click)="openCategoryModal(element.id)" style="cursor: pointer"> edit </span>
+									<span class="material-icons" (click)="deleteCategory(element.id)" style="cursor: pointer"> delete </span>
+								</td>
+							</ng-container>
+
+							<tr mat-header-row *matHeaderRowDef="categoryColumns"></tr>
+							<tr mat-row *matRowDef="let row; columns: categoryColumns"></tr>
+						</table>
+
+						<mat-paginator
+							[hidden]="categoryPaginator.length < 1"
+							[pageSizeOptions]="[5, 10, 20]"
+							showFirstLastButtons
+							aria-label="Select page of periodic elements"
+							#categoryPaginator
+						>
+						</mat-paginator>
+						<div class="card text-white bg-dark mt-3" *ngIf="categoryPaginator?.length < 1">
+							<div class="card-header">No Data</div>
 						</div>
-					</mat-card>
-					<table mat-table [dataSource]="categoryDataSource" *ngIf="categoryPaginator.length > 0">
-						<ng-container matColumnDef="sno">
-							<th mat-header-cell *matHeaderCellDef>No.</th>
-							<td mat-cell *matCellDef="let element; index as i">{{ categoryPaginator.pageIndex * categoryPaginator.pageSize + (i + 1) }}.</td>
-						</ng-container>
-
-						<ng-container matColumnDef="name">
-							<th mat-header-cell *matHeaderCellDef>Name</th>
-							<td mat-cell *matCellDef="let element">{{ element.name }}</td>
-						</ng-container>
-
-						<ng-container matColumnDef="project">
-							<th mat-header-cell *matHeaderCellDef>Assigned Project</th>
-							<td mat-cell *matCellDef="let element">{{ element.assignedName }}</td>
-						</ng-container>
-
-						<ng-container matColumnDef="action">
-							<th mat-header-cell *matHeaderCellDef>Action</th>
-							<td mat-cell *matCellDef="let element">
-								<span class="material-icons" (click)="openCategoryModal(element.id)" style="cursor: pointer"> edit </span>
-								<span class="material-icons" (click)="deleteCategory(element.id)" style="cursor: pointer"> delete </span>
-							</td>
-						</ng-container>
-
-						<tr mat-header-row *matHeaderRowDef="categoryColumns"></tr>
-						<tr mat-row *matRowDef="let row; columns: categoryColumns"></tr>
-					</table>
-
-					<mat-paginator
-						[hidden]="categoryPaginator.length < 1"
-						[pageSizeOptions]="[5, 10, 20]"
-						showFirstLastButtons
-						aria-label="Select page of periodic elements"
-						#categoryPaginator
-					>
-					</mat-paginator>
-					<div class="card text-white bg-dark mt-3" *ngIf="categoryPaginator?.length < 1">
-						<div class="card-header">No Data</div>
 					</div>
-				</div>
-			</ng-container>
-		</mat-tab>
+				</ng-container>
+			</mat-tab>
 
-		<mat-tab label="System Profiles">
-			<ng-container>
-				<div class="mat-elevation-z8">
-					<mat-card>
-						<div class="row">
-							<div class="col-8 mt-2">
-								<mat-card-title> System Profiles </mat-card-title>
-							</div>
-							<div class="col-4 d-flex">
-								<div class="col-4">
-									<button type="button" class="btn btn-outline-light float-end me-3" (click)="openProfileModal(null)" [disabled]="!adminRole">
-										Add Profile
-									</button>
+			<mat-tab label="System Profiles">
+				<ng-container>
+					<div class="mat-elevation-z8">
+						<mat-card>
+							<div class="row">
+								<div class="col-8 mt-2">
+									<mat-card-title> System Profiles </mat-card-title>
 								</div>
-								<div class="col">
-									<div class="input-group">
-										<input
-											type="search"
-											class="form-control bg-dark text-white"
-											placeholder="Search by OS Name"
-											aria-label="Search"
-											aria-describedby="search-addon"
-                      (input)="getSystemProfileList()"
-											(click)="getSystemProfileList()"
-                      [(ngModel)]="paginationCriteriaProfile.searchFor"
-										/>
-										<span class="input-group-text border-0" id="search-addon" style="cursor: pointer"><i class="material-icons">search</i> </span>
+								<div class="col-4 d-flex">
+									<div class="col-4">
+										<button type="button" class="btn btn-outline-light float-end me-3" (click)="openProfileModal(null)" [disabled]="!adminRole">
+											Add Profile
+										</button>
+									</div>
+									<div class="col">
+										<div class="input-group">
+											<input
+												type="search"
+												class="form-control bg-dark text-white"
+												placeholder="Search by OS Name"
+												aria-label="Search"
+												aria-describedby="search-addon"
+												(input)="getSystemProfileList()"
+												(click)="getSystemProfileList()"
+												[(ngModel)]="paginationCriteriaProfile.searchFor"
+											/>
+											<span class="input-group-text border-0" id="search-addon" style="cursor: pointer"><i class="material-icons">search</i> </span>
+										</div>
 									</div>
 								</div>
 							</div>
+						</mat-card>
+						<table mat-table [dataSource]="profileDataSource" *ngIf="profilePaginator.length > 0">
+							<ng-container matColumnDef="sno">
+								<th mat-header-cell *matHeaderCellDef>No.</th>
+								<td mat-cell *matCellDef="let element; index as i">{{ profilePaginator.pageIndex * profilePaginator.pageSize + (i + 1) }}.</td>
+							</ng-container>
+
+							<ng-container matColumnDef="platform">
+								<th mat-header-cell *matHeaderCellDef>platform</th>
+								<td mat-cell *matCellDef="let element">{{ element.platform }}</td>
+							</ng-container>
+
+							<ng-container matColumnDef="os">
+								<th mat-header-cell *matHeaderCellDef>OS Name</th>
+								<td mat-cell *matCellDef="let element">{{ element.osName }}</td>
+							</ng-container>
+
+							<ng-container matColumnDef="version">
+								<th mat-header-cell *matHeaderCellDef>OS Version</th>
+								<td mat-cell *matCellDef="let element">{{ element.osVersion }}</td>
+							</ng-container>
+
+							<ng-container matColumnDef="desc">
+								<th mat-header-cell *matHeaderCellDef>Description</th>
+								<td mat-cell *matCellDef="let element">{{ element?.description }}</td>
+							</ng-container>
+
+							<ng-container matColumnDef="action">
+								<th mat-header-cell *matHeaderCellDef>Action</th>
+								<td mat-cell *matCellDef="let element">
+									<span class="material-icons" (click)="openProfileModal(element.id)" style="cursor: pointer"> edit </span>
+									<span class="material-icons" (click)="deleteProfile(element.id)" style="cursor: pointer"> delete </span>
+								</td>
+							</ng-container>
+
+							<tr mat-header-row *matHeaderRowDef="profileColumns"></tr>
+							<tr mat-row *matRowDef="let row; columns: profileColumns"></tr>
+						</table>
+
+						<mat-paginator
+							[hidden]="profilePaginator.length < 1"
+							(page)="paginationProfile($event)"
+							[pageSizeOptions]="[5, 10, 20]"
+							showFirstLastButtons
+							#profilePaginator
+						>
+						</mat-paginator>
+						<div class="card text-white bg-dark mt-3" *ngIf="profilePaginator?.length < 1">
+							<div class="card-header">No Data</div>
 						</div>
-					</mat-card>
-					<table mat-table [dataSource]="profileDataSource" *ngIf="profilePaginator.length > 0">
-						<ng-container matColumnDef="sno">
-							<th mat-header-cell *matHeaderCellDef>No.</th>
-							<td mat-cell *matCellDef="let element; index as i">{{ profilePaginator.pageIndex * profilePaginator.pageSize + (i + 1) }}.</td>
-						</ng-container>
-
-						<ng-container matColumnDef="platform">
-							<th mat-header-cell *matHeaderCellDef>platform</th>
-							<td mat-cell *matCellDef="let element">{{ element.platform }}</td>
-						</ng-container>
-
-						<ng-container matColumnDef="os">
-							<th mat-header-cell *matHeaderCellDef>OS Name</th>
-							<td mat-cell *matCellDef="let element">{{ element.osName }}</td>
-						</ng-container>
-
-						<ng-container matColumnDef="version">
-							<th mat-header-cell *matHeaderCellDef>OS Version</th>
-							<td mat-cell *matCellDef="let element">{{ element.osVersion }}</td>
-						</ng-container>
-
-						<ng-container matColumnDef="desc">
-							<th mat-header-cell *matHeaderCellDef>Description</th>
-							<td mat-cell *matCellDef="let element">{{ element?.description }}</td>
-						</ng-container>
-
-						<ng-container matColumnDef="action">
-							<th mat-header-cell *matHeaderCellDef>Action</th>
-							<td mat-cell *matCellDef="let element">
-								<span class="material-icons" (click)="openProfileModal(element.id)" style="cursor: pointer"> edit </span>
-								<span class="material-icons" (click)="deleteProfile(element.id)" style="cursor: pointer"> delete </span>
-							</td>
-						</ng-container>
-
-						<tr mat-header-row *matHeaderRowDef="profileColumns"></tr>
-						<tr mat-row *matRowDef="let row; columns: profileColumns"></tr>
-					</table>
-
-					<mat-paginator
-						[hidden]="profilePaginator.length < 1"
-						(page)="paginationProfile($event)"
-						[pageSizeOptions]="[5, 10, 20]"
-						showFirstLastButtons
-						#profilePaginator
-					>
-					</mat-paginator>
-					<div class="card text-white bg-dark mt-3" *ngIf="profilePaginator?.length < 1">
-						<div class="card-header">No Data</div>
 					</div>
-				</div>
-			</ng-container>
-		</mat-tab>
-	</mat-tab-group>
+				</ng-container>
+			</mat-tab>
+		</mat-tab-group>
+	</div>
 </div>

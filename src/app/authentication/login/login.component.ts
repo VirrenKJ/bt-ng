@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { CustomValidationService } from '../services/custom-validation.service';
 import { LoginService } from '../services/login.service';
 
@@ -16,6 +17,7 @@ export class LoginComponent implements OnInit {
 	constructor(
 		private customValidationService: CustomValidationService,
 		private _snackBar: MatSnackBar,
+		private ngxService: NgxUiLoaderService,
 		private loginService: LoginService,
 		private router: Router
 	) {}
@@ -38,13 +40,16 @@ export class LoginComponent implements OnInit {
 		// });
 		// this.router.navigate(['companies']);
 		if (this.loginForm.valid) {
+			this.ngxService.startLoader('master');
 			this.loginService.authenticate(this.loginForm.value).subscribe(
 				(response: any) => {
 					console.log(response);
+					this.ngxService.stopLoader('master');
 					this.loginService.setTokenAndUser(response);
 				},
 				errorRes => {
 					console.error(errorRes);
+					this.ngxService.stopLoader('master');
 					this.snackBarPopup(errorRes?.error?.message);
 				},
 				() => {

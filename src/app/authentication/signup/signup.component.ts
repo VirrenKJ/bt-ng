@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 import Swal from 'sweetalert2';
 import { Role } from '../common/models/role';
 import { CustomValidationService } from '../services/custom-validation.service';
@@ -23,6 +24,7 @@ export class SignupComponent implements OnInit {
 	constructor(
 		private userService: UserService,
 		private _snackBar: MatSnackBar,
+		private ngxService: NgxUiLoaderService,
 		private customValidationService: CustomValidationService,
 		private router: Router
 	) {}
@@ -63,6 +65,7 @@ export class SignupComponent implements OnInit {
 
 	onSubmit() {
 		if (this.signupForm.valid) {
+			this.ngxService.startLoader('master');
 			//add role
 			let roles = new Array<Role>();
 			let role = new Role();
@@ -80,10 +83,12 @@ export class SignupComponent implements OnInit {
 			this.userService.add(this.signupForm.value).subscribe(
 				response => {
 					console.log(response);
+					this.ngxService.stopLoader('master');
 					this.confirmationPopup();
 				},
 				errorRes => {
 					console.log(errorRes);
+					this.ngxService.stopLoader('master');
 					this.snackBarPopup(errorRes?.error?.message);
 				},
 				() => {

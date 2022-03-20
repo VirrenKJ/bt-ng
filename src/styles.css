@@ -59,3 +59,9 @@ mat-paginator {
 .full-width {
 	width: 100%;
 }
+.text-link{
+	cursor: pointer;
+}
+.text-link:hover {
+  text-decoration: underline;
+}
