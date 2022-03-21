@@ -62,7 +62,7 @@
 								<mat-icon class="material-icons business-icon" (click)="gotoBugTracker(business)">business</mat-icon>
 							</div>
 							<div class="col-md-11">
-								<div class="card-header text-link">{{ business.name }}</div>
+								<div class="card-header text-link" (click)="gotoBugTracker(business)">{{ business.name }}</div>
 								<div class="card-body">
 									<h4 class="card-title m-0">{{ business.email }} | {{ business.contactNumber }}</h4>
 									<p class="card-text">
@@ -100,7 +100,7 @@
 								<mat-icon class="material-icons business-icon" (click)="gotoBugTracker(company)">business</mat-icon>
 							</div>
 							<div class="col-md-11">
-								<div class="card-header text-link">{{ company.name }}</div>
+								<div class="card-header text-link" (click)="gotoBugTracker(company)">{{ company.name }}</div>
 								<div class="card-body">
 									<h4 class="card-title m-0">{{ company.email }} | {{ company.contactNumber }}</h4>
 									<p class="card-text">
