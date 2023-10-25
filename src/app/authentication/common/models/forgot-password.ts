@@ -1,5 +1,5 @@
 export class ForgotPassword {
-	public token: string;
-	public newPassword: string;
-	public confirmNewPassword: string;
+  public token: string;
+  public newPassword: string;
+  public confirmNewPassword: string;
 }

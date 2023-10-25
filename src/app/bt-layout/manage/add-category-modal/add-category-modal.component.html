@@ -1,41 +1,42 @@
 <ng-template #addCategory let-modal>
-	<div class="modal-content">
-		<div class="modal-header">
-			<h1 class="modal-title">{{ category.id ? 'Edit' : 'Add' }} Global Category</h1>
-			<button type="button" class="btn-close btn-close-white" (click)="modal.dismiss('Cross click')"></button>
-		</div>
-		<div class="modal-body mb-2">
-			<div class="container">
-				<form [formGroup]="categoryForm">
-					<div class="form-group">
-						<div class="row">
-							<div class="col-md-6">
-								<mat-form-field appearance="outline">
-									<mat-label>Category Name</mat-label>
-									<input type="text" formControlName="name" autocomplete="name" matInput placeholder="Enter here!" required />
-									<mat-hint *ngIf="!categoryForm.get('name').valid && categoryForm.get('name').touched">Please enter a valid Name!!</mat-hint>
-								</mat-form-field>
-							</div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title">{{ category.id ? 'Edit' : 'Add' }} Global Category</h1>
+      <button (click)="modal.dismiss('Cross click')" class="btn-close btn-close-white" type="button"></button>
+    </div>
+    <div class="modal-body mb-2">
+      <div class="container">
+        <form [formGroup]="categoryForm">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Category Name</mat-label>
+                  <input autocomplete="name" formControlName="name" matInput placeholder="Enter here!" required type="text"/>
+                  <mat-hint *ngIf="!categoryForm.get('name').valid && categoryForm.get('name').touched">Please enter a valid Name!!</mat-hint>
+                </mat-form-field>
+              </div>
 
-							<div class="col-md-6">
-								<mat-form-field appearance="outline">
-									<mat-label>Assign To(Project)</mat-label>
-									<mat-select formControlName="assignedId" required>
-										<mat-option [value]="project?.id" *ngFor="let project of projectList; let i = index">{{ project?.name }}</mat-option>
-									</mat-select>
-									<mat-hint *ngIf="!categoryForm.get('assignedId').valid && categoryForm.get('assignedId').touched"
-										>Please select a Project!!</mat-hint
-									>
-								</mat-form-field>
-							</div>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-		<div class="modal-footer">
-			<button type="button" class="btn btn-primary" (click)="addUpdateCategory()">Submit</button>
-			<button type="button" class="btn btn-primary" (click)="modal.close('Save click')">Cancel</button>
-		</div>
-	</div>
+              <div class="col-md-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Assign To(Project)</mat-label>
+                  <mat-select formControlName="assignedId" required>
+                    <mat-option *ngFor="let project of projectList; let i = index" [value]="project?.id">{{ project?.name }}</mat-option>
+                  </mat-select>
+                  <mat-hint *ngIf="!categoryForm.get('assignedId').valid && categoryForm.get('assignedId').touched"
+                  >Please select a Project!!
+                  </mat-hint
+                  >
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button (click)="addUpdateCategory()" class="btn btn-primary" type="button">Submit</button>
+      <button (click)="modal.close('Save click')" class="btn btn-primary" type="button">Cancel</button>
+    </div>
+  </div>
 </ng-template>

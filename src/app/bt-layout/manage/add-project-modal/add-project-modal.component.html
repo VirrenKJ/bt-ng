@@ -1,82 +1,84 @@
 <ng-template #addProject let-modal>
-	<div class="modal-content">
-		<div class="modal-header">
-			<h1 class="modal-title">{{ project.id ? 'Edit' : 'Add' }} Project</h1>
-			<button type="button" class="btn-close btn-close-white" (click)="modal.dismiss('Cross click')"></button>
-		</div>
-		<div class="modal-body">
-			<div class="container">
-				<form [formGroup]="projectForm">
-					<div class="form-group">
-						<div class="row">
-							<div class="col-md-4">
-								<mat-form-field appearance="outline">
-									<mat-label>Name</mat-label>
-									<input type="text" formControlName="name" autocomplete="name" matInput placeholder="Enter here!" required />
-									<mat-hint *ngIf="!projectForm.get('name').valid && projectForm.get('name').touched">Please enter a valid Name!!</mat-hint>
-								</mat-form-field>
-							</div>
-							<div class="col-md-4">
-								<mat-form-field appearance="outline">
-									<mat-label>Status</mat-label>
-									<mat-select formControlName="status" required>
-										<mat-option [value]="status" *ngFor="let status of statusList; let i = index">{{ status }}</mat-option>
-									</mat-select>
-									<mat-hint *ngIf="!projectForm.get('status').valid && projectForm.get('status').touched">Please select a Status!!</mat-hint>
-								</mat-form-field>
-							</div>
-							<div class="col-md-4">
-								<mat-form-field appearance="outline">
-									<mat-label>View Status</mat-label>
-									<mat-select formControlName="viewStatus" required>
-										<mat-option [value]="viewStatus" *ngFor="let viewStatus of viewStatusList; let i = index">{{ viewStatus }}</mat-option>
-									</mat-select>
-									<mat-hint *ngIf="!projectForm.get('viewStatus').valid && projectForm.get('viewStatus').touched"
-										>Please select a View Status!!</mat-hint
-									>
-								</mat-form-field>
-							</div>
-						</div>
-						<div class="row">
-							<mat-form-field appearance="outline">
-								<mat-label>Description</mat-label>
-								<textarea
-									id="description"
-									rows="3"
-									formControlName="description"
-									autocomplete="description"
-									matInput
-									placeholder="Enter here!"
-								></textarea>
-								<mat-hint *ngIf="!projectForm.get('description').valid && projectForm.get('description').touched"
-									>Please enter a valid description!!</mat-hint
-								>
-							</mat-form-field>
-						</div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title">{{ project.id ? 'Edit' : 'Add' }} Project</h1>
+      <button (click)="modal.dismiss('Cross click')" class="btn-close btn-close-white" type="button"></button>
+    </div>
+    <div class="modal-body">
+      <div class="container">
+        <form [formGroup]="projectForm">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                  <mat-label>Name</mat-label>
+                  <input autocomplete="name" formControlName="name" matInput placeholder="Enter here!" required type="text"/>
+                  <mat-hint *ngIf="!projectForm.get('name').valid && projectForm.get('name').touched">Please enter a valid Name!!</mat-hint>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                  <mat-label>Status</mat-label>
+                  <mat-select formControlName="status" required>
+                    <mat-option *ngFor="let status of statusList; let i = index" [value]="status">{{ status }}</mat-option>
+                  </mat-select>
+                  <mat-hint *ngIf="!projectForm.get('status').valid && projectForm.get('status').touched">Please select a Status!!</mat-hint>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                  <mat-label>View Status</mat-label>
+                  <mat-select formControlName="viewStatus" required>
+                    <mat-option *ngFor="let viewStatus of viewStatusList; let i = index" [value]="viewStatus">{{ viewStatus }}</mat-option>
+                  </mat-select>
+                  <mat-hint *ngIf="!projectForm.get('viewStatus').valid && projectForm.get('viewStatus').touched"
+                  >Please select a View Status!!
+                  </mat-hint
+                  >
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <mat-form-field appearance="outline">
+                <mat-label>Description</mat-label>
+                <textarea
+                  autocomplete="description"
+                  formControlName="description"
+                  id="description"
+                  matInput
+                  placeholder="Enter here!"
+                  rows="3"
+                ></textarea>
+                <mat-hint *ngIf="!projectForm.get('description').valid && projectForm.get('description').touched"
+                >Please enter a valid description!!
+                </mat-hint
+                >
+              </mat-form-field>
+            </div>
 
-						<hr class="mt-1 mb-3" />
+            <hr class="mt-1 mb-3"/>
 
-						<div class="row">
-							<div class="col">
-								<div class="form-check form-switch ms-2">
-									<input
-										class="form-check-input bg-dark"
-										style="font-size: large"
-										type="checkbox"
-										id="category"
-										formControlName="inheritCategoryFlag"
-									/>
-									<label class="form-check-label mt-1" for="category">Inherit Global Categories</label>
-								</div>
-							</div>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-		<div class="modal-footer">
-			<button type="button" class="btn btn-primary" (click)="addUpdateProject()">Submit</button>
-			<button type="button" class="btn btn-primary" (click)="modal.close('Save click')">Cancel</button>
-		</div>
-	</div>
+            <div class="row">
+              <div class="col">
+                <div class="form-check form-switch ms-2">
+                  <input
+                    class="form-check-input bg-dark"
+                    formControlName="inheritCategoryFlag"
+                    id="category"
+                    style="font-size: large"
+                    type="checkbox"
+                  />
+                  <label class="form-check-label mt-1" for="category">Inherit Global Categories</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button (click)="addUpdateProject()" class="btn btn-primary" type="button">Submit</button>
+      <button (click)="modal.close('Save click')" class="btn btn-primary" type="button">Cancel</button>
+    </div>
+  </div>
 </ng-template>

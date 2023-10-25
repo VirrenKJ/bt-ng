@@ -1,134 +1,139 @@
 <ng-template #addUser let-modal>
-	<div class="modal-content">
-		<div class="modal-header">
-			<h1 class="modal-title">{{ user.id ? 'Edit' : 'Add' }} User</h1>
-			<button type="button" class="btn-close btn-close-white" (click)="close()"></button>
-		</div>
-		<div class="modal-body">
-			<div class="container">
-				<form [formGroup]="userForm">
-					<div class="form-group">
-						<div class="row">
-							<div class="col-md-6">
-								<mat-form-field appearance="outline">
-									<mat-label>First name</mat-label>
-									<input type="text" formControlName="firstName" autocomplete="name" matInput placeholder="Enter here!" />
-									<mat-hint *ngIf="!userForm.get('firstName').valid && userForm.get('firstName').touched">Please enter a valid firstName!!</mat-hint>
-								</mat-form-field>
-							</div>
-							<div class="col-md-6">
-								<mat-form-field appearance="outline">
-									<mat-label>Last name</mat-label>
-									<input type="text" formControlName="lastName" autocomplete="name" matInput placeholder="Enter here!" />
-									<mat-hint *ngIf="!userForm.get('lastName').valid && userForm.get('lastName').touched">Please enter a valid lastName!!</mat-hint>
-								</mat-form-field>
-							</div>
-						</div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title">{{ user.id ? 'Edit' : 'Add' }} User</h1>
+      <button (click)="close()" class="btn-close btn-close-white" type="button"></button>
+    </div>
+    <div class="modal-body">
+      <div class="container">
+        <form [formGroup]="userForm">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>First name</mat-label>
+                  <input autocomplete="name" formControlName="firstName" matInput placeholder="Enter here!" type="text"/>
+                  <mat-hint *ngIf="!userForm.get('firstName').valid && userForm.get('firstName').touched">Please enter a valid firstName!!</mat-hint>
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Last name</mat-label>
+                  <input autocomplete="name" formControlName="lastName" matInput placeholder="Enter here!" type="text"/>
+                  <mat-hint *ngIf="!userForm.get('lastName').valid && userForm.get('lastName').touched">Please enter a valid lastName!!</mat-hint>
+                </mat-form-field>
+              </div>
+            </div>
 
-						<div class="row">
-							<div class="col-md-6">
-								<mat-form-field appearance="outline" matTooltip="Must be Unique!" matTooltipPosition="after">
-									<mat-label>Username</mat-label>
-									<input type="text" formControlName="username" autocomplete="username" matInput placeholder="Enter here!" />
-									<mat-hint
-										*ngIf="
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field appearance="outline" matTooltip="Must be Unique!" matTooltipPosition="after">
+                  <mat-label>Username</mat-label>
+                  <input autocomplete="username" formControlName="username" matInput placeholder="Enter here!" type="text"/>
+                  <mat-hint
+                    *ngIf="
 											userForm.get('username').touched &&
 											(userForm.get('username').errors?.required ||
 												userForm.get('username').errors?.whitespace ||
 												userForm.get('username').errors?.minlength)
 										"
-										>Please enter a valid username, min length is 5 letters!!</mat-hint
-									>
-									<mat-hint *ngIf="userForm.get('username').errors?.usernameNotAvailable">Username is not available!!</mat-hint>
-								</mat-form-field>
-							</div>
-							<div class="col-md-6">
+                  >Please enter a valid username, min length is 5 letters!!
+                  </mat-hint
+                  >
+                  <mat-hint *ngIf="userForm.get('username').errors?.usernameNotAvailable">Username is not available!!</mat-hint>
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
                 <mat-form-field appearance="outline" matTooltip="Must be Unique!" matTooltipPosition="after">
                   <mat-label>Email</mat-label>
-                  <input type="email" formControlName="email" autocomplete="email" matInput placeholder="Enter here!" />
+                  <input autocomplete="email" formControlName="email" matInput placeholder="Enter here!" type="email"/>
                   <mat-hint *ngIf="userForm.get('email').touched && (userForm.get('email').errors?.required || userForm.get('email').errors?.email)"
-                    >Please enter a valid email!!</mat-hint
+                  >Please enter a valid email!!
+                  </mat-hint
                   >
                   <mat-hint *ngIf="userForm.get('email').touched && userForm.get('email').errors?.emailNotAvailable"
-                    >Email is not available!!</mat-hint
+                  >Email is not available!!
+                  </mat-hint
                   >
                 </mat-form-field>
-							</div>
-						</div>
+              </div>
+            </div>
 
-						<div class="row" *ngIf="!userId">
-							<div class="col-md-6">
-								<mat-form-field appearance="outline">
-									<mat-label>Password</mat-label>
-									<input
-										[type]="showPassword ? 'text' : 'password'"
-										formControlName="password"
-										autocomplete="new-password"
-										matInput
-										placeholder="Enter here!"
-									/>
-									<mat-icon matSuffix style="cursor: pointer" (click)="password()">{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-									<mat-hint *ngIf="userForm.get('password').errors?.required && userForm.get('password').touched">Password is required</mat-hint>
-									<mat-hint *ngIf="userForm.get('password').errors?.invalidPassword && userForm.get('password').touched"
-										>Password should have min 8 characters, at least 1 uppercase letter, 1 lowercase letter & 1 number</mat-hint
-									>
-								</mat-form-field>
-							</div>
-							<div class="col-md-6">
-								<mat-form-field appearance="outline">
-									<mat-label>Confirm Password</mat-label>
-									<input
-										[type]="showConfirmPassword ? 'text' : 'password'"
-										formControlName="confirmPassword"
-										autocomplete="new-password"
-										matInput
-										placeholder="Enter here!"
-									/>
-									<mat-icon matSuffix style="cursor: pointer" (click)="confirmPassword()">{{
-										showConfirmPassword ? 'visibility_off' : 'visibility'
-									}}</mat-icon>
-									<mat-hint *ngIf="userForm.get('confirmPassword').errors?.required && userForm.get('confirmPassword').touched"
-										>Please enter a valid password!!</mat-hint
-									>
-									<mat-hint *ngIf="userForm.get('confirmPassword').errors?.passwordMismatch">Passwords does not match</mat-hint>
-								</mat-form-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col">
-								<mat-form-field appearance="outline">
-									<mat-label>Role</mat-label>
-									<mat-select
-										matTooltip="Required"
-										matTooltipPosition="right"
-										[(ngModel)]="role.roleId"
-										[ngModelOptions]="{ standalone: true }"
-										placeholder="Choose..."
-									>
-										<mat-option>None</mat-option>
-										<mat-option [value]="role.roleId" *ngFor="let role of roles; let i = index">{{ role.roleName }}</mat-option>
-									</mat-select>
-								</mat-form-field>
-							</div>
-						</div>
+            <div *ngIf="!userId" class="row">
+              <div class="col-md-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Password</mat-label>
+                  <input
+                    [type]="showPassword ? 'text' : 'password'"
+                    autocomplete="new-password"
+                    formControlName="password"
+                    matInput
+                    placeholder="Enter here!"
+                  />
+                  <mat-icon (click)="password()" matSuffix style="cursor: pointer">{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                  <mat-hint *ngIf="userForm.get('password').errors?.required && userForm.get('password').touched">Password is required</mat-hint>
+                  <mat-hint *ngIf="userForm.get('password').errors?.invalidPassword && userForm.get('password').touched"
+                  >Password should have min 8 characters, at least 1 uppercase letter, 1 lowercase letter & 1 number
+                  </mat-hint
+                  >
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Confirm Password</mat-label>
+                  <input
+                    [type]="showConfirmPassword ? 'text' : 'password'"
+                    autocomplete="new-password"
+                    formControlName="confirmPassword"
+                    matInput
+                    placeholder="Enter here!"
+                  />
+                  <mat-icon (click)="confirmPassword()" matSuffix style="cursor: pointer">{{
+                    showConfirmPassword ? 'visibility_off' : 'visibility'
+                    }}</mat-icon>
+                  <mat-hint *ngIf="userForm.get('confirmPassword').errors?.required && userForm.get('confirmPassword').touched"
+                  >Please enter a valid password!!
+                  </mat-hint
+                  >
+                  <mat-hint *ngIf="userForm.get('confirmPassword').errors?.passwordMismatch">Passwords does not match</mat-hint>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <mat-form-field appearance="outline">
+                  <mat-label>Role</mat-label>
+                  <mat-select
+                    [(ngModel)]="role.roleId"
+                    [ngModelOptions]="{ standalone: true }"
+                    matTooltip="Required"
+                    matTooltipPosition="right"
+                    placeholder="Choose..."
+                  >
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let role of roles; let i = index" [value]="role.roleId">{{ role.roleName }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
 
-						<hr class="mt-0" />
+            <hr class="mt-0"/>
 
-						<div class="row">
-							<div class="col ps-4">
-								<div class="form-check form-switch">
-									<input class="form-check-input bg-dark" formControlName="enabled" style="font-size: large" type="checkbox" id="enabled" checked />
-									<label class="form-check-label mt-1" for="enabled">Enabled</label>
-								</div>
-							</div>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-		<div class="modal-footer">
-			<button type="button" class="btn btn-primary" (click)="addUpdateUser()" [disabled]="!role?.roleId">Submit</button>
-			<button type="button" class="btn btn-primary" (click)="close()">Cancel</button>
-		</div>
-	</div>
+            <div class="row">
+              <div class="col ps-4">
+                <div class="form-check form-switch">
+                  <input checked class="form-check-input bg-dark" formControlName="enabled" id="enabled" style="font-size: large" type="checkbox"/>
+                  <label class="form-check-label mt-1" for="enabled">Enabled</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button (click)="addUpdateUser()" [disabled]="!role?.roleId" class="btn btn-primary" type="button">Submit</button>
+      <button (click)="close()" class="btn btn-primary" type="button">Cancel</button>
+    </div>
+  </div>
 </ng-template>

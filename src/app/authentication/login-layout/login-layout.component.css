@@ -1,71 +1,83 @@
 mat-toolbar.app-toolbar {
-	position: sticky;
-	top: 0;
-	z-index: 1000;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 mat-toolbar.shadow {
-	position: relative;
-	z-index: 2;
-	box-shadow: 0px 0px 10px -3px #000000 !important;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0px 0px 10px -3px #000000 !important;
 }
+
 footer {
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	background: #121416;
-	height: auto;
-	width: 100vw;
-	padding-top: 0px;
-	color: #fff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #121416;
+    height: auto;
+    width: 100vw;
+    padding-top: 0px;
+    color: #fff;
 }
+
 .footer-bottom {
-	background: #121416;
-	width: 100vw;
-	padding: 20px;
-	padding-bottom: 40px;
-	text-align: center;
+    background: #121416;
+    width: 100vw;
+    padding: 20px;
+    padding-bottom: 40px;
+    text-align: center;
 }
+
 .footer-bottom p {
-	float: left;
-	font-size: 14px;
-	word-spacing: 2px;
-	text-transform: capitalize;
+    float: left;
+    font-size: 14px;
+    word-spacing: 2px;
+    text-transform: capitalize;
 }
+
 .footer-bottom p a {
-	color: #c46;
-	font-size: 16px;
-	text-decoration: none;
+    color: #c46;
+    font-size: 16px;
+    text-decoration: none;
 }
+
 .footer-menu {
-	float: right;
+    float: right;
 }
+
 .footer-menu ul {
-	display: flex;
+    display: flex;
 }
+
 .footer-menu ul li {
-	padding-right: 10px;
-	display: block;
+    padding-right: 10px;
+    display: block;
 }
+
 .footer-menu ul li a {
-	color: #cfd2d6;
-	text-decoration: none;
+    color: #cfd2d6;
+    text-decoration: none;
 }
+
 .footer-menu ul li a:hover {
-	color: #c46;
+    color: #c46;
 }
+
 .footer-menu ul li i {
-  margin-left: 5px;
-  font-size: 20px;
+    margin-left: 5px;
+    font-size: 20px;
 }
+
 .footer-menu ul li i:hover {
-	color: #c46;
+    color: #c46;
 }
+
 @media (max-width: 500px) {
-	.footer-menu ul {
-		display: flex;
-		margin-top: 10px;
-		margin-bottom: 20px;
-	}
+    .footer-menu ul {
+        display: flex;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
 }

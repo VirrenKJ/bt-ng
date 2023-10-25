@@ -1,197 +1,205 @@
 <mat-toolbar class="app-toolbar shadow" color="primary">
-	<span class="h3" style="margin-bottom: 0%">Companies</span>
-	<span class="spacer"> </span>
-	<!-- <div class="me-3">
-		<button mat-mini-fab color="primary" class="btn btn-secondary"><mat-icon class="material-icons">notifications</mat-icon></button>
-	</div> -->
-	<div class="dropdown">
-		<a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-			<span class="material-icons mt-2" style="font-size: xx-large"> account_circle </span>
-		</a>
-		<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuLink">
-			<li><button class="dropdown-item" type="button" (click)="openUserModal()">Profile</button></li>
-			<li><button class="dropdown-item" type="button" (click)="openChangePasswordModal()">Change Password</button></li>
-			<li><hr class="dropdown-divider" /></li>
-			<li><button class="dropdown-item" type="button" (click)="logoutConfirmation()">Logout</button></li>
-		</ul>
-	</div>
+  <span class="h3" style="margin-bottom: 0%">Companies</span>
+  <span class="spacer"> </span>
+  <!-- <div class="me-3">
+    <button mat-mini-fab color="primary" class="btn btn-secondary"><mat-icon class="material-icons">notifications</mat-icon></button>
+  </div> -->
+  <div class="dropdown">
+    <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownMenuLink" role="button">
+      <span class="material-icons mt-2" style="font-size: xx-large"> account_circle </span>
+    </a>
+    <ul aria-labelledby="dropdownMenuLink" class="dropdown-menu dropdown-menu-dark">
+      <li>
+        <button (click)="openUserModal()" class="dropdown-item" type="button">Profile</button>
+      </li>
+      <li>
+        <button (click)="openChangePasswordModal()" class="dropdown-item" type="button">Change Password</button>
+      </li>
+      <li>
+        <hr class="dropdown-divider"/>
+      </li>
+      <li>
+        <button (click)="logoutConfirmation()" class="dropdown-item" type="button">Logout</button>
+      </li>
+    </ul>
+  </div>
 </mat-toolbar>
 
-<app-add-user-modal [openUserModal]="setOpenUserModal" (userListEvent)="getUserDetails()"></app-add-user-modal>
-<app-change-password [openChangePasswordModal]="setOpenChangePasswordModal" (changePasswordEvent)="passwordChange()"></app-change-password>
-<app-enlist-modal [openEnlistingModal]="setOpenEnlistModal" (employeeListing)="getAllEmployeeList()"></app-enlist-modal>
-<app-new-company [openCompanyModal]="setOpenCompanyModal" (reloadBusinesses)="getCompanyBusinessList()"></app-new-company>
+<app-add-user-modal (userListEvent)="getUserDetails()" [openUserModal]="setOpenUserModal"></app-add-user-modal>
+<app-change-password (changePasswordEvent)="passwordChange()" [openChangePasswordModal]="setOpenChangePasswordModal"></app-change-password>
+<app-enlist-modal (employeeListing)="getAllEmployeeList()" [openEnlistingModal]="setOpenEnlistModal"></app-enlist-modal>
+<app-new-company (reloadBusinesses)="getCompanyBusinessList()" [openCompanyModal]="setOpenCompanyModal"></app-new-company>
 
 <div class="body">
-	<div class="container p-3">
-		<mat-tab-group mat-stretch-tabs dynamicHeight class="mat-elevation-z4">
-			<mat-tab class="mat-tab" label="Business">
-				<div class="container py-3">
-					<mat-card>
-						<div class="row">
-							<div class="col-8 mt-2">
-								<mat-card-title> Businesses </mat-card-title>
-							</div>
-							<div class="col-4 d-flex">
-								<div class="col-4">
-									<button type="button" class="btn btn-outline-light float-end me-3" style="width: max-content" (click)="openCompanyModal(null)">
-										Add Business
-									</button>
-								</div>
-								<div class="col">
-									<div class="input-group">
-										<input
-											type="search"
-											class="form-control bg-dark text-white"
-											placeholder="Search by Name"
-											aria-label="Search"
-											aria-describedby="search-addon"
-											(input)="getCompanyBusinessList()"
-											(click)="getCompanyBusinessList()"
-											[(ngModel)]="paginationCriteriaBusiness.searchFor"
-										/>
-										<span class="input-group-text border-0" id="search-addon" style="cursor: pointer"><i class="material-icons">search</i> </span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</mat-card>
-					<div class="card text-white bg-dark mt-2" *ngFor="let business of businessList; let i = index">
-						<div class="row g-0">
-							<div class="col-md-1">
-								<mat-icon class="material-icons business-icon" (click)="gotoBugTracker(business)">business</mat-icon>
-							</div>
-							<div class="col-md-11">
-								<div class="card-header text-link" (click)="gotoBugTracker(business)">{{ business.name }}</div>
-								<div class="card-body">
-									<h4 class="card-title m-0">{{ business.email }} | {{ business.contactNumber }}</h4>
-									<p class="card-text">
-										<small class="text-muted">{{ business.industryType }}</small>
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<mat-paginator
-						[hidden]="businessPaginator?.length < 1"
-						(page)="paginationBusiness($event)"
-						[pageSizeOptions]="[5, 10, 20]"
-						showFirstLastButtons
-						#businessPaginator
-					>
-					</mat-paginator>
-					<div class="card text-white bg-dark mt-3" *ngIf="businessPaginator?.length < 1">
-						<div class="card-header">No Data</div>
-					</div>
-				</div>
-			</mat-tab>
-			<mat-tab label="Companies(Employer)">
-				<div class="container py-3">
-					<mat-card>
-						<div class="row">
-							<div class="col-8 mt-2">
-								<mat-card-title> Companies </mat-card-title>
-							</div>
-						</div>
-					</mat-card>
-					<div class="card text-white bg-dark mt-2" *ngFor="let company of companyList; let i = index">
-						<div class="row g-0">
-							<div class="col-md-1">
-								<mat-icon class="material-icons business-icon" (click)="gotoBugTracker(company)">business</mat-icon>
-							</div>
-							<div class="col-md-11">
-								<div class="card-header text-link" (click)="gotoBugTracker(company)">{{ company.name }}</div>
-								<div class="card-body">
-									<h4 class="card-title m-0">{{ company.email }} | {{ company.contactNumber }}</h4>
-									<p class="card-text">
-										<small class="text-muted">{{ company.industryType }}</small>
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="card text-white bg-dark mt-3" *ngIf="companyList?.length < 1">
-						<div class="card-header">No Data</div>
-					</div>
-				</div>
-			</mat-tab>
-			<mat-tab label="Employees">
-				<div class="container py-3 mat-elevation-z8">
-					<mat-card>
-						<div class="row">
-							<div class="col-10 mt-2">
-								<mat-card-title> All Employees </mat-card-title>
-							</div>
-							<div class="col-2 d-flex">
-								<div class="col">
-									<button type="button" class="btn btn-outline-light float-end me-3" style="width: max-content" (click)="openEnlistingModal()">
-										Enlist Employee
-									</button>
-								</div>
-								<!-- <div class="col">
-									<div class="input-group">
-										<input
-											type="search"
-											class="form-control bg-dark text-white"
-											placeholder="Search by Username/Email"
-											aria-label="Search"
-											aria-describedby="search-addon"
+  <div class="container p-3">
+    <mat-tab-group class="mat-elevation-z4" dynamicHeight mat-stretch-tabs>
+      <mat-tab class="mat-tab" label="Business">
+        <div class="container py-3">
+          <mat-card>
+            <div class="row">
+              <div class="col-8 mt-2">
+                <mat-card-title> Businesses</mat-card-title>
+              </div>
+              <div class="col-4 d-flex">
+                <div class="col-4">
+                  <button (click)="openCompanyModal(null)" class="btn btn-outline-light float-end me-3" style="width: max-content" type="button">
+                    Add Business
+                  </button>
+                </div>
+                <div class="col">
+                  <div class="input-group">
+                    <input
+                      (click)="getCompanyBusinessList()"
+                      (input)="getCompanyBusinessList()"
+                      [(ngModel)]="paginationCriteriaBusiness.searchFor"
+                      aria-describedby="search-addon"
+                      aria-label="Search"
+                      class="form-control bg-dark text-white"
+                      placeholder="Search by Name"
+                      type="search"
+                    />
+                    <span class="input-group-text border-0" id="search-addon" style="cursor: pointer"><i class="material-icons">search</i> </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-card>
+          <div *ngFor="let business of businessList; let i = index" class="card text-white bg-dark mt-2">
+            <div class="row g-0">
+              <div class="col-md-1">
+                <mat-icon (click)="gotoBugTracker(business)" class="material-icons business-icon">business</mat-icon>
+              </div>
+              <div class="col-md-11">
+                <div (click)="gotoBugTracker(business)" class="card-header text-link">{{ business.name }}</div>
+                <div class="card-body">
+                  <h4 class="card-title m-0">{{ business.email }} | {{ business.contactNumber }}</h4>
+                  <p class="card-text">
+                    <small class="text-muted">{{ business.industryType }}</small>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <mat-paginator
+            #businessPaginator
+            (page)="paginationBusiness($event)"
+            [hidden]="businessPaginator?.length < 1"
+            [pageSizeOptions]="[5, 10, 20]"
+            showFirstLastButtons
+          >
+          </mat-paginator>
+          <div *ngIf="businessPaginator?.length < 1" class="card text-white bg-dark mt-3">
+            <div class="card-header">No Data</div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Companies(Employer)">
+        <div class="container py-3">
+          <mat-card>
+            <div class="row">
+              <div class="col-8 mt-2">
+                <mat-card-title> Companies</mat-card-title>
+              </div>
+            </div>
+          </mat-card>
+          <div *ngFor="let company of companyList; let i = index" class="card text-white bg-dark mt-2">
+            <div class="row g-0">
+              <div class="col-md-1">
+                <mat-icon (click)="gotoBugTracker(company)" class="material-icons business-icon">business</mat-icon>
+              </div>
+              <div class="col-md-11">
+                <div (click)="gotoBugTracker(company)" class="card-header text-link">{{ company.name }}</div>
+                <div class="card-body">
+                  <h4 class="card-title m-0">{{ company.email }} | {{ company.contactNumber }}</h4>
+                  <p class="card-text">
+                    <small class="text-muted">{{ company.industryType }}</small>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="companyList?.length < 1" class="card text-white bg-dark mt-3">
+            <div class="card-header">No Data</div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Employees">
+        <div class="container py-3 mat-elevation-z8">
+          <mat-card>
+            <div class="row">
+              <div class="col-10 mt-2">
+                <mat-card-title> All Employees</mat-card-title>
+              </div>
+              <div class="col-2 d-flex">
+                <div class="col">
+                  <button (click)="openEnlistingModal()" class="btn btn-outline-light float-end me-3" style="width: max-content" type="button">
+                    Enlist Employee
+                  </button>
+                </div>
+                <!-- <div class="col">
+                  <div class="input-group">
+                    <input
+                      type="search"
+                      class="form-control bg-dark text-white"
+                      placeholder="Search by Username/Email"
+                      aria-label="Search"
+                      aria-describedby="search-addon"
                       (input)="getAllEmployeeList()"
                       (click)="getAllEmployeeList()"
-                      [(ngModel)]="paginationCriteriaEmployees.searchFor"    
-										/>
-										<span class="input-group-text border-0" id="search-addon" style="cursor: pointer"><i class="material-icons">search</i> </span>
-									</div>
-								</div> -->
-							</div>
-						</div>
-					</mat-card>
-					<table mat-table [dataSource]="employeeDataSource" [hidden]="employeePaginator.length < 1">
-						<ng-container matColumnDef="sno">
-							<th mat-header-cell *matHeaderCellDef>No.</th>
-							<td mat-cell *matCellDef="let element; index as i">{{ i + 1 }}.</td>
-						</ng-container>
+                      [(ngModel)]="paginationCriteriaEmployees.searchFor"
+                    />
+                    <span class="input-group-text border-0" id="search-addon" style="cursor: pointer"><i class="material-icons">search</i> </span>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+          </mat-card>
+          <table [dataSource]="employeeDataSource" [hidden]="employeePaginator.length < 1" mat-table>
+            <ng-container matColumnDef="sno">
+              <th *matHeaderCellDef mat-header-cell>No.</th>
+              <td *matCellDef="let element; index as i" mat-cell>{{ i + 1 }}.</td>
+            </ng-container>
 
-						<ng-container matColumnDef="name">
-							<th mat-header-cell *matHeaderCellDef>Name</th>
-							<td mat-cell *matCellDef="let element">{{ element.firstName }} {{ element.lastName }}</td>
-						</ng-container>
+            <ng-container matColumnDef="name">
+              <th *matHeaderCellDef mat-header-cell>Name</th>
+              <td *matCellDef="let element" mat-cell>{{ element.firstName }} {{ element.lastName }}</td>
+            </ng-container>
 
-						<ng-container matColumnDef="companies">
-							<th mat-header-cell *matHeaderCellDef>Companies</th>
-							<td mat-cell *matCellDef="let element">
-								<ng-container *ngFor="let company of element.companies">{{ company.name }}, </ng-container>
-							</td>
-						</ng-container>
+            <ng-container matColumnDef="companies">
+              <th *matHeaderCellDef mat-header-cell>Companies</th>
+              <td *matCellDef="let element" mat-cell>
+                <ng-container *ngFor="let company of element.companies">{{ company.name }},</ng-container>
+              </td>
+            </ng-container>
 
-						<ng-container matColumnDef="username">
-							<th mat-header-cell *matHeaderCellDef>Username</th>
-							<td mat-cell *matCellDef="let element">{{ element.username }}</td>
-						</ng-container>
+            <ng-container matColumnDef="username">
+              <th *matHeaderCellDef mat-header-cell>Username</th>
+              <td *matCellDef="let element" mat-cell>{{ element.username }}</td>
+            </ng-container>
 
-						<ng-container matColumnDef="email">
-							<th mat-header-cell *matHeaderCellDef>Email</th>
-							<td mat-cell *matCellDef="let element">{{ element.email }}</td>
-						</ng-container>
+            <ng-container matColumnDef="email">
+              <th *matHeaderCellDef mat-header-cell>Email</th>
+              <td *matCellDef="let element" mat-cell>{{ element.email }}</td>
+            </ng-container>
 
-						<tr mat-header-row *matHeaderRowDef="employeeColumns"></tr>
-						<tr mat-row *matRowDef="let row; columns: employeeColumns"></tr>
-					</table>
+            <tr *matHeaderRowDef="employeeColumns" mat-header-row></tr>
+            <tr *matRowDef="let row; columns: employeeColumns" mat-row></tr>
+          </table>
 
-					<mat-paginator
-						class="mt-0"
-						[hidden]="employeePaginator.length < 1"
-						(page)="paginationEmployees($event)"
-						[pageSizeOptions]="[5, 10, 20]"
-						showFirstLastButtons
-						#employeePaginator
-					>
-					</mat-paginator>
-					<div class="card text-white bg-dark mt-3" *ngIf="employeePaginator?.length < 1">
-						<div class="card-header">No Data</div>
-					</div>
-				</div>
-			</mat-tab>
-		</mat-tab-group>
-	</div>
+          <mat-paginator
+            #employeePaginator
+            (page)="paginationEmployees($event)"
+            [hidden]="employeePaginator.length < 1"
+            [pageSizeOptions]="[5, 10, 20]"
+            class="mt-0"
+            showFirstLastButtons
+          >
+          </mat-paginator>
+          <div *ngIf="employeePaginator?.length < 1" class="card text-white bg-dark mt-3">
+            <div class="card-header">No Data</div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
 </div>

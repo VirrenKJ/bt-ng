@@ -1,138 +1,139 @@
 <div class="container">
-	<div class="py-4">
-		<h1>
+  <div class="py-4">
+    <h1>
 			<span class="align-middle">
 				<mat-icon mat-list-icon>bug_report</mat-icon>
 			</span>
-			<span class="align-text-bottom"> Issue Details </span>
-		</h1>
-		<form [formGroup]="issueForm" (ngSubmit)="onSubmit()">
-			<div class="form-group">
-				<div class="row">
-					<div class="col-md-4">
-						<mat-form-field appearance="outline">
-							<mat-label>Projects</mat-label>
-							<mat-select formControlName="projectId" required>
-								<mat-option [value]="project?.id" *ngFor="let project of projectList; let i = index">{{ project?.name }}</mat-option>
-							</mat-select>
-							<mat-hint *ngIf="!issueForm.get('projectId').valid && issueForm.get('projectId').touched">Please select a Project!!</mat-hint>
-						</mat-form-field>
-					</div>
-					<div class="col-md-4">
-						<mat-form-field appearance="outline">
-							<mat-label>Category</mat-label>
-							<mat-select formControlName="categoryId" required>
-								<mat-option *ngFor="let category of categoryList" [value]="category.id">{{ category.name }}</mat-option>
-							</mat-select>
-							<mat-hint *ngIf="!issueForm.get('categoryId').valid && issueForm.get('categoryId').touched">Please select a Category!!</mat-hint>
-						</mat-form-field>
-					</div>
-					<div class="col-md-4">
-						<mat-form-field appearance="outline">
-							<mat-label>Reproducibility</mat-label>
-							<mat-select formControlName="reproducibility" required>
-								<mat-option *ngFor="let reproduce of reproducibilityList" [value]="reproduce">{{ reproduce }}</mat-option>
-							</mat-select>
-							<mat-hint *ngIf="!issueForm.get('reproducibility').valid && issueForm.get('reproducibility').touched"
-								>Please select a Reproducibility!!</mat-hint
-							>
-						</mat-form-field>
-					</div>
-				</div>
+      <span class="align-text-bottom"> Issue Details </span>
+    </h1>
+    <form (ngSubmit)="onSubmit()" [formGroup]="issueForm">
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Projects</mat-label>
+              <mat-select formControlName="projectId" required>
+                <mat-option *ngFor="let project of projectList; let i = index" [value]="project?.id">{{ project?.name }}</mat-option>
+              </mat-select>
+              <mat-hint *ngIf="!issueForm.get('projectId').valid && issueForm.get('projectId').touched">Please select a Project!!</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Category</mat-label>
+              <mat-select formControlName="categoryId" required>
+                <mat-option *ngFor="let category of categoryList" [value]="category.id">{{ category.name }}</mat-option>
+              </mat-select>
+              <mat-hint *ngIf="!issueForm.get('categoryId').valid && issueForm.get('categoryId').touched">Please select a Category!!</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Reproducibility</mat-label>
+              <mat-select formControlName="reproducibility" required>
+                <mat-option *ngFor="let reproduce of reproducibilityList" [value]="reproduce">{{ reproduce }}</mat-option>
+              </mat-select>
+              <mat-hint *ngIf="!issueForm.get('reproducibility').valid && issueForm.get('reproducibility').touched"
+              >Please select a Reproducibility!!
+              </mat-hint
+              >
+            </mat-form-field>
+          </div>
+        </div>
 
-				<div class="row">
-					<div class="col-md-4">
-						<mat-form-field appearance="outline">
-							<mat-label>Severity</mat-label>
-							<mat-select formControlName="severity" required>
-								<mat-option *ngFor="let severity of severityList" [value]="severity">{{ severity }}</mat-option>
-							</mat-select>
-							<mat-hint *ngIf="!issueForm.get('severity').valid && issueForm.get('severity').touched">Please select a Severity!!</mat-hint>
-						</mat-form-field>
-					</div>
-					<div class="col-md-4">
-						<mat-form-field appearance="outline">
-							<mat-label>Priority</mat-label>
-							<mat-select formControlName="priority" required>
-								<mat-option *ngFor="let priority of priorityList" [value]="priority">{{ priority }}</mat-option>
-							</mat-select>
-							<mat-hint *ngIf="!issueForm.get('priority').valid && issueForm.get('priority').touched">Please select a Priority!!</mat-hint>
-						</mat-form-field>
-					</div>
-					<div class="col-md-4">
-						<mat-form-field appearance="outline">
-							<mat-label>Select Profile</mat-label>
-							<mat-select formControlName="profileId" required>
-								<mat-option *ngFor="let profile of systemProfileList" [value]="profile.id">{{ profile.osName }}</mat-option>
-							</mat-select>
-							<mat-hint *ngIf="!issueForm.get('profileId').valid && issueForm.get('profileId').touched">Please select a Profile!!</mat-hint>
-						</mat-form-field>
-					</div>
-				</div>
+        <div class="row">
+          <div class="col-md-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Severity</mat-label>
+              <mat-select formControlName="severity" required>
+                <mat-option *ngFor="let severity of severityList" [value]="severity">{{ severity }}</mat-option>
+              </mat-select>
+              <mat-hint *ngIf="!issueForm.get('severity').valid && issueForm.get('severity').touched">Please select a Severity!!</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Priority</mat-label>
+              <mat-select formControlName="priority" required>
+                <mat-option *ngFor="let priority of priorityList" [value]="priority">{{ priority }}</mat-option>
+              </mat-select>
+              <mat-hint *ngIf="!issueForm.get('priority').valid && issueForm.get('priority').touched">Please select a Priority!!</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Select Profile</mat-label>
+              <mat-select formControlName="profileId" required>
+                <mat-option *ngFor="let profile of systemProfileList" [value]="profile.id">{{ profile.osName }}</mat-option>
+              </mat-select>
+              <mat-hint *ngIf="!issueForm.get('profileId').valid && issueForm.get('profileId').touched">Please select a Profile!!</mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
 
-				<div class="row">
-					<div class="col-md-4">
-						<mat-form-field appearance="outline">
-							<mat-label>Assign To</mat-label>
-							<mat-select formControlName="assignedId" required>
-								<mat-option *ngFor="let user of userList" [value]="user.id">{{ user.firstName }} {{ user.lastName }}</mat-option>
-							</mat-select>
-							<mat-hint *ngIf="!issueForm.get('assignedId').valid && issueForm.get('assignedId').touched">Please select a Assignee!!</mat-hint>
-						</mat-form-field>
-					</div>
-					<div class="col-md-8">
-						<mat-form-field appearance="outline">
-							<mat-label>Summary</mat-label>
-							<input type="text" formControlName="summary" autocomplete="summary" matInput placeholder="Enter here!" required />
-							<mat-hint *ngIf="!issueForm.get('summary').valid && issueForm.get('summary').touched">Please select a Summary!!</mat-hint>
-						</mat-form-field>
-					</div>
-				</div>
+        <div class="row">
+          <div class="col-md-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Assign To</mat-label>
+              <mat-select formControlName="assignedId" required>
+                <mat-option *ngFor="let user of userList" [value]="user.id">{{ user.firstName }} {{ user.lastName }}</mat-option>
+              </mat-select>
+              <mat-hint *ngIf="!issueForm.get('assignedId').valid && issueForm.get('assignedId').touched">Please select a Assignee!!</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="col-md-8">
+            <mat-form-field appearance="outline">
+              <mat-label>Summary</mat-label>
+              <input autocomplete="summary" formControlName="summary" matInput placeholder="Enter here!" required type="text"/>
+              <mat-hint *ngIf="!issueForm.get('summary').valid && issueForm.get('summary').touched">Please select a Summary!!</mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
 
-				<div class="row">
-					<div class="col">
-						<mat-form-field appearance="outline">
-							<mat-label>Description</mat-label>
-							<textarea formControlName="description" autocomplete="description" matInput rows="4" placeholder="Enter here!"></textarea>
-						</mat-form-field>
-					</div>
-					<div class="col">
-						<mat-form-field appearance="outline">
-							<mat-label>Steps To Reproduce</mat-label>
-							<textarea formControlName="stepsToReproduce" autocomplete="stepsToReproduce" matInput rows="4" placeholder="Enter here!"></textarea>
-						</mat-form-field>
-					</div>
-					<div class="col">
-						<mat-form-field appearance="outline">
-							<mat-label>Additional Information</mat-label>
-							<textarea formControlName="addInfo" autocomplete="addInfo" matInput rows="4" placeholder="Enter here!"></textarea>
-						</mat-form-field>
-					</div>
-				</div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Description</mat-label>
+              <textarea autocomplete="description" formControlName="description" matInput placeholder="Enter here!" rows="4"></textarea>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Steps To Reproduce</mat-label>
+              <textarea autocomplete="stepsToReproduce" formControlName="stepsToReproduce" matInput placeholder="Enter here!" rows="4"></textarea>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Additional Information</mat-label>
+              <textarea autocomplete="addInfo" formControlName="addInfo" matInput placeholder="Enter here!" rows="4"></textarea>
+            </mat-form-field>
+          </div>
+        </div>
 
-				<!-- <div class="row">
-					<div class="col">
-						<mat-form-field appearance="outline">
-							<mat-label>Upload Document</mat-label>
-							<input type="text" formControlName="documentId" autocomplete="documentId" matInput placeholder="Enter here!" required />
-							<mat-hint *ngIf="!issueForm.get('documentId').valid && issueForm.get('documentId').touched">Please enter a valid Name!!</mat-hint>
-						</mat-form-field>
-					</div>
-				</div> -->
+        <!-- <div class="row">
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Upload Document</mat-label>
+              <input type="text" formControlName="documentId" autocomplete="documentId" matInput placeholder="Enter here!" required />
+              <mat-hint *ngIf="!issueForm.get('documentId').valid && issueForm.get('documentId').touched">Please enter a valid Name!!</mat-hint>
+            </mat-form-field>
+          </div>
+        </div> -->
 
-				<div class="row">
-					<div class="col-2">
-						<h3>View Status</h3>
-					</div>
-					<div class="col">
-						<mat-radio-group aria-label="Select an option" formControlName="viewStatus">
-							<mat-radio-button value="public">Public</mat-radio-button>
-							<mat-radio-button value="private">Private</mat-radio-button>
-						</mat-radio-group>
-					</div>
-				</div>
-			</div>
-			<button type="submit" class="btn btn-primary">Submit Issue</button>
-		</form>
-	</div>
+        <div class="row">
+          <div class="col-2">
+            <h3>View Status</h3>
+          </div>
+          <div class="col">
+            <mat-radio-group aria-label="Select an option" formControlName="viewStatus">
+              <mat-radio-button value="public">Public</mat-radio-button>
+              <mat-radio-button value="private">Private</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-primary" type="submit">Submit Issue</button>
+    </form>
+  </div>
 </div>

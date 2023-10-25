@@ -1,86 +1,86 @@
 <div class="body">
-	<div class="container p-3">
-		<div class="mat-elevation-z8">
-			<mat-card>
-				<div class="row">
-					<div class="col-9 mt-2">
-						<mat-card-title> All Issues </mat-card-title>
-					</div>
-					<div class="col-3 d-flex">
-						<div class="col">
-							<div class="input-group">
-								<input
-									type="search"
-									class="form-control bg-dark text-white"
-									placeholder="Search by Summary"
-									aria-label="Search"
-									aria-describedby="search-addon"
-									(input)="getIssueList()"
-									(click)="getIssueList()"
-									[(ngModel)]="paginationCriteria.searchFor"
-								/>
-								<span class="input-group-text border-0" id="search-addon" style="cursor: pointer"><i class="material-icons">search</i> </span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</mat-card>
-			<table mat-table [dataSource]="dataSource" *ngIf="issueList?.length > 0">
-				<ng-container matColumnDef="sno">
-					<th mat-header-cell *matHeaderCellDef>No.</th>
-					<td mat-cell *matCellDef="let element; index as i">{{ paginator.pageIndex * paginator.pageSize + (i + 1) }}.</td>
-				</ng-container>
+  <div class="container p-3">
+    <div class="mat-elevation-z8">
+      <mat-card>
+        <div class="row">
+          <div class="col-9 mt-2">
+            <mat-card-title> All Issues</mat-card-title>
+          </div>
+          <div class="col-3 d-flex">
+            <div class="col">
+              <div class="input-group">
+                <input
+                  (click)="getIssueList()"
+                  (input)="getIssueList()"
+                  [(ngModel)]="paginationCriteria.searchFor"
+                  aria-describedby="search-addon"
+                  aria-label="Search"
+                  class="form-control bg-dark text-white"
+                  placeholder="Search by Summary"
+                  type="search"
+                />
+                <span class="input-group-text border-0" id="search-addon" style="cursor: pointer"><i class="material-icons">search</i> </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-card>
+      <table *ngIf="issueList?.length > 0" [dataSource]="dataSource" mat-table>
+        <ng-container matColumnDef="sno">
+          <th *matHeaderCellDef mat-header-cell>No.</th>
+          <td *matCellDef="let element; index as i" mat-cell>{{ paginator.pageIndex * paginator.pageSize + (i + 1) }}.</td>
+        </ng-container>
 
-				<ng-container matColumnDef="project_name">
-					<th mat-header-cell *matHeaderCellDef>Project Name</th>
-					<td mat-cell *matCellDef="let element">{{ element?.projectName }}</td>
-				</ng-container>
+        <ng-container matColumnDef="project_name">
+          <th *matHeaderCellDef mat-header-cell>Project Name</th>
+          <td *matCellDef="let element" mat-cell>{{ element?.projectName }}</td>
+        </ng-container>
 
-				<ng-container matColumnDef="category_name">
-					<th mat-header-cell *matHeaderCellDef>Category Name</th>
-					<td mat-cell *matCellDef="let element">{{ element?.categoryName }}</td>
-				</ng-container>
+        <ng-container matColumnDef="category_name">
+          <th *matHeaderCellDef mat-header-cell>Category Name</th>
+          <td *matCellDef="let element" mat-cell>{{ element?.categoryName }}</td>
+        </ng-container>
 
-				<ng-container matColumnDef="assigned">
-					<th mat-header-cell *matHeaderCellDef>Assigned User</th>
-					<td mat-cell *matCellDef="let element">{{ element?.assignedFirstName }} ({{ element?.assignedUsername }})</td>
-				</ng-container>
+        <ng-container matColumnDef="assigned">
+          <th *matHeaderCellDef mat-header-cell>Assigned User</th>
+          <td *matCellDef="let element" mat-cell>{{ element?.assignedFirstName }} ({{ element?.assignedUsername }})</td>
+        </ng-container>
 
-				<ng-container matColumnDef="reported_by">
-					<th mat-header-cell *matHeaderCellDef>Reported By</th>
-					<td mat-cell *matCellDef="let element">{{ element?.reportedByFirstName }} ({{ element?.reportedByUsername }})</td>
-				</ng-container>
+        <ng-container matColumnDef="reported_by">
+          <th *matHeaderCellDef mat-header-cell>Reported By</th>
+          <td *matCellDef="let element" mat-cell>{{ element?.reportedByFirstName }} ({{ element?.reportedByUsername }})</td>
+        </ng-container>
 
-				<ng-container matColumnDef="summary">
-					<th mat-header-cell *matHeaderCellDef>Summary</th>
-					<td mat-cell *matCellDef="let element">{{ element?.summary }}</td>
-				</ng-container>
+        <ng-container matColumnDef="summary">
+          <th *matHeaderCellDef mat-header-cell>Summary</th>
+          <td *matCellDef="let element" mat-cell>{{ element?.summary }}</td>
+        </ng-container>
 
-				<ng-container matColumnDef="action" *ngIf="userRole != 'Viewer'">
-					<th mat-header-cell *matHeaderCellDef>Action</th>
-					<td mat-cell *matCellDef="let element">
-						<a [routerLink]="['/bug-tracker/edit-issue', element.id]" style="color: #ffffff">
-							<span class="material-icons" style="cursor: pointer"> edit </span>
-						</a>
-						<span class="material-icons" (click)="deleteIssue(element.id)" style="cursor: pointer"> delete </span>
-					</td>
-				</ng-container>
+        <ng-container *ngIf="userRole != 'Viewer'" matColumnDef="action">
+          <th *matHeaderCellDef mat-header-cell>Action</th>
+          <td *matCellDef="let element" mat-cell>
+            <a [routerLink]="['/bug-tracker/edit-issue', element.id]" style="color: #ffffff">
+              <span class="material-icons" style="cursor: pointer"> edit </span>
+            </a>
+            <span (click)="deleteIssue(element.id)" class="material-icons" style="cursor: pointer"> delete </span>
+          </td>
+        </ng-container>
 
-				<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-				<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-			</table>
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+      </table>
 
-			<mat-paginator
-				[hidden]="paginator?.length < 1"
-				[pageSizeOptions]="[5, 10, 20]"
-				showFirstLastButtons
-				aria-label="Select page of periodic elements"
-				#paginator
-			>
-			</mat-paginator>
-			<div class="card text-white bg-dark mt-3" *ngIf="issueList?.length < 1">
-				<div class="card-header">No Data</div>
-			</div>
-		</div>
-	</div>
+      <mat-paginator
+        #paginator
+        [hidden]="paginator?.length < 1"
+        [pageSizeOptions]="[5, 10, 20]"
+        aria-label="Select page of periodic elements"
+        showFirstLastButtons
+      >
+      </mat-paginator>
+      <div *ngIf="issueList?.length < 1" class="card text-white bg-dark mt-3">
+        <div class="card-header">No Data</div>
+      </div>
+    </div>
+  </div>
 </div>

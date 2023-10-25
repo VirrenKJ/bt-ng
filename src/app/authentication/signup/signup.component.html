@@ -1,93 +1,99 @@
 <div class="bootstrap-wrapper">
-	<div class="container">
-		<div class="row justify-content-center mt-4">
-			<div class="col-lg-5">
-				<mat-card>
-					<h1 class="text-center h3">Sign up</h1>
-					<!-- <span class="text-center h3" style="margin-bottom: 0%">Bug Tracker</span> -->
+  <div class="container">
+    <div class="row justify-content-center mt-4">
+      <div class="col-lg-5">
+        <mat-card>
+          <h1 class="text-center h3">Sign up</h1>
+          <!-- <span class="text-center h3" style="margin-bottom: 0%">Bug Tracker</span> -->
 
-					<form action="" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-						<mat-form-field appearance="outline">
-							<mat-label>First name</mat-label>
-							<input type="text" formControlName="firstName" autocomplete="name" matInput placeholder="Enter here!" />
-							<mat-hint *ngIf="!signupForm.get('firstName').valid && signupForm.get('firstName').touched">Please enter a valid firstName!!</mat-hint>
-						</mat-form-field>
+          <form (ngSubmit)="onSubmit()" [formGroup]="signupForm" action="">
+            <mat-form-field appearance="outline">
+              <mat-label>First name</mat-label>
+              <input autocomplete="name" formControlName="firstName" matInput placeholder="Enter here!" type="text"/>
+              <mat-hint *ngIf="!signupForm.get('firstName').valid && signupForm.get('firstName').touched">Please enter a valid firstName!!</mat-hint>
+            </mat-form-field>
 
-						<mat-form-field appearance="outline">
-							<mat-label>Last name</mat-label>
-							<input type="text" formControlName="lastName" autocomplete="name" matInput placeholder="Enter here!" />
-							<mat-hint *ngIf="!signupForm.get('lastName').valid && signupForm.get('lastName').touched">Please enter a valid lastName!!</mat-hint>
-						</mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Last name</mat-label>
+              <input autocomplete="name" formControlName="lastName" matInput placeholder="Enter here!" type="text"/>
+              <mat-hint *ngIf="!signupForm.get('lastName').valid && signupForm.get('lastName').touched">Please enter a valid lastName!!</mat-hint>
+            </mat-form-field>
 
-						<mat-form-field appearance="outline" matTooltip="Must be Unique!" matTooltipPosition="after">
-							<mat-label>Username</mat-label>
-							<input type="text" formControlName="username" autocomplete="username" matInput placeholder="Enter here!" />
-							<mat-hint
-								*ngIf="
+            <mat-form-field appearance="outline" matTooltip="Must be Unique!" matTooltipPosition="after">
+              <mat-label>Username</mat-label>
+              <input autocomplete="username" formControlName="username" matInput placeholder="Enter here!" type="text"/>
+              <mat-hint
+                *ngIf="
 									signupForm.get('username').touched &&
 									(signupForm.get('username').errors?.required ||
 										signupForm.get('username').errors?.whitespace ||
 										signupForm.get('username').errors?.minlength)
 								"
-								>Please enter a valid username, min length is 5 letters!!</mat-hint
-							>
-							<mat-hint *ngIf="signupForm.get('username').touched && signupForm.get('username').errors?.usernameNotAvailable"
-								>Username is not available!!</mat-hint
-							>
-						</mat-form-field>
+              >Please enter a valid username, min length is 5 letters!!
+              </mat-hint
+              >
+              <mat-hint *ngIf="signupForm.get('username').touched && signupForm.get('username').errors?.usernameNotAvailable"
+              >Username is not available!!
+              </mat-hint
+              >
+            </mat-form-field>
 
-						<mat-form-field appearance="outline">
-							<mat-label>Password</mat-label>
-							<input
-								[type]="showPassword ? 'text' : 'password'"
-								formControlName="password"
-								autocomplete="new-password"
-								matInput
-								placeholder="Enter here!"
-							/>
-							<mat-icon matSuffix style="cursor: pointer" (click)="password()">{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-							<mat-hint *ngIf="signupForm.get('password').errors?.required && signupForm.get('password').touched">Password is required</mat-hint>
-							<mat-hint *ngIf="signupForm.get('password').errors?.invalidPassword && signupForm.get('password').touched"
-								>Password should have min 8 characters, at least 1 uppercase letter, 1 lowercase letter & 1 number</mat-hint
-							>
-						</mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Password</mat-label>
+              <input
+                [type]="showPassword ? 'text' : 'password'"
+                autocomplete="new-password"
+                formControlName="password"
+                matInput
+                placeholder="Enter here!"
+              />
+              <mat-icon (click)="password()" matSuffix style="cursor: pointer">{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+              <mat-hint *ngIf="signupForm.get('password').errors?.required && signupForm.get('password').touched">Password is required</mat-hint>
+              <mat-hint *ngIf="signupForm.get('password').errors?.invalidPassword && signupForm.get('password').touched"
+              >Password should have min 8 characters, at least 1 uppercase letter, 1 lowercase letter & 1 number
+              </mat-hint
+              >
+            </mat-form-field>
 
-						<mat-form-field appearance="outline">
-							<mat-label>Confirm Password</mat-label>
-							<input
-								[type]="showConfirmPassword ? 'text' : 'password'"
-								formControlName="confirmPassword"
-								autocomplete="new-confirm-password"
-								matInput
-								placeholder="Enter here!"
-							/>
-							<mat-icon matSuffix style="cursor: pointer" (click)="confirmPassword()">{{
-								showConfirmPassword ? 'visibility_off' : 'visibility'
-							}}</mat-icon>
-							<mat-hint *ngIf="signupForm.get('confirmPassword').errors?.required && signupForm.get('confirmPassword').touched"
-								>Please enter a valid password!!</mat-hint
-							>
-							<mat-hint *ngIf="signupForm.get('confirmPassword').errors?.passwordMismatch">Passwords does not match</mat-hint>
-						</mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Confirm Password</mat-label>
+              <input
+                [type]="showConfirmPassword ? 'text' : 'password'"
+                autocomplete="new-confirm-password"
+                formControlName="confirmPassword"
+                matInput
+                placeholder="Enter here!"
+              />
+              <mat-icon (click)="confirmPassword()" matSuffix style="cursor: pointer">{{
+                showConfirmPassword ? 'visibility_off' : 'visibility'
+                }}</mat-icon>
+              <mat-hint *ngIf="signupForm.get('confirmPassword').errors?.required && signupForm.get('confirmPassword').touched"
+              >Please enter a valid password!!
+              </mat-hint
+              >
+              <mat-hint *ngIf="signupForm.get('confirmPassword').errors?.passwordMismatch">Passwords does not match</mat-hint>
+            </mat-form-field>
 
-						<mat-form-field appearance="outline" matTooltip="Must be Unique!" matTooltipPosition="after">
-							<mat-label>Email</mat-label>
-							<input type="email" formControlName="email" autocomplete="email" matInput placeholder="Enter here!" />
-							<mat-hint *ngIf="signupForm.get('email').touched && (signupForm.get('email').errors?.required || signupForm.get('email').errors?.email)"
-								>Please enter a valid email!!</mat-hint
-							>
-							<mat-hint *ngIf="signupForm.get('email').touched && signupForm.get('email').errors?.emailNotAvailable"
-								>Email is not available!!</mat-hint
-							>
-						</mat-form-field>
+            <mat-form-field appearance="outline" matTooltip="Must be Unique!" matTooltipPosition="after">
+              <mat-label>Email</mat-label>
+              <input autocomplete="email" formControlName="email" matInput placeholder="Enter here!" type="email"/>
+              <mat-hint *ngIf="signupForm.get('email').touched && (signupForm.get('email').errors?.required || signupForm.get('email').errors?.email)"
+              >Please enter a valid email!!
+              </mat-hint
+              >
+              <mat-hint *ngIf="signupForm.get('email').touched && signupForm.get('email').errors?.emailNotAvailable"
+              >Email is not available!!
+              </mat-hint
+              >
+            </mat-form-field>
 
-						<div class="container text-center">
-							<button type="submit" class="me-2" mat-raised-button color="primary">Sign Up</button>
-							<button mat-raised-button color="primary" [routerLink]="'/user/login'">Already have an account</button>
-						</div>
-					</form>
-				</mat-card>
-			</div>
-		</div>
-	</div>
+            <div class="container text-center">
+              <button class="me-2" color="primary" mat-raised-button type="submit">Sign Up</button>
+              <button [routerLink]="'/user/login'" color="primary" mat-raised-button>Already have an account</button>
+            </div>
+          </form>
+        </mat-card>
+      </div>
+    </div>
+  </div>
 </div>

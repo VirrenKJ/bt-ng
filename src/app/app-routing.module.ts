@@ -20,63 +20,64 @@ import { ManageComponent } from './bt-layout/manage/manage.component';
 import { SummaryComponent } from './bt-layout/summary/summary.component';
 
 const routes: Routes = [
-	{ path: '', redirectTo: 'user', pathMatch: 'full' },
-	{
-		path: 'user',
-		component: LoginLayoutComponent,
-		children: [
-			{
-				path: '',
-				redirectTo: 'login',
-				pathMatch: 'full',
-			},
+  { path: '', redirectTo: 'user', pathMatch: 'full' },
+  {
+    path: 'user',
+    component: LoginLayoutComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'login',
+        pathMatch: 'full',
+      },
       {
         path: 'login',
         component: LoginComponent,
         pathMatch: 'full',
       },
-			{
-				path: 'signup',
-				component: SignupComponent,
-			},
       {
-				path: 'forgot-password',
-				component: ForgotPasswordComponent,
-			},
+        path: 'signup',
+        component: SignupComponent,
+      },
       {
-				path: 'reset-password/:token',
-				component: ResetPasswordComponent,
-			},
-		],
-		canActivate: [LoggedInGuard, BugTrackerExitGuard],
-	},
-	{
-		path: 'companies',
-		component: CompanyListingComponent,
-		canActivate: [AuthGuard, BugTrackerExitGuard],
-	},
-	{
-		path: 'bug-tracker',
-		component: BtLayoutComponent,
-		children: [
-			{
-				path: '',
-				redirectTo: 'home',
-				pathMatch: 'full',
-			},
-			{ path: 'home', component: HomeComponent, canActivate: [ViewerGuard] },
-			{ path: 'view-issue', component: ViewIssueComponent },
-			{ path: 'add-issue', component: AddIssueComponent, canActivate: [ViewerGuard] },
-			{ path: 'edit-issue/:id', component: AddIssueComponent, canActivate: [ViewerGuard] },
-			{ path: 'summary', component: SummaryComponent },
-			{ path: 'manage', component: ManageComponent, pathMatch: 'full', canActivate: [AdminGuard] },
-		],
-		canActivate: [AuthGuard, BugTrackerGuard],
-	},
+        path: 'forgot-password',
+        component: ForgotPasswordComponent,
+      },
+      {
+        path: 'reset-password/:token',
+        component: ResetPasswordComponent,
+      },
+    ],
+    canActivate: [LoggedInGuard, BugTrackerExitGuard],
+  },
+  {
+    path: 'companies',
+    component: CompanyListingComponent,
+    canActivate: [AuthGuard, BugTrackerExitGuard],
+  },
+  {
+    path: 'bug-tracker',
+    component: BtLayoutComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full',
+      },
+      { path: 'home', component: HomeComponent, canActivate: [ViewerGuard] },
+      { path: 'view-issue', component: ViewIssueComponent },
+      { path: 'add-issue', component: AddIssueComponent, canActivate: [ViewerGuard] },
+      { path: 'edit-issue/:id', component: AddIssueComponent, canActivate: [ViewerGuard] },
+      { path: 'summary', component: SummaryComponent },
+      { path: 'manage', component: ManageComponent, pathMatch: 'full', canActivate: [AdminGuard] },
+    ],
+    canActivate: [AuthGuard, BugTrackerGuard],
+  },
 ];
 
 @NgModule({
-	imports: [RouterModule.forRoot(routes)],
-	exports: [RouterModule],
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+}

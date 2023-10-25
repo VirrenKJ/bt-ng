@@ -10,6 +10,6 @@ export class RoleService {
   constructor(private httpClient: HttpClient) {}
 
   public getList(data: any): Observable<any> {
-    return this.httpClient.post(`${baseUrl}/role/list`, data);
+    return this.httpClient.post(`${ baseUrl }/role/list`, data);
   }
 }

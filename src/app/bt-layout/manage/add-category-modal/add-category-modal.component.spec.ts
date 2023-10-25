@@ -8,9 +8,9 @@ describe('AddCategoryModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddCategoryModalComponent ]
+      declarations: [AddCategoryModalComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

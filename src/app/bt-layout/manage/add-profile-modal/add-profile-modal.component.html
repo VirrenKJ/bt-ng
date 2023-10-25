@@ -1,61 +1,63 @@
 <ng-template #addProfile let-modal>
-	<div class="modal-content">
-		<div class="modal-header">
-			<h1 class="modal-title">{{ profile.id ? 'Edit' : 'Add' }} Profile</h1>
-			<button type="button" class="btn-close btn-close-white" (click)="modal.dismiss('Cross click')"></button>
-		</div>
-		<div class="modal-body mt-3">
-			<div class="container">
-				<form [formGroup]="profileForm">
-					<div class="row">
-						<div class="col-md-4">
-							<mat-form-field appearance="outline">
-								<mat-label>Platform</mat-label>
-								<input type="text" formControlName="platform" autocomplete="platform" matInput placeholder="Enter here!" required />
-								<mat-hint *ngIf="!profileForm.get('platform').valid && profileForm.get('platform').touched">Please enter a valid platform!!</mat-hint>
-							</mat-form-field>
-						</div>
-						<div class="col-md-4">
-							<mat-form-field appearance="outline">
-								<mat-label>OS</mat-label>
-								<input type="text" formControlName="osName" autocomplete="osName" matInput placeholder="Enter here!" required />
-								<mat-hint *ngIf="!profileForm.get('osName').valid && profileForm.get('osName').touched">Please enter a valid OS!!</mat-hint>
-							</mat-form-field>
-						</div>
-						<div class="col-md-4">
-							<mat-form-field appearance="outline">
-								<mat-label>OS Version</mat-label>
-								<input type="text" formControlName="osVersion" autocomplete="osVersion" matInput placeholder="Enter here!" required />
-								<mat-hint *ngIf="!profileForm.get('osVersion').valid && profileForm.get('osVersion').touched"
-									>Please enter a valid OS Version!!</mat-hint
-								>
-							</mat-form-field>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col">
-							<mat-form-field appearance="outline">
-								<mat-label>Description</mat-label>
-								<textarea
-									id="description"
-									rows="3"
-									formControlName="description"
-									autocomplete="description"
-									matInput
-									placeholder="Enter here!"
-								></textarea>
-								<mat-hint *ngIf="!profileForm.get('description').valid && profileForm.get('description').touched"
-									>Please enter a valid description!!</mat-hint
-								>
-							</mat-form-field>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-		<div class="modal-footer">
-			<button type="button" class="btn btn-primary" (click)="addUpdateProfile()">Submit</button>
-			<button type="button" class="btn btn-primary" (click)="modal.close('Save click')">Cancel</button>
-		</div>
-	</div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title">{{ profile.id ? 'Edit' : 'Add' }} Profile</h1>
+      <button (click)="modal.dismiss('Cross click')" class="btn-close btn-close-white" type="button"></button>
+    </div>
+    <div class="modal-body mt-3">
+      <div class="container">
+        <form [formGroup]="profileForm">
+          <div class="row">
+            <div class="col-md-4">
+              <mat-form-field appearance="outline">
+                <mat-label>Platform</mat-label>
+                <input autocomplete="platform" formControlName="platform" matInput placeholder="Enter here!" required type="text"/>
+                <mat-hint *ngIf="!profileForm.get('platform').valid && profileForm.get('platform').touched">Please enter a valid platform!!</mat-hint>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field appearance="outline">
+                <mat-label>OS</mat-label>
+                <input autocomplete="osName" formControlName="osName" matInput placeholder="Enter here!" required type="text"/>
+                <mat-hint *ngIf="!profileForm.get('osName').valid && profileForm.get('osName').touched">Please enter a valid OS!!</mat-hint>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field appearance="outline">
+                <mat-label>OS Version</mat-label>
+                <input autocomplete="osVersion" formControlName="osVersion" matInput placeholder="Enter here!" required type="text"/>
+                <mat-hint *ngIf="!profileForm.get('osVersion').valid && profileForm.get('osVersion').touched"
+                >Please enter a valid OS Version!!
+                </mat-hint
+                >
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <mat-form-field appearance="outline">
+                <mat-label>Description</mat-label>
+                <textarea
+                  autocomplete="description"
+                  formControlName="description"
+                  id="description"
+                  matInput
+                  placeholder="Enter here!"
+                  rows="3"
+                ></textarea>
+                <mat-hint *ngIf="!profileForm.get('description').valid && profileForm.get('description').touched"
+                >Please enter a valid description!!
+                </mat-hint
+                >
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button (click)="addUpdateProfile()" class="btn btn-primary" type="button">Submit</button>
+      <button (click)="modal.close('Save click')" class="btn btn-primary" type="button">Cancel</button>
+    </div>
+  </div>
 </ng-template>

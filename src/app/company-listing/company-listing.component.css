@@ -1,12 +1,14 @@
 .mat-select-panel {
-	background: #212529 !important;
+    background: #212529 !important;
 }
+
 mat-paginator {
-	margin-top: 8px;
+    margin-top: 8px;
 }
+
 mat-toolbar a {
-  display: inline-block;
-  margin: 0 10px;
-  color: white;
-  text-decoration: none;
+    display: inline-block;
+    margin: 0 10px;
+    color: white;
+    text-decoration: none;
 }

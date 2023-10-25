@@ -1,80 +1,80 @@
 <ng-template #addCompany let-modal>
-	<div class="modal-content">
-		<div class="modal-header">
-			<h1 class="modal-title">Add Company</h1>
-			<button type="button" class="btn-close btn-close-white" (click)="modal.dismiss()"></button>
-		</div>
-		<div class="modal-body">
-			<div class="container">
-				<form [formGroup]="companyForm">
-					<div class="form-group">
-						<div class="row mt-3">
-							<div class="col-md-6">
-								<mat-form-field class="full-width" appearance="outline">
-									<mat-label>Business Name</mat-label>
-									<input type="text" matInput formControlName="name" placeholder="XYZ Private Limited" />
-									<mat-error> Please enter a valid <strong>business name</strong>. </mat-error>
-								</mat-form-field>
-							</div>
-							<div class="col-md-6">
-								<mat-form-field class="full-width" appearance="outline">
-									<mat-label>E-mail</mat-label>
-									<input type="email" matInput formControlName="email" placeholder="xyz@gmail.com" />
-									<mat-error> Please enter a valid <strong>email address</strong>. </mat-error>
-								</mat-form-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-6">
-								<mat-form-field class="full-width" appearance="outline">
-									<mat-label>Contact number</mat-label>
-									<input type="number" matInput formControlName="contactNumber" placeholder="9876543210" />
-									<mat-error> Please enter a valid <strong>contact number</strong>. </mat-error>
-								</mat-form-field>
-							</div>
-							<div class="col-md-6">
-								<mat-form-field class="full-width" appearance="outline">
-									<mat-label>Industry type</mat-label>
-									<mat-select formControlName="industryType" placeholder="Choose...">
-										<mat-option>None</mat-option>
-										<mat-option [value]="industry" *ngFor="let industry of industryType; let i = index">{{ industry }}</mat-option>
-									</mat-select>
-									<mat-error> Select an <strong>Industry type</strong>. </mat-error>
-								</mat-form-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-4">
-								<mat-form-field class="full-width" appearance="outline">
-									<mat-label>PIN Code</mat-label>
-									<input type="number" matInput formControlName="pinCode" placeholder="302015" />
-									<mat-error> Please enter a valid <strong>PIN</strong>. </mat-error>
-								</mat-form-field>
-							</div>
-							<div class="col-md-4">
-								<mat-form-field class="full-width" appearance="outline">
-									<mat-label>State</mat-label>
-									<mat-select formControlName="state" placeholder="Choose...">
-										<mat-option [value]="state" *ngFor="let state of states; let i = index">{{ state }}</mat-option>
-									</mat-select>
-									<mat-error> Select an <strong>State</strong>. </mat-error>
-								</mat-form-field>
-							</div>
-							<div class="col-md-4">
-								<mat-form-field class="full-width" appearance="outline">
-									<mat-label>City</mat-label>
-									<input type="text" matInput formControlName="city" placeholder="Jaipur" />
-									<mat-error> Please enter a valid <strong>city</strong>. </mat-error>
-								</mat-form-field>
-							</div>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-		<div class="modal-footer">
-			<button type="button" class="btn btn-primary" (click)="onSubmit()">Submit</button>
-			<button type="button" class="btn btn-primary" (click)="modal.close()">Cancel</button>
-		</div>
-	</div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title">Add Company</h1>
+      <button (click)="modal.dismiss()" class="btn-close btn-close-white" type="button"></button>
+    </div>
+    <div class="modal-body">
+      <div class="container">
+        <form [formGroup]="companyForm">
+          <div class="form-group">
+            <div class="row mt-3">
+              <div class="col-md-6">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Business Name</mat-label>
+                  <input formControlName="name" matInput placeholder="XYZ Private Limited" type="text"/>
+                  <mat-error> Please enter a valid <strong>business name</strong>.</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>E-mail</mat-label>
+                  <input formControlName="email" matInput placeholder="xyz@gmail.com" type="email"/>
+                  <mat-error> Please enter a valid <strong>email address</strong>.</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Contact number</mat-label>
+                  <input formControlName="contactNumber" matInput placeholder="9876543210" type="number"/>
+                  <mat-error> Please enter a valid <strong>contact number</strong>.</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Industry type</mat-label>
+                  <mat-select formControlName="industryType" placeholder="Choose...">
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let industry of industryType; let i = index" [value]="industry">{{ industry }}</mat-option>
+                  </mat-select>
+                  <mat-error> Select an <strong>Industry type</strong>.</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>PIN Code</mat-label>
+                  <input formControlName="pinCode" matInput placeholder="302015" type="number"/>
+                  <mat-error> Please enter a valid <strong>PIN</strong>.</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>State</mat-label>
+                  <mat-select formControlName="state" placeholder="Choose...">
+                    <mat-option *ngFor="let state of states; let i = index" [value]="state">{{ state }}</mat-option>
+                  </mat-select>
+                  <mat-error> Select an <strong>State</strong>.</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>City</mat-label>
+                  <input formControlName="city" matInput placeholder="Jaipur" type="text"/>
+                  <mat-error> Please enter a valid <strong>city</strong>.</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button (click)="onSubmit()" class="btn btn-primary" type="button">Submit</button>
+      <button (click)="modal.close()" class="btn btn-primary" type="button">Cancel</button>
+    </div>
+  </div>
 </ng-template>

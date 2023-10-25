@@ -8,9 +8,9 @@ describe('AddProfileModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddProfileModalComponent ]
+      declarations: [AddProfileModalComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

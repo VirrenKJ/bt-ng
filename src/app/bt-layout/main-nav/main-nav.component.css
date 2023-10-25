@@ -1,31 +1,31 @@
 .sidenav-container {
-	height: 84%;
-	width: 100%;
-	position: fixed;
+    height: 84%;
+    width: 100%;
+    position: fixed;
 }
 
 .sidenav {
-	width: 200px;
-	background: inherit;
+    width: 200px;
+    background: inherit;
 }
 
 mat-toolbar.sub-header {
-	/* background: #ea4863; */
-	position: sticky !important;
-	z-index: 0 !important;
-	height: 90px;
+    /* background: #ea4863; */
+    position: sticky !important;
+    z-index: 0 !important;
+    height: 90px;
 }
 
 mat-sidenav-container mat-sidenav-content mat-toolbar.app-toolbar {
-	position: sticky;
-	top: 0;
-	z-index: 1000;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 mat-sidenav-container {
-	z-index: auto;
+    z-index: auto;
 }
 
 .is-active {
-	background-color: rgb(35, 38, 41);
+    background-color: rgb(35, 38, 41);
 }

@@ -8,9 +8,9 @@ describe('AddProjectModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddProjectModalComponent ]
+      declarations: [AddProjectModalComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

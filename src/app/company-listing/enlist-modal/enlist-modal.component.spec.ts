@@ -8,9 +8,9 @@ describe('EnlistModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EnlistModalComponent ]
+      declarations: [EnlistModalComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
