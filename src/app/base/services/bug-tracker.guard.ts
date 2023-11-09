@@ -13,7 +13,7 @@ export class BugTrackerGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.companyService.getTenant() != null && this.companyService.getTenant() != '') {
+    if (this.companyService.getTenant() != null && this.companyService.getTenant() !== '') {
       return true;
     } else {
       this.router.navigate(['/companies']);

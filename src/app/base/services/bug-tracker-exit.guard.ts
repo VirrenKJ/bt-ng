@@ -13,7 +13,7 @@ export class BugTrackerExitGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.companyService.getTenant() != null && this.companyService.getTenant() != '') {
+    if (this.companyService.getTenant() != null && this.companyService.getTenant() !== '') {
       this.router.navigate(['/bug-tracker']);
       return false;
     } else {
